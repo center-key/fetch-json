@@ -31,3 +31,23 @@ describe('Module browser-fetch-json', () => {
       });
 
    });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+describe('Function fetchJson.enableLogger()', () => {
+
+   it('sets the logger to the function passed in', () => {
+      function mockLogger() {}
+      fetchJson.enableLogger(mockLogger);
+      const actual =   { type: typeof fetchJson.logger, fn: fetchJson.logger };
+      const expected = { type: 'function',              fn: mockLogger };
+      assert.deepEqual(actual, expected);
+      });
+
+   it('disables the logger when passed false', () => {
+      fetchJson.enableLogger(false);
+      const actual =   { logger: fetchJson.logger, disabled: !fetchJson.logger };
+      const expected = { logger: null,             disabled: true };
+      assert.deepEqual(actual, expected);
+      });
+
+   });

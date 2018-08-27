@@ -11,6 +11,8 @@ const fetchJson = {
       else if (options.method !== 'GET' && data)
          options.body = JSON.stringify(data);
       function toJson(response) { return response.json(); }
+      if (fetchJson.logger)
+         fetchJson.logger(Date.now(), options.method, url.split('?')[0]);
       return fetch(url, options).then(toJson);
       },
    get: function(url, params, options) {
@@ -27,6 +29,12 @@ const fetchJson = {
       },
    delete: function(url, resource, options) {
       return fetchJson.request('DELETE', url, resource, options);
+      },
+   logger: null,
+   enableLogger: function(booleanOrFn) {
+      const isFn = typeof booleanOrFn === 'function';
+      fetchJson.logger = isFn ? booleanOrFn : booleanOrFn === false ? null : console.log;
+      return fetchJson.logger;
       }
    };
 
