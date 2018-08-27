@@ -1,7 +1,7 @@
 # browser-fetch-json
 <img src=https://centerkey.com/graphics/center-key-logo.svg align=right width=200 alt=logo>
 
-_A thin wrapper around node-fetch just for JSON_
+_A thin wrapper around Fetch API just for JSON in the browser_
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/browser-fetch-json/blob/master/LICENSE.txt)
 &nbsp;
@@ -12,6 +12,124 @@ _A thin wrapper around node-fetch just for JSON_
 [![Build Status](https://travis-ci.org/center-key/browser-fetch-json.svg)](https://travis-ci.org/center-key/browser-fetch-json)
 
 Why would you fetch anything but json? ;)
+
+### A) Include
+Use the [jsdelivr.com](https://www.jsdelivr.com/package/npm/browser-fetch-json) CDN:
+```html
+<script src=https://cdn.jsdelivr.net/npm/browser-fetch-json@0.0/browser-fetch-json.min.js></script>
+```
+
+Or install as a module:
+```shell
+$ npm install browser-fetch-json
+```
+Then import with the line:
+```javascript
+const fetchJson = require('browser-fetch-json');
+```
+
+### B) Examples
+#### HTTP GET
+Fetch the NASA Astronomy Picture of the Day:
+```javascript
+// NASA APOD
+const url =    'https://api.nasa.gov/planetary/apod';
+const params = { api_key: 'DEMO_KEY' };
+function handleData(data) {
+   console.log('The NASA APOD for today is at: ' + data.url);
+   }
+fetchJson.get(url, params).then(handleData);
+```
+#### HTTP POST
+Create a resource for the planet Jupiter:
+```javascript
+// Create Jupiter
+const resource = { name: 'Jupiter', position: 5 };
+function handleData(data) {
+   console.log(data);  //HTTP response body as an object literal
+   }
+fetchJson.post('https://httpbin.org/post', resource)
+   .then(handleData)
+   .catch(console.error);
+```
+
+### C) Leverages Fetch API
+**browser-fetch-json** uses the browser's native **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**.
+
+For comparison, the above POST example to create a planet would be done directly using the **Fetch API** with the code:
+```javascript
+// Create Jupiter (with Fetch API instead of browser-fetch-json)
+const resource = { name: 'Jupiter', position: 5 };
+const options = {
+   method: 'POST',
+   headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+      },
+   body: JSON.stringify(resource)
+   };
+function handleData(data) {
+   console.log(data);  //HTTP response body as an object literal
+   }
+fetch('https://httpbin.org/post', options)
+   .then(response => response.json())
+   .then(handleData)
+   .catch(console.error);
+```
+The examples for **browser-fetch-json** and the **Fetch API** each produce the same output.
+
+### D) Details
+The **browser-fetch-json** module automatically:
+1. Serializes the body payload with `JSON.stringify()`.
+1. Adds the JSON data type (`'application/json'`) to the HTTP headers.
+1. Builds the URL query string from the `params` object for GET requests.
+1. Runs `.json()` on the response from the promise.
+1. Sets `credentials` to `'same-origin'` to support user sessions for frameworks/servers such as Grails, Rails, PHP, Flask, etc.
+
+### E) API
+The format for using **browser-fetch-json** is:
+#### GET
+```javascript
+fetchJson.get(url, params, options).then(callback);
+```
+#### POST
+```javascript
+fetchJson.post(url, resource, options).then(callback);
+```
+#### PUT
+```javascript
+fetchJson.put(url, resource, options).then(callback);
+```
+#### PATCH
+```javascript
+fetchJson.patch(url, resource, options).then(callback);
+```
+#### DELETE
+```javascript
+fetchJson.delete(url, resource, options).then(callback);
+```
+Notes:
+1. Only the `url` parameter is required.&nbsp; The other parameters are optional.
+1. The `params` object for `fetchJson.get()` is converted into a query string and appended to the `url`.
+1. The `resource` object is turned into the body of the HTTP request.
+1. The `options` parameter is passed through to the **Fetch API** (see the MDN **Fetch API** documentation for supported **[`init` options](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters)**).
+
+#### Dynamic HTTP method
+If you need to programmatically set the method, use the format:
+```javascript
+fetchJson.request(method, url, data, options).then(callback);
+```
+Where `method` is `'GET'`, `'POST'`, `'PUT'`, `'PATCH'`, or `'DELETE'`, and `data` represents
+either `params` or `resource`.
+
+#### Logging
+Enable basic logging to the console with:
+```javascript
+fetchJson.enableLogger();
+```
+
+### F) Questions or enhancements
+Feel free to submit an [issue](https://github.com/center-key/browser-fetch-json/issues).
 
 ---
 [MIT License](LICENSE.txt)
