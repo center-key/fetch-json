@@ -2,7 +2,8 @@
 
 const fetchJson = {
    request: function(method, url, data, options) {
-      options = Object.assign({ method: method.toUpperCase() }, options);
+      const settings = { method: method.toUpperCase(), credentials: 'same-origin' };
+      options = Object.assign(settings, options);
       const jsonHeaders = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
       options.headers = Object.assign(jsonHeaders, options.headers);
       function toPair(key) { return key + '=' + data[key]; }
