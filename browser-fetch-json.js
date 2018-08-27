@@ -41,3 +41,5 @@ const fetchJson = {
 
 if (typeof module === 'object')
    module.exports = fetchJson;  //Node.js module loading system (CommonJS)
+else
+   window.fetchJson = fetchJson;
