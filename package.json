@@ -1,0 +1,44 @@
+{
+   "name": "browser-fetch-json",
+   "description": "A thin wrapper around Fetch API just for JSON in the browser",
+   "version": "0.0.0",
+   "license": "MIT",
+   "main": "browser-fetch-json.js",
+   "repository": "github:center-key/browser-fetch-json",
+   "homepage": "https://github.com/center-key/browser-fetch-json",
+   "bugs": "https://github.com/center-key/browser-fetch-json/issues",
+   "docs": "https://github.com/center-key/browser-fetch-json/blob/master/README.md",
+   "keywords": [
+      "browser",
+      "fetch",
+      "get",
+      "http",
+      "javascript",
+      "json",
+      "post",
+      "rest"
+   ],
+   "author": {
+      "name": "Center Key",
+      "url": "https://centerkey.com"
+   },
+   "scripts": {
+      "pretest": "jshint browser-fetch-json.js",
+      "test": "mocha spec.js"
+   },
+   "jshintConfig": {
+      "esversion": 6,
+      "strict": "implied",
+      "undef": true,
+      "unused": true,
+      "browser": true,
+      "node": true,
+      "mocha": true
+   },
+   "devDependencies": {
+      "jsdom": "~12.0",
+      "jshint": "~2.9",
+      "mocha": "~5.2"
+   },
+   "dependencies": {}
+}
