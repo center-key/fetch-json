@@ -15,7 +15,7 @@ const fetchJson = {
          options.body = JSON.stringify(data);
       function toJson(response) { return response.json(); }
       if (fetchJson.logger)
-         fetchJson.logger(Date.now(), options.method, url.split('?')[0]);
+         fetchJson.logger(new Date().toISOString(), options.method, url);
       return fetch(url, options).then(toJson);
       },
    get: function(url, params, options) {
