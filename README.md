@@ -1,5 +1,6 @@
 # browser-fetch-json
-<img src=https://centerkey.com/graphics/center-key-logo.svg align=right width=200 alt=logo>
+<img src=https://raw.githubusercontent.com/center-key/browser-fetch-json/master/logos.png
+   align=right width=200 alt=logos>
 
 _A thin wrapper around the Fetch API just for JSON in the browser_
 
@@ -15,7 +16,7 @@ Why would you fetch anything but json? ;)
 
 For a node version, see: [node-fetch-json](https://www.npmjs.com/package/node-fetch-json)
 
-### A) Include
+### 1) Include
 In a web page:
 ```html
 <script src=browser-fetch-json.min.js></script>
@@ -35,7 +36,7 @@ Then import with:
 const fetchJson = require('browser-fetch-json');
 ```
 
-### B) Examples
+### 2) Examples
 #### HTTP GET
 Fetch the NASA Astronomy Picture of the Day:
 ```javascript
@@ -60,7 +61,7 @@ fetchJson.post('https://httpbin.org/post', resource)
    .catch(console.error);
 ```
 
-### C) Leverages the Fetch API
+### 3) Leverages the Fetch API
 **browser-fetch-json** uses the browser's native **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**.
 
 For comparison, the above POST example to create a planet would be done directly using the **Fetch API** with the code:
@@ -85,7 +86,7 @@ fetch('https://httpbin.org/post', options)
 ```
 The examples for **browser-fetch-json** and the **Fetch API** each produce the same output.
 
-### D) Details
+### 4) Details
 The **browser-fetch-json** module automatically:
 1. Serializes the body payload with `JSON.stringify()`.
 1. Adds the JSON data type (`'application/json'`) to the HTTP headers.
@@ -93,7 +94,7 @@ The **browser-fetch-json** module automatically:
 1. Runs `.json()` on the response from the promise.
 1. Sets `credentials` to `'same-origin'` to support user sessions for frameworks/servers such as Grails, Rails, PHP, Flask, etc.
 
-### E) API
+### 5) API
 The format for using **browser-fetch-json** is:
 #### GET
 ```javascript
@@ -136,8 +137,8 @@ fetchJson.enableLogger();
 ```
 Pass in a function to use a custom logger or pass in `false` to disable logging.
 
-### F) Legacy web browsers
-To support old legacy browsers, include polyfills for
+### 6) Legacy web browsers
+To support really old browsers, include polyfills for
 [Promise](https://github.com/taylorhakes/promise-polyfill/) and
 [Fetch API](https://github.com/github/fetch):
 ```html
@@ -145,7 +146,7 @@ To support old legacy browsers, include polyfills for
 <script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0/fetch.min.js></script>
 ```
 
-### G) Questions or enhancements
+### 7) Questions or enhancements
 Feel free to submit an [issue](https://github.com/center-key/browser-fetch-json/issues).
 
 ---
