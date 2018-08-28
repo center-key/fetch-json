@@ -1,4 +1,4 @@
-//! browser-fetch-json v0.1.0
+//! browser-fetch-json v0.1.1
 //! A thin wrapper around the Fetch API just for JSON in the browser
 //! MIT License -- https://github.com/center-key/browser-fetch-json
 
