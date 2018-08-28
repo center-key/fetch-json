@@ -1,6 +1,6 @@
 {
    "name": "browser-fetch-json",
-   "description": "A thin wrapper around Fetch API just for JSON in the browser",
+   "description": "A thin wrapper around the Fetch API just for JSON in the browser",
    "version": "0.0.2",
    "license": "MIT",
    "main": "browser-fetch-json.js",
@@ -22,23 +22,45 @@
       "name": "Center Key",
       "url": "https://centerkey.com"
    },
+   "eslintConfig": {
+      "extends": "eslint:recommended",
+      "env": {
+         "es6": true,
+         "browser": true,
+         "node": true,
+         "mocha": true
+      },
+      "rules": {
+         "no-console": "off",
+         "quotes": [
+            "warn",
+            "single"
+         ],
+         "semi": [
+            "warn",
+            "always"
+         ]
+      }
+   },
    "scripts": {
-      "pretest": "jshint browser-fetch-json.js",
+      "pretest": "eslint gulpfile.js spec.js browser-fetch-json.js && gulp build",
       "test": "mocha spec.js"
    },
-   "jshintConfig": {
-      "esversion": 6,
-      "strict": "implied",
-      "undef": true,
-      "unused": true,
-      "browser": true,
-      "node": true,
-      "mocha": true
-   },
+   "dependencies": {},
    "devDependencies": {
+      "ajv": "~6.5",
+      "babel-core": "~6.26",
+      "eslint": "~5.4",
+      "gulp": "~4.0",
+      "gulp-babel": "~7.0",
+      "gulp-babel-minify": "~0.4",
+      "gulp-header": "~2.0",
+      "gulp-rename": "~1.4",
+      "gulp-replace": "~1.0",
+      "gulp-size": "~3.0",
       "jsdom": "~12.0",
-      "jshint": "~2.9",
-      "mocha": "~5.2"
-   },
-   "dependencies": {}
+      "merge-stream": "~1.0",
+      "mocha": "~5.2",
+      "whatwg-fetch": "~2.0"
+   }
 }

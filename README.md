@@ -1,7 +1,7 @@
 # browser-fetch-json
 <img src=https://centerkey.com/graphics/center-key-logo.svg align=right width=200 alt=logo>
 
-_A thin wrapper around Fetch API just for JSON in the browser_
+_A thin wrapper around the Fetch API just for JSON in the browser_
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/browser-fetch-json/blob/master/LICENSE.txt)
 &nbsp;
@@ -13,8 +13,15 @@ _A thin wrapper around Fetch API just for JSON in the browser_
 
 Why would you fetch anything but json? ;)
 
+For a node version, see: [node-fetch-json](https://www.npmjs.com/package/node-fetch-json)
+
 ### A) Include
-Use the [jsdelivr.com](https://www.jsdelivr.com/package/npm/browser-fetch-json) CDN:
+In a web page:
+```html
+<script src=browser-fetch-json.min.js></script>
+```
+
+From the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/browser-fetch-json):
 ```html
 <script src=https://cdn.jsdelivr.net/npm/browser-fetch-json@0.0/browser-fetch-json.min.js></script>
 ```
@@ -23,7 +30,7 @@ Or install as a module:
 ```shell
 $ npm install browser-fetch-json
 ```
-Then import with the line:
+Then import with:
 ```javascript
 const fetchJson = require('browser-fetch-json');
 ```
@@ -53,7 +60,7 @@ fetchJson.post('https://httpbin.org/post', resource)
    .catch(console.error);
 ```
 
-### C) Leverages Fetch API
+### C) Leverages the Fetch API
 **browser-fetch-json** uses the browser's native **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**.
 
 For comparison, the above POST example to create a planet would be done directly using the **Fetch API** with the code:
@@ -127,6 +134,7 @@ Enable basic logging to the console with:
 ```javascript
 fetchJson.enableLogger();
 ```
+Pass in a function to use a custom logger or pass in `false` to disable logging.
 
 ### F) Questions or enhancements
 Feel free to submit an [issue](https://github.com/center-key/browser-fetch-json/issues).

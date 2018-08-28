@@ -1,4 +1,6 @@
-// browser-fetch-json ~~ MIT License
+//! browser-fetch-json v0.0.2
+//! A thin wrapper around the Fetch API just for JSON in the browser
+//! MIT License -- https://github.com/center-key/browser-fetch-json
 
 const fetchJson = {
    request: function(method, url, data, options) {
@@ -41,5 +43,5 @@ const fetchJson = {
 
 if (typeof module === 'object')
    module.exports = fetchJson;  //Node.js module loading system (CommonJS)
-else
-   window.fetchJson = fetchJson;
+else if (typeof window === 'object')
+   window.fetchJson = fetchJson;  //support both global and window property
