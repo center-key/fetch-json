@@ -23,7 +23,7 @@ In a web page:
 
 From the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/browser-fetch-json):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/browser-fetch-json@0.0/browser-fetch-json.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/browser-fetch-json@0.1/browser-fetch-json.min.js></script>
 ```
 
 Or install as a module:
@@ -136,7 +136,16 @@ fetchJson.enableLogger();
 ```
 Pass in a function to use a custom logger or pass in `false` to disable logging.
 
-### F) Questions or enhancements
+### F) Legacy web browsers
+To support old legacy browsers, include polyfills for
+[Promise](https://github.com/taylorhakes/promise-polyfill/) and
+[Fetch API](https://github.com/github/fetch):
+```html
+<script src=https://cdn.jsdelivr.net/npm/promise-polyfill@8.1/dist/polyfill.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0/fetch.min.js></script>
+```
+
+### G) Questions or enhancements
 Feel free to submit an [issue](https://github.com/center-key/browser-fetch-json/issues).
 
 ---
