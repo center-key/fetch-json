@@ -42,7 +42,7 @@ describe('Module browser-fetch-json', () => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Google Books API search result for "spacex" fetched by fetchJson.get()', () => {
 
-   it('contains the correct "kind" value and "totalItems" as an number', (done) => {
+   it('contains the correct "kind" value and "totalItems" as a number', (done) => {
       const url = 'https://www.googleapis.com/books/v1/volumes?q=spacex';
       function handleData(data) {
          const actual =   { total: typeof data.totalItems, kind: data.kind };
@@ -221,6 +221,20 @@ describe('Function fetchJson.enableLogger()', () => {
       const actual =   { logger: fetchJson.logger, disabled: !fetchJson.logger };
       const expected = { logger: null,             disabled: true };
       assert.deepEqual(actual, expected);
+      });
+
+   it('passes a timestamp, methed, and url to a custom logger on GET', (done) => {
+      const url = 'https://httpbin.org/get';
+      const isoTimestampLength = new Date().toISOString().length;
+      function customLogger(logTimestamp, logMethod, logUrl) {
+         fetchJson.enableLogger(false);
+         const actual =   { timestamp: logTimestamp.length, method: logMethod, url: logUrl };
+         const expected = { timestamp: isoTimestampLength,  method: 'GET',     url: url };
+         assert.deepEqual(actual, expected);
+         done();
+         }
+      fetchJson.enableLogger(customLogger);
+      fetchJson.get(url);
       });
 
    });
