@@ -223,7 +223,7 @@ describe('Function fetchJson.enableLogger()', () => {
       assert.deepEqual(actual, expected);
       });
 
-   it('passes a timestamp, methed, and url to a custom logger on GET', (done) => {
+   it('passes a timestamp, methed, and URL to a custom logger on GET', (done) => {
       const url = 'https://httpbin.org/get';
       const isoTimestampLength = new Date().toISOString().length;
       function customLogger(logTimestamp, logMethod, logUrl) {

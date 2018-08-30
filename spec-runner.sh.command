@@ -4,11 +4,15 @@
 # To make this file runnable:
 #     $ chmod +x *.sh.command
 
+banner="browser-fetch-json"
 projectHome=$(cd $(dirname $0); pwd)
 
 setupTools() {
    # Check for Node.js installation and download project dependencies
    cd $projectHome
+   echo
+   echo $banner
+   echo $(echo $banner | sed -e "s/./=/g")
    pwd
    echo
    echo "Node.js:"
@@ -47,9 +51,6 @@ runSpecs() {
    echo
    }
 
-echo
-echo "browser-fetch-json"
-echo "=================="
 setupTools
 showVersions
 runSpecs
