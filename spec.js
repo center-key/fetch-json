@@ -1,7 +1,14 @@
 // Mocha Specification Cases
 
+const fs =        require('fs');
 const assert =    require('assert');
-const fetchJson = require('./browser-fetch-json.js');
+const { JSDOM } = require('jsdom');
+
+const scripts = ['node_modules/whatwg-fetch/fetch.js', './browser-fetch-json.js'];
+const window = new JSDOM('', { runScripts: 'outside-only' }).window;
+function loadScript(file) { window.eval(fs.readFileSync(file).toString()); }
+scripts.forEach(loadScript);
+const fetchJson = window.fetchJson;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Module browser-fetch-json', () => {
@@ -48,6 +55,23 @@ describe('Function fetchJson.enableLogger()', () => {
       const actual =   { logger: fetchJson.logger, disabled: !fetchJson.logger };
       const expected = { logger: null,             disabled: true };
       assert.deepEqual(actual, expected);
+      });
+
+   });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+describe('Response returned by httpbin.org for a planet (object literal)', () => {
+
+   it('from a POST contains the planet (JSON)', (done) => {
+      const url = 'https://httpbin.org/post';
+      const resource = { name: 'Mercury', position: 1 };
+      function handleData(data) {
+         const actual =   { planet: data.json, type: typeof data.json };
+         const expected = { planet: resource,  type: 'object' };
+         assert.deepEqual(actual, expected);
+         done();
+         }
+      fetchJson.post(url, resource).then(handleData);
       });
 
    });
