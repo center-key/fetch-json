@@ -14,9 +14,7 @@ _A thin wrapper around the Fetch API just for JSON in the browser_
 
 Why would you fetch anything but json? ;)
 
-For a node version, see: [node-fetch-json](https://www.npmjs.com/package/node-fetch-json)
-
-### 1) Include
+### 1) Setup
 In a web page:
 ```html
 <script src=browser-fetch-json.min.js></script>
@@ -146,7 +144,10 @@ To support really old browsers, include polyfills for
 <script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0/fetch.min.js></script>
 ```
 
-### 7) Questions or enhancements
+### 7) Related
+For a node version, see: [node-fetch-json](https://www.npmjs.com/package/node-fetch-json)
+
+### 8) Questions or enhancements
 Feel free to submit an [issue](https://github.com/center-key/browser-fetch-json/issues).
 
 ---
