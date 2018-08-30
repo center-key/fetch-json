@@ -68,7 +68,7 @@ describe('NASA Astronomy Picture of the Day resource fetched by fetchJson.get()'
          done();
          }
       fetchJson.get(url, params).then(handleData);
-      });
+      }).timeout(5000);
 
    });
 
