@@ -22,7 +22,7 @@ In a web page:
 
 From the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/browser-fetch-json):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/browser-fetch-json@0.1/fetch-json.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/browser-fetch-json@0.2/fetch-json.min.js></script>
 ```
 
 Or install as a module:

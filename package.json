@@ -1,7 +1,7 @@
 {
    "name": "browser-fetch-json",
    "description": "A thin wrapper around the Fetch API just for JSON in the browser",
-   "version": "0.1.2",
+   "version": "0.2.0",
    "license": "MIT",
    "main": "fetch-json.js",
    "repository": "github:center-key/browser-fetch-json",
