@@ -17,12 +17,12 @@ Why would you fetch anything but json? ;)
 ### 1) Setup
 In a web page:
 ```html
-<script src=browser-fetch-json.min.js></script>
+<script src=fetch-json.min.js></script>
 ```
 
 From the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/browser-fetch-json):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/browser-fetch-json@0.1/browser-fetch-json.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/browser-fetch-json@0.1/fetch-json.min.js></script>
 ```
 
 Or install as a module:
@@ -145,7 +145,7 @@ To support really old browsers, include polyfills for
 ```
 
 ### 7) Related
-For a node version, see: [node-fetch-json](https://www.npmjs.com/package/node-fetch-json)
+For a node version, see: [node-fetch-json](https://github.com/center-key/node-fetch-json)
 
 ### 8) Questions or enhancements
 Feel free to submit an [issue](https://github.com/center-key/browser-fetch-json/issues).

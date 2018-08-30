@@ -3,7 +3,7 @@
    "description": "A thin wrapper around the Fetch API just for JSON in the browser",
    "version": "0.1.2",
    "license": "MIT",
-   "main": "browser-fetch-json.js",
+   "main": "fetch-json.js",
    "repository": "github:center-key/browser-fetch-json",
    "homepage": "https://github.com/center-key/browser-fetch-json",
    "bugs": "https://github.com/center-key/browser-fetch-json/issues",
@@ -43,7 +43,7 @@
       }
    },
    "scripts": {
-      "pretest": "eslint gulpfile.js spec.js browser-fetch-json.js && gulp build",
+      "pretest": "eslint gulpfile.js spec.js fetch-json.js && gulp build",
       "test": "mocha spec.js"
    },
    "dependencies": {},

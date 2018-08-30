@@ -20,14 +20,14 @@ const banner = [
 const task = {
    build: function() {
       function updateBanner() {
-         return gulp.src('browser-fetch-json.js')
+         return gulp.src('fetch-json.js')
             .pipe(replace(/\/\/!.*\n/g, ''))
             .pipe(header(banner.join('')))
             .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('.'));
          }
       function minify() {
-         return gulp.src('browser-fetch-json.js')
+         return gulp.src('fetch-json.js')
             .pipe(rename({ extname: '.min.js' }))
             .pipe(babel({ presets: ['minify'] }))
             .pipe(header(banner[0] + banner[2]))

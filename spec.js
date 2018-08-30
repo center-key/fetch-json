@@ -4,7 +4,7 @@ const fs =        require('fs');
 const assert =    require('assert');
 const { JSDOM } = require('jsdom');
 
-const scripts = ['node_modules/whatwg-fetch/fetch.js', './browser-fetch-json.js'];
+const scripts = ['node_modules/whatwg-fetch/fetch.js', './fetch-json.js'];
 const window = new JSDOM('', { runScripts: 'outside-only' }).window;
 function loadScript(file) { window.eval(fs.readFileSync(file).toString()); }
 scripts.forEach(loadScript);
@@ -68,7 +68,7 @@ describe('NASA Astronomy Picture of the Day resource fetched by fetchJson.get()'
          done();
          }
       fetchJson.get(url, params).then(handleData);
-      }).timeout(5000);
+      }).timeout(5000);  //Deep Space Network can be a little slow
 
    });
 
