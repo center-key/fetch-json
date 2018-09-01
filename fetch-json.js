@@ -1,5 +1,5 @@
 //! browser-fetch-json v0.2.0
-//! A thin wrapper around the Fetch API just for JSON in the browser
+//! A thin wrapper around the browser's native Fetch API just for JSON
 //! MIT License -- https://github.com/center-key/browser-fetch-json
 
 const fetchJson = {

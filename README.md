@@ -2,7 +2,7 @@
 <img src=https://raw.githubusercontent.com/center-key/browser-fetch-json/master/logos.png
    align=right width=200 alt=logos>
 
-_A thin wrapper around the Fetch API just for JSON in the browser_
+_A thin wrapper around the browser's native Fetch API just for JSON_
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/browser-fetch-json/blob/master/LICENSE.txt)
 &nbsp;
@@ -145,7 +145,7 @@ To support really old browsers, include polyfills for
 ```
 
 ### 7) Related
-For a node version, see: [node-fetch-json](https://github.com/center-key/node-fetch-json)
+[node-fetch-json](https://github.com/center-key/node-fetch-json) - A version for node
 
 ### 8) Questions or enhancements
 Feel free to submit an [issue](https://github.com/center-key/browser-fetch-json/issues).
