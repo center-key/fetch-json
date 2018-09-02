@@ -1,7 +1,7 @@
 {
    "name": "browser-fetch-json",
    "description": "A thin wrapper around the browser's native Fetch API just for JSON",
-   "version": "0.2.0",
+   "version": "0.2.1",
    "license": "MIT",
    "main": "fetch-json.js",
    "repository": "github:center-key/browser-fetch-json",
@@ -50,7 +50,7 @@
    "devDependencies": {
       "ajv": "~6.5",
       "babel-core": "~6.26",
-      "eslint": "~5.4",
+      "eslint": "~5.5",
       "gulp": "~4.0",
       "gulp-babel": "~7.0",
       "gulp-babel-minify": "~0.4",
