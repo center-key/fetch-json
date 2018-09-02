@@ -101,10 +101,10 @@ describe('GET response returned by httpbin.org', () => {
 
    it('contains the params from an object', (done) => {
       const url = 'https://httpbin.org/get';
-      const params = { planet: 'Jupiter', max: 3 };
+      const params = { planet: 'Jupiter', max: 3, tip: 'Big & -148°C' };
       function handleData(data) {
          const actual =   data.args;
-         const expected = { planet: 'Jupiter', max: '3' };
+         const expected = { planet: 'Jupiter', max: '3', tip: 'Big & -148°C' };
          assert.deepEqual(actual, expected);
          done();
          }
