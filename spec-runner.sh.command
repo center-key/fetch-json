@@ -24,33 +24,58 @@ setupTools() {
    echo
    }
 
-showVersions() {
+releaseInstructions() {
    cd $projectHome
+   repository=$(grep repository package.json | awk -F'"' '{print $4}' | sed s/github://)
+   package=https://raw.githubusercontent.com/$repository/master/package.json
+   version=v$(grep '"version"' package.json | awk -F'"' '{print $4}')
+   pushed=v$(curl --silent $package | grep '"version":' | awk -F'"' '{print $4}')
+   released=$(git tag | tail -1)
    echo "Local changes:"
    git status --short
    echo
-   echo "Releases:"
-   git tag
+   echo "Recent releases:"
+   git tag | tail -5
    echo
-   echo "Current version:"
-   versionLocal=v$(grep '"version"' package.json | awk -F'"' '{print $4}')
-   echo $versionLocal
+   echo "Release progress:"
+   echo "   $version (local) --> $pushed (pushed) --> $released (released)"
    echo
-   echo "To publish release:"
-   echo "   cd $projectHome"
-   echo "   git tag --annotate --force --message 'Release' $versionLocal"
-   echo "   git remote --verbose"
-   echo "   git push origin --tags --force"
-   echo "   npm publish"
+   echo "Next release action:"
+   nextActionUpdate() {
+      echo "   === Increment version ==="
+      echo "   Edit pacakge.json to bump $version to next version number"
+      echo "   $projectHome/package.json"
+      }
+   nextActionCommit() {
+      echo "   === Commit and push ==="
+      echo "   Check in changed source files for $version with the message:"
+      echo "   Set version for next release"
+      }
+   nextActionTag() {
+      echo "   === Release checkin ==="
+      echo "   Check in remaining changed files with the message:"
+      echo "   Release $version"
+      echo "   === Tag and publish ==="
+      echo "   cd $projectHome"
+      echo "   git tag --annotate --message 'Release' $version"
+      echo "   git remote --verbose"
+      echo "   git push origin --tags"
+      echo "   npm publish"
+      }
+   checkStatus() {
+      test $version ">" $pushed && nextActionCommit || nextActionUpdate
+      }
+   test $pushed ">" $released && nextActionTag || checkStatus
    echo
    }
 
 runSpecs() {
    cd $projectHome
+   echo "Run specifications:"
    npm test
    echo
    }
 
 setupTools
-showVersions
+releaseInstructions
 runSpecs
