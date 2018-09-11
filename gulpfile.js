@@ -23,6 +23,7 @@ const task = {
          return gulp.src('fetch-json.js')
             .pipe(replace(/\/\/!.*\n/g, ''))
             .pipe(header(banner.join('')))
+            .pipe(replace(/'\d[.]\d[.]\d'/, `'${pkg.version}'`))
             .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('.'));
          }
@@ -31,6 +32,7 @@ const task = {
             .pipe(rename({ extname: '.min.js' }))
             .pipe(babel({ presets: ['minify'] }))
             .pipe(header(banner[0] + banner[2]))
+            .pipe(replace(/'\d[.]\d[.]\d'/, `'${pkg.version}'`))
             .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('.'));
          }

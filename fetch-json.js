@@ -3,6 +3,7 @@
 //! MIT License -- https://github.com/center-key/browser-fetch-json
 
 const fetchJson = {
+   version: '0.2.1',
    request: function(method, url, data, options) {
       const settings = { method: method.toUpperCase(), credentials: 'same-origin' };
       options = Object.assign(settings, options);
