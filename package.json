@@ -1,7 +1,7 @@
 {
    "name": "browser-fetch-json",
    "description": "A thin wrapper around the browser's native Fetch API just for JSON",
-   "version": "0.2.1",
+   "version": "0.2.2",
    "license": "MIT",
    "main": "fetch-json.js",
    "repository": "github:center-key/browser-fetch-json",
@@ -45,7 +45,7 @@
    "scripts": {
       "lint": "eslint gulpfile.js spec-*.js fetch-json.js",
       "pretest": "npm run lint && gulp build",
-      "test": "mocha spec-*.js",
+      "test": "mocha --timeout 10000 spec-*.js",
       "quick": "npm run lint && mocha --bail spec-node.js"
    },
    "dependencies": {},
