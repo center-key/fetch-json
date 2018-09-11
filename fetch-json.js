@@ -13,7 +13,20 @@ const fetchJson = {
          url = url + (url.includes('?') ? '&' : '?') + Object.keys(data).map(toPair).join('&');
       else if (options.method !== 'GET' && data)
          options.body = JSON.stringify(data);
-      function toJson(response) { return response.json(); }
+      function toJson(response) {
+         const contentType = response.headers.get('content-type');
+         const isJson = /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
+         function textToObj(httpBody) {
+            if (fetchJson.logger)
+               fetchJson.logger(new Date().toISOString(), options.method, response.url,
+                  response.ok, response.status, response.statusText, contentType);
+            response.error =       !response.ok;
+            response.contentType = contentType;
+            response.bodyText =    httpBody;
+            return response;
+            }
+         return isJson ? response.json() : response.text().then(textToObj);
+         }
       if (fetchJson.logger)
          fetchJson.logger(new Date().toISOString(), options.method, url);
       return fetch(url, options).then(toJson);

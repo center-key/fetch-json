@@ -208,6 +208,54 @@ describe('The low-level fetchJson.request() function', () => {
    });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+describe('HTTP error returned by httpbin.org', () => {
+
+   it('for status 500 contains the message "INTERNAL SERVER ERROR"', (done) => {
+      const url = 'https://httpbin.org/status/500';
+      function handleData(data) {
+         const actual =   {
+            error:       data.error,
+            ok:          data.ok,
+            status:      [data.status, data.statusText],
+            contentType: data.contentType
+            };
+         const expected = {
+            error:       true,
+            ok:          false,
+            status:      [500, 'INTERNAL SERVER ERROR'],
+            contentType: 'text/html; charset=utf-8'
+            };
+         assert.deepEqual(actual, expected);
+         done();
+         }
+      fetchJson.get(url).then(handleData);
+      });
+
+   it('for status 418 contains the message "I\'M A TEAPOT"', (done) => {
+      const url = 'https://httpbin.org/status/418';
+      function handleData(data) {
+         const actual =   {
+            error:       data.error,
+            ok:          data.ok,
+            status:      [data.status, data.statusText],
+            contentType: data.contentType
+            };
+         const expected = {
+            error:       true,
+            ok:          false,
+            status:      [418, 'I\'M A TEAPOT'],
+            contentType: null
+            };
+         assert.deepEqual(actual, expected);
+         done();
+         console.log(data.bodyText);
+         }
+      fetchJson.get(url).then(handleData);
+      });
+
+   });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Function fetchJson.enableLogger()', () => {
 
    it('sets the logger to the function passed in', () => {
