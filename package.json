@@ -43,8 +43,10 @@
       }
    },
    "scripts": {
-      "pretest": "eslint gulpfile.js spec.js fetch-json.js && gulp build",
-      "test": "mocha spec.js"
+      "lint": "eslint gulpfile.js spec-*.js fetch-json.js",
+      "pretest": "npm run lint && gulp build",
+      "test": "mocha spec-*.js",
+      "quick": "npm run lint && mocha --bail spec-node.js"
    },
    "dependencies": {},
    "devDependencies": {
@@ -61,6 +63,7 @@
       "jsdom": "~12.0",
       "merge-stream": "~1.0",
       "mocha": "~5.2",
+      "node-fetch": "~2.2",
       "whatwg-fetch": "~2.0"
    }
 }

@@ -1,16 +1,11 @@
 // Mocha Specification Cases
 
 // Imports
-const fs =        require('fs');
 const assert =    require('assert');
-const { JSDOM } = require('jsdom');
+const fetchJson = require('./fetch-json.js');
 
-// Setup
-const scripts = ['node_modules/whatwg-fetch/fetch.js', './fetch-json.js'];
-const window = new JSDOM('', { runScripts: 'outside-only' }).window;
-function loadScript(file) { window.eval(fs.readFileSync(file).toString()); }
-scripts.forEach(loadScript);
-const fetchJson = window.fetchJson;
+//Setup
+describe('Specification Cases: node', () => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Module browser-fetch-json', () => {
@@ -288,3 +283,5 @@ describe('Function fetchJson.enableLogger()', () => {
       });
 
    });
+
+});
