@@ -6,7 +6,7 @@ const assert =    require('assert');
 const { JSDOM } = require('jsdom');
 
 // Setup
-const scripts = ['node_modules/whatwg-fetch/fetch.js', './fetch-json.js'];
+const scripts = ['node_modules/whatwg-fetch/dist/fetch.umd.js', './fetch-json.js'];
 const window = new JSDOM('', { runScripts: 'outside-only' }).window;
 function loadScript(file) { window.eval(fs.readFileSync(file).toString()); }
 scripts.forEach(loadScript);

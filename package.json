@@ -64,6 +64,6 @@
       "merge-stream": "~1.0",
       "mocha": "~5.2",
       "node-fetch": "~2.2",
-      "whatwg-fetch": "~2.0"
+      "whatwg-fetch": "~3.0"
    }
 }
