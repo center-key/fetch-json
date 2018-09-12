@@ -95,7 +95,7 @@ The **browser-fetch-json** module automatically:
 1. Builds the URL query string from the `params` object for GET requests.
 1. Runs `.json()` on the response from the promise.
 1. Sets `credentials` to `'same-origin'` to support user sessions for frameworks/servers such as Grails, Rails, PHP, Flask, etc.
-1. If the response body is HTML or text, it's converted to JSON.
+1. If the response body is HTML or text, it's converted to JSON (makes it easier to handle HTTP error status codes).
 
 ### 5) API
 The format for using **browser-fetch-json** is:
@@ -140,7 +140,7 @@ fetchJson.enableLogger();
 ```
 Pass in a function to use a custom logger or pass in `false` to disable logging.
 
-The default output looks like:
+The default console output looks like:<br>
 `2018-09-12T07:20:12.372Z – "GET" – "https://api.nasa.gov/planetary/apod"`
 
 #### Text to JSON
