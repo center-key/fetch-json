@@ -15,21 +15,21 @@ _A thin wrapper around the browser's native Fetch API just for JSON_
 Why would you fetch anything but json? ;)
 
 ### 1) Setup
+#### Browser
 In a web page:
 ```html
 <script src=fetch-json.min.js></script>
 ```
-
-From the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/browser-fetch-json):
+or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/browser-fetch-json):
 ```html
 <script src=https://cdn.jsdelivr.net/npm/browser-fetch-json@0.2/fetch-json.min.js></script>
 ```
-
-Or install as a module:
+#### node
+As a module:
 ```shell
 $ npm install browser-fetch-json
 ```
-Then import with:
+Then import with the line:
 ```javascript
 const fetchJson = require('browser-fetch-json');
 ```
@@ -60,7 +60,11 @@ fetchJson.post('https://httpbin.org/post', resource)
 ```
 
 ### 3) Leverages the Fetch API
-**browser-fetch-json** uses the browser's native **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**.
+**browser-fetch-json** calls the native
+**[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**
+if in a browser and calls
+**[node-fetch](https://www.npmjs.com/package/node-fetch)**
+if running on node.
 
 For comparison, the above POST example to create a planet would be done directly using the **Fetch API** with the code:
 ```javascript
@@ -136,6 +140,9 @@ fetchJson.enableLogger();
 ```
 Pass in a function to use a custom logger or pass in `false` to disable logging.
 
+The default output looks like:
+`2018-09-12T07:20:12.372Z – "GET" – "https://api.nasa.gov/planetary/apod"`
+
 #### Text to JSON
 If the HTTP response body is not JSON (`Content-Type` is not `"application/json"` or `"text/javascript"`), an object containing the body as a string in the `bodyText` field is created and passed on through the promise.&nbsp; In addition to the `bodyText` field, the object
 will have the fields: `ok`, `status`, `statusText`, and `contentType`.
@@ -161,10 +168,7 @@ To support really old browsers, include polyfills for
 <script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0/fetch.min.js></script>
 ```
 
-### 7) Related
-[node-fetch-json](https://github.com/center-key/node-fetch-json) - A version for node
-
-### 8) Questions or enhancements
+### 7) Questions or enhancements
 Feel free to submit an [issue](https://github.com/center-key/browser-fetch-json/issues).
 
 ---
