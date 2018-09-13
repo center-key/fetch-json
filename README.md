@@ -2,7 +2,7 @@
 <img src=https://raw.githubusercontent.com/center-key/browser-fetch-json/master/logos.png
    align=right width=200 alt=logos>
 
-_A thin wrapper around the browser's native Fetch API just for JSON_
+_A wrapper around Fetch just for JSON_
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/browser-fetch-json/blob/master/LICENSE.txt)
 &nbsp;

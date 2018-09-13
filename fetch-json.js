@@ -1,5 +1,5 @@
 //! browser-fetch-json v0.2.2
-//! A thin wrapper around the browser's native Fetch API just for JSON
+//! A wrapper around Fetch just for JSON
 //! MIT License -- https://github.com/center-key/browser-fetch-json
 
 const fetch = typeof window === 'object' ? window.fetch : require('node-fetch');
