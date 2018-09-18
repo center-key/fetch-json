@@ -58,6 +58,7 @@ fetchJson.post('https://httpbin.org/post', resource)
    .then(handleData)
    .catch(console.error);
 ```
+For more examples calls, see: [spec-node.js](spec-node.js) ([Mocha output](https://travis-ci.org/center-key/fetch-json))
 
 ### 3) Leverages the Fetch API
 **fetch-json** calls the native
