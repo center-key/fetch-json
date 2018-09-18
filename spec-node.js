@@ -5,7 +5,7 @@ const assert =    require('assert');
 const fetchJson = require('./fetch-json.js');
 
 //Setup
-describe('Specification Cases: node', () => {
+describe('Specification Cases: node (fetch-json.js)', () => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Module fetch-json', () => {

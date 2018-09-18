@@ -22,7 +22,7 @@ In a web page:
 ```
 or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json2):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/fetch-json2@0.2/fetch-json.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/fetch-json2@0.3/fetch-json.min.js></script>
 ```
 #### node
 As a module:
