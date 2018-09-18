@@ -1,4 +1,4 @@
-// browser-fetch-json
+// fetch-json
 // Tasks
 
 const babel =       require('gulp-babel');
@@ -11,7 +11,7 @@ const size =        require('gulp-size');
 
 const pkg = require('./package.json');
 const banner = [
-   `//! ${pkg.name} v${pkg.version}\n`,
+   `//! fetch-json v${pkg.version}\n`,
    `//! ${pkg.description}\n`,
    `//! ${pkg.license} License -- ${pkg.homepage}\n`
    ];

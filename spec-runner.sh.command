@@ -4,7 +4,7 @@
 # To make this file runnable:
 #     $ chmod +x *.sh.command
 
-banner="browser-fetch-json"
+banner="fetch-json"
 projectHome=$(cd $(dirname $0); pwd)
 
 setupTools() {

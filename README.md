@@ -1,16 +1,16 @@
-# browser-fetch-json
-<img src=https://raw.githubusercontent.com/center-key/browser-fetch-json/master/logos.png
+# fetch-json
+<img src=https://raw.githubusercontent.com/center-key/fetch-json/master/logos.png
    align=right width=200 alt=logos>
 
 _A wrapper around Fetch just for JSON_
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/browser-fetch-json/blob/master/LICENSE.txt)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/fetch-json/blob/master/LICENSE.txt)
 &nbsp;
-[![npm](https://img.shields.io/npm/v/browser-fetch-json.svg)](https://www.npmjs.com/package/browser-fetch-json)
+[![npm](https://img.shields.io/npm/v/fetch-json2.svg)](https://www.npmjs.com/package/fetch-json2)
 &nbsp;
-[![Known Vulnerabilities](https://snyk.io/test/github/center-key/browser-fetch-json/badge.svg)](https://snyk.io/test/github/center-key/browser-fetch-json)
+[![Known Vulnerabilities](https://snyk.io/test/github/center-key/fetch-json/badge.svg)](https://snyk.io/test/github/center-key/fetch-json)
 &nbsp;
-[![Build Status](https://travis-ci.org/center-key/browser-fetch-json.svg)](https://travis-ci.org/center-key/browser-fetch-json)
+[![Build Status](https://travis-ci.org/center-key/fetch-json.svg)](https://travis-ci.org/center-key/fetch-json)
 
 Why would you fetch anything but json? ;)
 
@@ -20,18 +20,18 @@ In a web page:
 ```html
 <script src=fetch-json.min.js></script>
 ```
-or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/browser-fetch-json):
+or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json2):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/browser-fetch-json@0.2/fetch-json.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/fetch-json2@0.2/fetch-json.min.js></script>
 ```
 #### node
 As a module:
 ```shell
-$ npm install browser-fetch-json
+$ npm install fetch-json2
 ```
 Then import with the line:
 ```javascript
-const fetchJson = require('browser-fetch-json');
+const fetchJson = require('fetch-json2');
 ```
 
 ### 2) Examples
@@ -60,7 +60,7 @@ fetchJson.post('https://httpbin.org/post', resource)
 ```
 
 ### 3) Leverages the Fetch API
-**browser-fetch-json** calls the native
+**fetch-json** calls the native
 **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**
 if in a browser and calls
 **[node-fetch](https://www.npmjs.com/package/node-fetch)**
@@ -68,7 +68,7 @@ if running on node.
 
 For comparison, the above POST example to create a planet would be done directly using the **Fetch API** with the code:
 ```javascript
-// Create Jupiter (with Fetch API instead of browser-fetch-json)
+// Create Jupiter (with Fetch API instead of fetch-json)
 const resource = { name: 'Jupiter', position: 5 };
 const options = {
    method: 'POST',
@@ -86,10 +86,10 @@ fetch('https://httpbin.org/post', options)
    .then(handleData)
    .catch(console.error);
 ```
-The examples for **browser-fetch-json** and the **Fetch API** each produce the same output.
+The examples for **fetch-json** and the **Fetch API** each produce the same output.
 
 ### 4) Details
-The **browser-fetch-json** module automatically:
+The **fetch-json** module automatically:
 1. Serializes the body payload with `JSON.stringify()`.
 1. Adds the JSON data type (`'application/json'`) to the HTTP headers.
 1. Builds the URL query string from the `params` object for GET requests.
@@ -98,7 +98,7 @@ The **browser-fetch-json** module automatically:
 1. If the response body is HTML or text, it's converted to JSON (makes it easier to handle HTTP error status codes).
 
 ### 5) API
-The format for using **browser-fetch-json** is:
+The format for using **fetch-json** is:
 #### GET
 ```javascript
 fetchJson.get(url, params, options).then(callback);
@@ -169,7 +169,7 @@ To support really old browsers, include polyfills for
 ```
 
 ### 7) Questions or enhancements
-Feel free to submit an [issue](https://github.com/center-key/browser-fetch-json/issues).
+Feel free to submit an [issue](https://github.com/center-key/fetch-json/issues).
 
 ---
 [MIT License](LICENSE.txt)

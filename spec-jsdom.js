@@ -14,7 +14,7 @@ const fetchJson = window.fetchJson;
 describe('Specification Cases: JSDOM', () => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-describe('Module browser-fetch-json', () => {
+describe('Module fetch-json', () => {
 
    it('loads as an object', () => {
       const actual =   { module: typeof fetchJson };

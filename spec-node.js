@@ -8,7 +8,7 @@ const fetchJson = require('./fetch-json.js');
 describe('Specification Cases: node', () => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-describe('Module browser-fetch-json', () => {
+describe('Module fetch-json', () => {
 
    it('loads as an object', () => {
       const actual =   { module: typeof fetchJson };

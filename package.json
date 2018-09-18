@@ -1,13 +1,13 @@
 {
-   "name": "browser-fetch-json",
+   "name": "fetch-json2",
    "description": "A wrapper around Fetch just for JSON",
    "version": "0.2.2",
    "license": "MIT",
    "main": "fetch-json.js",
-   "repository": "github:center-key/browser-fetch-json",
-   "homepage": "https://github.com/center-key/browser-fetch-json",
-   "bugs": "https://github.com/center-key/browser-fetch-json/issues",
-   "docs": "https://github.com/center-key/browser-fetch-json/blob/master/README.md",
+   "repository": "github:center-key/fetch-json",
+   "homepage": "https://github.com/center-key/fetch-json",
+   "bugs": "https://github.com/center-key/fetch-json/issues",
+   "docs": "https://github.com/center-key/fetch-json/blob/master/README.md",
    "keywords": [
       "browser",
       "fetch",
