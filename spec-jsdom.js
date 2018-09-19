@@ -62,7 +62,7 @@ describe('Google Books API search result for "spacex" fetched by fetchJson.get()
 describe('NASA Astronomy Picture of the Day resource fetched by fetchJson.get()', () => {
 
    it('contains a link to media', (done) => {
-      const url = 'https://api.nasa.gov/planetary/apod';
+      const url =    'https://api.nasa.gov/planetary/apod';
       const params = { api_key: 'DEMO_KEY' };
       function handleData(data) {
          const actual =   { media: typeof data.media_type, url: data.url.match(/..../)[0] };
@@ -101,7 +101,7 @@ describe('GET response returned by httpbin.org', () => {
       });
 
    it('contains the params from an object', (done) => {
-      const url = 'https://httpbin.org/get';
+      const url =    'https://httpbin.org/get';
       const params = { planet: 'Jupiter', position: 5, tip: 'Big & -148°C' };
       function handleData(data) {
          const actual =   data.args;
@@ -113,7 +113,7 @@ describe('GET response returned by httpbin.org', () => {
       });
 
    it('contains the params from both the URL query string and an object', (done) => {
-      const url = 'https://httpbin.org/get?sort=diameter';
+      const url =    'https://httpbin.org/get?sort=diameter';
       const params = { planet: 'Jupiter', position: 5 };
       function handleData(data) {
          const actual =   data.args;
@@ -130,7 +130,7 @@ describe('GET response returned by httpbin.org', () => {
 describe('Response returned by httpbin.org for a planet (object literal)', () => {
 
    it('from a POST contains the planet (JSON)', (done) => {
-      const url = 'https://httpbin.org/post';
+      const url =      'https://httpbin.org/post';
       const resource = { name: 'Mercury', position: 1 };
       function handleData(data) {
          const actual =   { planet: data.json, type: typeof data.json };
@@ -142,7 +142,7 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       });
 
    it('from a PUT contains the planet (JSON)', (done) => {
-      const url = 'https://httpbin.org/put';
+      const url =      'https://httpbin.org/put';
       const resource = { name: 'Venus', position: 2 };
       function handleData(data) {
          const actual =   { planet: data.json, type: typeof data.json };
@@ -154,7 +154,7 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       });
 
    it('from a PATCH contains the planet (JSON)', (done) => {
-      const url = 'https://httpbin.org/patch';
+      const url =      'https://httpbin.org/patch';
       const resource = { name: 'Mars', position: 4 };
       function handleData(data) {
          const actual =   { planet: data.json, type: typeof data.json };
@@ -166,7 +166,7 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       });
 
    it('from a DELETE contains the planet (JSON)', (done) => {
-      const url = 'https://httpbin.org/delete';
+      const url =      'https://httpbin.org/delete';
       const resource = { name: 'Jupiter', position: 5 };
       function handleData(data) {
          const actual =   { planet: data.json, type: typeof data.json };
@@ -183,7 +183,7 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
 describe('The low-level fetchJson.request() function', () => {
 
    it('can successfully GET a planet', (done) => {
-      const url = 'https://httpbin.org/get';
+      const url =    'https://httpbin.org/get';
       const params = { planet: 'Neptune', position: 8 };
       function handleData(data) {
          const actual =   data.args;
@@ -195,7 +195,7 @@ describe('The low-level fetchJson.request() function', () => {
       });
 
    it('can successfully POST a planet', (done) => {
-      const url = 'https://httpbin.org/post';
+      const url =      'https://httpbin.org/post';
       const resource = { name: 'Saturn', position: 6 };
       function handleData(data) {
          const actual =   { planet: data.json, type: typeof data.json };

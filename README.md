@@ -38,11 +38,11 @@ const fetchJson = require('fetch-json2');
 #### HTTP GET
 Fetch the NASA Astronomy Picture of the Day:
 ```javascript
-// NASA APOD
+// NASA APoD
 const url =    'https://api.nasa.gov/planetary/apod';
 const params = { api_key: 'DEMO_KEY' };
 function handleData(data) {
-   console.log('The NASA APOD for today is at: ' + data.url);
+   console.log('The NASA APoD for today is at: ' + data.url);
    }
 fetchJson.get(url, params).then(handleData);
 ```
@@ -58,16 +58,17 @@ fetchJson.post('https://httpbin.org/post', resource)
    .then(handleData)
    .catch(console.error);
 ```
-For more examples calls, see: [spec-node.js](spec-node.js) ([Mocha output](https://travis-ci.org/center-key/fetch-json))
+For more examples, see code for Mocha specification cases at: [spec-node.js](spec-node.js) ([output](https://travis-ci.org/center-key/fetch-json))
 
-### 3) Leverages the Fetch API
+### 3) Leverages the Fetch API and node-fetch
 **fetch-json** calls the native
 **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**
 if in a browser and calls
 **[node-fetch](https://www.npmjs.com/package/node-fetch)**
 if running on node.
 
-For comparison, the above POST example to create a planet would be done directly using the **Fetch API** with the code:
+For comparison, the above POST example to create a planet would be done calling the **Fetch API**
+directly with the code:
 ```javascript
 // Create Jupiter (with Fetch API instead of fetch-json)
 const resource = { name: 'Jupiter', position: 5 };
@@ -124,7 +125,7 @@ Notes:
 1. Only the `url` parameter is required.&nbsp; The other parameters are optional.
 1. The `params` object for `fetchJson.get()` is converted into a query string and appended to the `url`.
 1. The `resource` object is turned into the body of the HTTP request.
-1. The `options` parameter is passed through to the **Fetch API** (see the MDN **Fetch API** documentation for supported **[`init` options](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters)**).
+1. The `options` parameter is passed through to the **Fetch API** (see the `init` [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters)).
 
 #### Dynamic HTTP method
 If you need to programmatically set the method, use the format:
