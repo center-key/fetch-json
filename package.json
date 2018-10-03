@@ -1,5 +1,5 @@
 {
-   "name": "fetch-json2",
+   "name": "fetch-json",
    "description": "A wrapper around Fetch just for JSON",
    "version": "2.1.0",
    "license": "MIT",
