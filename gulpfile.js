@@ -15,7 +15,7 @@ const pkg = require('./package.json');
 const banner = [
    `//! fetch-json v${pkg.version}\n`,
    `//! ${pkg.description}\n`,
-   `//! ${pkg.license} License -- ${pkg.homepage}\n`
+   `//! ${pkg.homepage} -- ${pkg.license} License\n`
    ];
 const transpileES6 =   ['@babel/env', { modules: false }];
 
@@ -43,4 +43,5 @@ const task = {
       }
    };
 
+// Gulp
 gulp.task('build', task.build);

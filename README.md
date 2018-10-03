@@ -6,7 +6,7 @@ _A wrapper around Fetch just for JSON_
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/fetch-json/blob/master/LICENSE.txt)
 &nbsp;
-[![npm](https://img.shields.io/npm/v/fetch-json2.svg)](https://www.npmjs.com/package/fetch-json2)
+[![npm](https://img.shields.io/npm/v/fetch-json.svg)](https://www.npmjs.com/package/fetch-json)
 &nbsp;
 [![Known Vulnerabilities](https://snyk.io/test/github/center-key/fetch-json/badge.svg)](https://snyk.io/test/github/center-key/fetch-json)
 &nbsp;
@@ -20,18 +20,18 @@ In a web page:
 ```html
 <script src=fetch-json.min.js></script>
 ```
-or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json2):
+or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/fetch-json2@0.3/fetch-json.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/fetch-json@2.1/fetch-json.min.js></script>
 ```
 #### node
 As a module:
 ```shell
-$ npm install fetch-json2
+$ npm install fetch-json
 ```
-Then import with the line:
+then import with the line:
 ```javascript
-const fetchJson = require('fetch-json2');
+const fetchJson = require('fetch-json');
 ```
 
 ### 2) Examples
@@ -52,7 +52,7 @@ Create a resource for the planet Jupiter:
 // Create Jupiter
 const resource = { name: 'Jupiter', position: 5 };
 function handleData(data) {
-   console.log(data);  //HTTP response body as an object literal
+   console.log(data);  //http response body as an object literal
    }
 fetchJson.post('https://httpbin.org/post', resource)
    .then(handleData)
@@ -81,7 +81,7 @@ const options = {
    body: JSON.stringify(resource)
    };
 function handleData(data) {
-   console.log(data);  //HTTP response body as an object literal
+   console.log(data);  //http response body as an object literal
    }
 fetch('https://httpbin.org/post', options)
    .then(response => response.json())
@@ -167,7 +167,7 @@ To support really old browsers, include polyfills for
 [Fetch API](https://github.com/github/fetch):
 ```html
 <script src=https://cdn.jsdelivr.net/npm/promise-polyfill@8.1/dist/polyfill.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@2.0/fetch.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0/dist/fetch.umd.min.js></script>
 ```
 
 ### 7) Questions or enhancements
