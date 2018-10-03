@@ -19,10 +19,10 @@
       "post",
       "rest"
    ],
-   "author": {
-      "name": "Center Key",
-      "url": "https://centerkey.com"
-   },
+   "contributors": [
+      "KahWee Teng (https://twitter.com/kahwee)",
+      "Dem Pilafian (https://twitter.com/dempilafian)"
+   ],
    "eslintConfig": {
       "extends": "eslint:recommended",
       "env": {
