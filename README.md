@@ -14,8 +14,8 @@ _A wrapper around Fetch just for JSON_
 
 Why would you fetch anything but json? ;)
 
-### 1) Setup
-#### Browser
+## 1) Setup
+### Browser
 In a web page:
 ```html
 <script src=fetch-json.min.js></script>
@@ -24,18 +24,18 @@ or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ```html
 <script src=https://cdn.jsdelivr.net/npm/fetch-json@2.1/fetch-json.min.js></script>
 ```
-#### node
+### node
 As a module:
 ```shell
 $ npm install fetch-json
 ```
-then import with the line:
+and then import:
 ```javascript
 const fetchJson = require('fetch-json');
 ```
 
-### 2) Examples
-#### HTTP GET
+## 2) Examples
+### HTTP GET
 Fetch the NASA Astronomy Picture of the Day:
 ```javascript
 // NASA APoD
@@ -46,7 +46,7 @@ function handleData(data) {
    }
 fetchJson.get(url, params).then(handleData);
 ```
-#### HTTP POST
+### HTTP POST
 Create a resource for the planet Jupiter:
 ```javascript
 // Create Jupiter
@@ -58,12 +58,13 @@ fetchJson.post('https://httpbin.org/post', resource)
    .then(handleData)
    .catch(console.error);
 ```
-For more examples, see code for Mocha specification cases at: [spec-node.js](spec-node.js) ([output](https://travis-ci.org/center-key/fetch-json))
+For more examples, see the Mocha specification cases:<br>
+[spec-node.js](spec-node.js) ([Mocha output on Travis CI](https://travis-ci.org/center-key/fetch-json))
 
-### 3) Leverages the Fetch API and node-fetch
+## 3) Leverages the Fetch API and node-fetch
 **fetch-json** calls the native
 **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**
-if in a browser and calls
+if in a web browser and calls
 **[node-fetch](https://www.npmjs.com/package/node-fetch)**
 if running on node.
 
@@ -90,7 +91,7 @@ fetch('https://httpbin.org/post', options)
 ```
 The examples for **fetch-json** and the **Fetch API** each produce the same output.
 
-### 4) Details
+## 4) Details
 The **fetch-json** module automatically:
 1. Serializes the body payload with `JSON.stringify()`.
 1. Adds the JSON data type (`'application/json'`) to the HTTP headers.
@@ -99,25 +100,25 @@ The **fetch-json** module automatically:
 1. Sets `credentials` to `'same-origin'` to support user sessions for frameworks/servers such as Grails, Rails, PHP, Flask, etc.
 1. If the response body is HTML or text, it's converted to JSON (makes it easier to handle HTTP error status codes).
 
-### 5) API
+## 5) API
 The format for using **fetch-json** is:
-#### GET
+### GET
 ```javascript
 fetchJson.get(url, params, options).then(callback);
 ```
-#### POST
+### POST
 ```javascript
 fetchJson.post(url, resource, options).then(callback);
 ```
-#### PUT
+### PUT
 ```javascript
 fetchJson.put(url, resource, options).then(callback);
 ```
-#### PATCH
+### PATCH
 ```javascript
 fetchJson.patch(url, resource, options).then(callback);
 ```
-#### DELETE
+### DELETE
 ```javascript
 fetchJson.delete(url, resource, options).then(callback);
 ```
@@ -127,7 +128,7 @@ Notes:
 1. The `resource` object is turned into the body of the HTTP request.
 1. The `options` parameter is passed through to the **Fetch API** (see the `init` [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters)).
 
-#### Dynamic HTTP method
+### Dynamic HTTP method
 If you need to programmatically set the method, use the format:
 ```javascript
 fetchJson.request(method, url, data, options).then(callback);
@@ -135,7 +136,7 @@ fetchJson.request(method, url, data, options).then(callback);
 Where `method` is `'GET'`, `'POST'`, `'PUT'`, `'PATCH'`, or `'DELETE'`, and `data` represents
 either `params` or `resource`.
 
-#### Logging
+### Logging
 Enable basic logging to the console with:
 ```javascript
 fetchJson.enableLogger();
@@ -145,7 +146,7 @@ Pass in a function to use a custom logger or pass in `false` to disable logging.
 The default console output looks like:<br>
 `2018-09-12T07:20:12.372Z – "GET" – "https://api.nasa.gov/planetary/apod"`
 
-#### Text to JSON
+### Text to JSON
 If the HTTP response body is not JSON (`Content-Type` is not `"application/json"` or `"text/javascript"`), an object containing the body as a string in the `bodyText` field is created and passed on through the promise.&nbsp; In addition to the `bodyText` field, the object
 will have the fields: `ok`, `status`, `statusText`, and `contentType`.
 
@@ -161,7 +162,7 @@ similar to:
 }
 ```
 
-### 6) Legacy web browsers
+## 6) Legacy web browsers
 To support really old browsers, include polyfills for
 [Promise](https://github.com/taylorhakes/promise-polyfill/) and
 [Fetch API](https://github.com/github/fetch):
@@ -170,8 +171,10 @@ To support really old browsers, include polyfills for
 <script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0/dist/fetch.umd.min.js></script>
 ```
 
-### 7) Questions or enhancements
+## 7) Questions or enhancements
 Feel free to submit an [issue](https://github.com/center-key/fetch-json/issues).
+
+_"Stop trying to make fetch happen without fetch-json!"_
 
 ---
 [MIT License](LICENSE.txt)
