@@ -174,7 +174,7 @@ To support really old browsers, include polyfills for
 ## 7) Questions or enhancements
 Feel free to submit an [issue](https://github.com/center-key/fetch-json/issues).
 
-_"Stop trying to make fetch happen without fetch-json!"_
+_"Stop trying to make fetch happen without [#fetchJson](https://twitter.com/hashtag/fetchJson)!"_
 
 ---
 [MIT License](LICENSE.txt)
