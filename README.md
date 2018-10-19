@@ -27,7 +27,7 @@ or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ### node
 As a module:
 ```shell
-$ npm install fetch-json
+$ npm install node-fetch fetch-json
 ```
 and then import:
 ```javascript
