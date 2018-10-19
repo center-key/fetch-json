@@ -2,7 +2,7 @@
 //! A wrapper around Fetch just for JSON
 //! https://github.com/center-key/fetch-json -- MIT License
 
-const fetch = typeof window === 'object' ? window.fetch : require('node-fetch');
+const fetch = typeof window === 'object' && window.fetch || require('node-fetch');
 
 const fetchJson = {
    version: '2.1.0',
@@ -59,5 +59,5 @@ const fetchJson = {
 
 if (typeof module === 'object')
    module.exports = fetchJson;  //Node.js module loading system (CommonJS)
-else if (typeof window === 'object')
+if (typeof window === 'object')
    window.fetchJson = fetchJson;  //support both global and window property
