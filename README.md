@@ -170,6 +170,9 @@ To support really old browsers, include polyfills for
 <script src=https://cdn.jsdelivr.net/npm/promise-polyfill@8.1/dist/polyfill.min.js></script>
 <script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0/dist/fetch.umd.min.js></script>
 ```
+**Note:** JSDOM does not include `fetch`, so you need to add a polyfill (see usage of `whatwg-fetch` in
+[spec-jsdom.js](spec-jsdom.js) and
+[gulpfile.js](https://github.com/dnajs/data-dashboard/blob/master/gulpfile.js).
 
 ## 7) Questions or enhancements
 Feel free to submit an [issue](https://github.com/center-key/fetch-json/issues).
