@@ -4,13 +4,13 @@
 
 _A wrapper around Fetch just for JSON_
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/fetch-json/blob/master/LICENSE.txt)
+[![License:MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/fetch-json/blob/master/LICENSE.txt)
 &nbsp;
 [![npm](https://img.shields.io/npm/v/fetch-json.svg)](https://www.npmjs.com/package/fetch-json)
 &nbsp;
-[![Known Vulnerabilities](https://snyk.io/test/github/center-key/fetch-json/badge.svg)](https://snyk.io/test/github/center-key/fetch-json)
+[![Vulnerabilities](https://snyk.io/test/github/center-key/fetch-json/badge.svg)](https://snyk.io/test/github/center-key/fetch-json)
 &nbsp;
-[![Build Status](https://travis-ci.org/center-key/fetch-json.svg)](https://travis-ci.org/center-key/fetch-json)
+[![Build](https://travis-ci.org/center-key/fetch-json.svg)](https://travis-ci.org/center-key/fetch-json)
 
 Why would you fetch anything but json? ;)
 
