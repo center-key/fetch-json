@@ -22,11 +22,12 @@ const transpileES6 =   ['@babel/env', { modules: false }];
 // Tasks
 const task = {
    build: function() {
+      const semVerPattern = /\d+[.]\d+[.]\d+/g;
       function updateBanner() {
          return gulp.src('fetch-json.js')
             .pipe(replace(/\/\/!.*\n/g, ''))
+            .pipe(replace(semVerPattern, pkg.version))
             .pipe(header(banner.join('')))
-            .pipe(replace(/'\d[.]\d[.]\d'/, `'${pkg.version}'`))
             .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('.'));
          }
@@ -35,7 +36,7 @@ const task = {
             .pipe(rename({ extname: '.min.js' }))
             .pipe(babel({ presets: [transpileES6, 'minify'] }))
             .pipe(header(banner[0] + banner[2]))
-            .pipe(replace(/'\d[.]\d[.]\d'/, `'${pkg.version}'`))
+            .pipe(replace(semVerPattern, pkg.version))
             .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('.'));
          }
