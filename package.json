@@ -62,7 +62,7 @@
       "gulp-rename": "~1.4",
       "gulp-replace": "~1.0",
       "gulp-size": "~3.0",
-      "jsdom": "~12.2",
+      "jsdom": "~13.0",
       "merge-stream": "~1.0",
       "mocha": "~5.2",
       "node-fetch": "~2.2",
