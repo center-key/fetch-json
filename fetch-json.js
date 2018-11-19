@@ -58,6 +58,6 @@ const fetchJson = {
    };
 
 if (typeof module === 'object')
-   module.exports = fetchJson;  //Node.js module loading system (CommonJS)
+   module.exports = fetchJson;  //node module loading system (CommonJS)
 if (typeof window === 'object')
    window.fetchJson = fetchJson;  //support both global and window property

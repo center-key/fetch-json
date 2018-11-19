@@ -34,7 +34,7 @@ const task = {
       function minify() {
          return gulp.src('fetch-json.js')
             .pipe(rename({ extname: '.min.js' }))
-            .pipe(babel({ presets: [transpileES6, 'minify'] }))
+            .pipe(babel({ presets: [transpileES6, 'minify'], comments: false }))
             .pipe(header(banner[0] + banner[2]))
             .pipe(replace(semVerPattern, pkg.version))
             .pipe(size({ showFiles: true }))
