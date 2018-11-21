@@ -54,7 +54,7 @@
       "@babel/core": "~7.1",
       "@babel/preset-env": "~7.1",
       "ajv": "~6.5",
-      "eslint": "~5.8",
+      "eslint": "~5.9",
       "gulp": "~4.0",
       "gulp-babel": "~8.0",
       "gulp-babel-minify": "~0.5",
@@ -65,7 +65,7 @@
       "jsdom": "~13.0",
       "merge-stream": "~1.0",
       "mocha": "~5.2",
-      "node-fetch": "~2.2",
+      "node-fetch": "~2.3",
       "promise-polyfill": "~8.1",
       "whatwg-fetch": "~3.0"
    }
