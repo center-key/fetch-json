@@ -1,5 +1,5 @@
 // Mocha Specification Cases
-// Run cases in jsdom headless web browser
+// Run specification cases in jsdom (a headless web browser)
 
 // Imports
 const assert =    require('assert');

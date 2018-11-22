@@ -1,11 +1,11 @@
 #!/bin/bash
-# Spec Runner
+# Execute specification cases
 
 # To make this file runnable:
 #     $ chmod +x *.sh.command
 
 banner="fetch-json"
-projectHome=$(cd $(dirname $0); pwd)
+projectHome=$(cd $(dirname $0)/..; pwd)
 
 setupTools() {
    # Check for Node.js installation and download project dependencies

@@ -1,5 +1,5 @@
 // Mocha Specification Cases
-// Run cases on node
+// Run specification cases on a node server
 
 // Imports
 const assert = require('assert');
