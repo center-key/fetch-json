@@ -44,10 +44,10 @@
       }
    },
    "scripts": {
-      "lint": "eslint gulpfile.js spec-*.js fetch-json.js",
+      "lint": "eslint gulpfile.js spec/*.js fetch-json.js",
       "pretest": "npm run lint && gulp build",
-      "test": "mocha --timeout 10000 spec-*.js",
-      "quick": "npm run lint && mocha --bail spec-node.js"
+      "test": "mocha --timeout 10000 spec/*.js",
+      "quick": "npm run lint && mocha --bail spec/node.js"
    },
    "dependencies": {},
    "devDependencies": {

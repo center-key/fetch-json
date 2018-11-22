@@ -1,17 +1,12 @@
 // Mocha Specification Cases
+// Run cases on node
 
 // Imports
-const fs =        require('fs');
-const assert =    require('assert');
-const { JSDOM } = require('jsdom');
+const assert = require('assert');
 
-// Setup
-const scripts = ['node_modules/whatwg-fetch/dist/fetch.umd.js', './fetch-json.min.js'];
-const window = new JSDOM('', { runScripts: 'outside-only' }).window;
-function loadScript(file) { window.eval(fs.readFileSync(file).toString()); }
-scripts.forEach(loadScript);
-const fetchJson = window.fetchJson;
-describe('Specification Cases: JSDOM (fetch-json.min.js)', () => {
+//Setup
+const fetchJson = require('../fetch-json.js');
+describe('Specification Cases: node (fetch-json.js)', () => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Module fetch-json', () => {
