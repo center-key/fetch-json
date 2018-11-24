@@ -5,11 +5,8 @@
 _A wrapper around Fetch just for JSON_
 
 [![License:MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/fetch-json/blob/master/LICENSE.txt)
-&nbsp;
 [![npm](https://img.shields.io/npm/v/fetch-json.svg)](https://www.npmjs.com/package/fetch-json)
-&nbsp;
 [![Vulnerabilities](https://snyk.io/test/github/center-key/fetch-json/badge.svg)](https://snyk.io/test/github/center-key/fetch-json)
-&nbsp;
 [![Build](https://travis-ci.org/center-key/fetch-json.svg)](https://travis-ci.org/center-key/fetch-json)
 
 Why would you fetch anything but json? ;)
@@ -146,9 +143,13 @@ Pass in a function to use a custom logger or pass in `false` to disable logging.
 The default console output looks like:<br>
 `2018-09-12T07:20:12.372Z – "GET" – "https://api.nasa.gov/planetary/apod"`
 
-### Text to JSON
-If the HTTP response body is not JSON (`Content-Type` is not `"application/json"` or `"text/javascript"`), an object containing the body as a string in the `bodyText` field is created and passed on through the promise.&nbsp; In addition to the `bodyText` field, the object
-will have the fields: `ok`, `status`, `statusText`, and `contentType`.
+## 6) Response text converted to JSON
+The HTTP response body is considered to be JSON if the `Content-Type` is `"application/json"` or
+`"text/javascript"`.  If the HTTP response body is not JSON, an object containing the body as a
+string in the `bodyText` field is created and passed on through the promise.
+
+In addition to the `bodyText` field, the object will have the fields: `ok`, `status`, `statusText`,
+and `contentType`.
 
 For example, an HTTP response for an error status of 500 would be converted to an object
 similar to:
@@ -161,8 +162,10 @@ similar to:
    bodyText:    '<!doctype html><html><body>Server Error</body></html>'
 }
 ```
+With **fetch-json**, you know the response body will always be passed back to you as a simple
+object literal.
 
-## 6) Legacy web browsers
+## 7) Legacy web browsers
 To support really old browsers, include polyfills for
 [Promise](https://github.com/taylorhakes/promise-polyfill/) and
 [Fetch API](https://github.com/github/fetch):
@@ -170,11 +173,12 @@ To support really old browsers, include polyfills for
 <script src=https://cdn.jsdelivr.net/npm/promise-polyfill@8.1/dist/polyfill.min.js></script>
 <script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0/dist/fetch.umd.min.js></script>
 ```
-**Note:** JSDOM does not include `fetch`, so you need to add a polyfill (see usage of `whatwg-fetch` in
+**Note:**
+JSDOM does not include `fetch`, so you need to add a polyfill (see usage of `whatwg-fetch` in
 [spec-jsdom.js](spec-jsdom.js) and
 [gulpfile.js](https://github.com/dnajs/data-dashboard/blob/master/gulpfile.js).
 
-## 7) Questions or enhancements
+## 8) Questions or enhancements
 Feel free to submit an [issue](https://github.com/center-key/fetch-json/issues).
 
 _"Stop trying to make fetch happen without [#fetchJson](https://twitter.com/hashtag/fetchJson)!"_
