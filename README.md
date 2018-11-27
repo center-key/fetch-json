@@ -49,7 +49,7 @@ Create a resource for the planet Jupiter:
 // Create Jupiter
 const resource = { name: 'Jupiter', position: 5 };
 function handleData(data) {
-   console.log(data);  //http response body as an object literal
+   console.log('Planet:', data);  //http response body as an object literal
    }
 fetchJson.post('https://httpbin.org/post', resource)
    .then(handleData)
@@ -89,33 +89,34 @@ fetch('https://httpbin.org/post', options)
 The examples for **fetch-json** and the **Fetch API** each produce the same output.
 
 ## 4) Details
-The **fetch-json** module automatically:
-1. Serializes the body payload with `JSON.stringify()`.
-1. Adds the JSON data type (`'application/json'`) to the HTTP headers.
-1. Builds the URL query string from the `params` object for GET requests.
-1. Runs `.json()` on the response from the promise.
-1. Sets `credentials` to `'same-origin'` to support user sessions for frameworks/servers such as Grails, Rails, PHP, Flask, etc.
-1. If the response body is HTML or text, it's converted to JSON (makes it easier to handle HTTP error status codes).
+**fetch-json** makes REST easy &mdash; it automatically:
+1. Serializes the body payload with `JSON.stringify()`
+1. Adds the HTTP header for `'application/json' data type`
+1. Appends the GET `params` object items to the URL
+1. Runs `.json()` on the response
+1. Sets `credentials` to `'same-origin'` (support user sessions in Grails, Rails, PHP, Flask, etc.)
+1. Converts text responses into JSON (convenient for HTTP errors)
 
 ## 5) API
+### API - HTTP Request
 The format for using **fetch-json** is:
-### GET
+#### GET
 ```javascript
 fetchJson.get(url, params, options).then(callback);
 ```
-### POST
+#### POST
 ```javascript
 fetchJson.post(url, resource, options).then(callback);
 ```
-### PUT
+#### PUT
 ```javascript
 fetchJson.put(url, resource, options).then(callback);
 ```
-### PATCH
+#### PATCH
 ```javascript
 fetchJson.patch(url, resource, options).then(callback);
 ```
-### DELETE
+#### DELETE
 ```javascript
 fetchJson.delete(url, resource, options).then(callback);
 ```
@@ -125,7 +126,7 @@ Notes:
 1. The `resource` object is turned into the body of the HTTP request.
 1. The `options` parameter is passed through to the **Fetch API** (see the `init` [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters)).
 
-### Dynamic HTTP method
+#### Dynamic HTTP method
 If you need to programmatically set the method, use the format:
 ```javascript
 fetchJson.request(method, url, data, options).then(callback);
@@ -133,7 +134,7 @@ fetchJson.request(method, url, data, options).then(callback);
 Where `method` is `'GET'`, `'POST'`, `'PUT'`, `'PATCH'`, or `'DELETE'`, and `data` represents
 either `params` or `resource`.
 
-### Logging
+### API - Logging
 Enable basic logging to the console with:
 ```javascript
 fetchJson.enableLogger();
