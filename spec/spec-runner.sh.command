@@ -31,6 +31,7 @@ releaseInstructions() {
    version=v$(grep '"version"' package.json | awk -F'"' '{print $4}')
    pushed=v$(curl --silent $package | grep '"version":' | awk -F'"' '{print $4}')
    released=$(git tag | tail -1)
+   minorVersion=$(echo ${pushed:1} | awk -F"." '{ print $1 "." $2 }')
    echo "Local changes:"
    git status --short
    echo
@@ -69,6 +70,13 @@ releaseInstructions() {
    echo
    }
 
+updateCdnVersion() {
+   cd $projectHome
+   updateVersion="s|fetch-json@[.0-9]*|fetch-json@$minorVersion|"
+   sed -i "" $updateVersion README.md
+   sed -i "" $updateVersion docs/index.html
+   }
+
 runSpecs() {
    cd $projectHome
    echo "Run specifications:"
@@ -78,4 +86,5 @@ runSpecs() {
 
 setupTools
 releaseInstructions
+updateCdnVersion
 runSpecs
