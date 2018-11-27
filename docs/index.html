@@ -1,0 +1,66 @@
+<!doctype html>
+<!-- - - - - - - -->
+<!-- fetch-json  -->
+<!-- - - - - - - -->
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>fetch-json &bull; A wrapper around Fetch just for JSON</title>
+<link rel=icon       href=https://centerkey.com/graphics/bookmark.png>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.3/css/all.min.css>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/dna.js@1.4/dna.css>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/web-ignition@1.0/dist/reset.min.css>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/web-ignition@1.0/dist/layouts/letterbox.css>
+<style>
+   html { background-image: url(examples.png); }
+   body >main >section:first-child h2 { text-transform: none; }
+   body >main >section:first-child nav { margin-bottom: 30px; }
+   body >main >section ol { max-width: 600px; text-align: left; padding-left: 100px; margin: 0px auto 30px auto; }
+</style>
+</head>
+<body>
+
+<main>
+   <section>
+      <h1>fetch-json v<span class=version-number></span></h1>
+      <h2>A wrapper around Fetch just for JSON</h2>
+      <nav>
+         <a href=https://github.com/center-key/fetch-json/blob/master/LICENSE.txt><img src=https://img.shields.io/badge/License-MIT-blue.svg alt=license></a>
+         <a href=https://www.npmjs.com/package/fetch-json><img src=https://img.shields.io/npm/v/fetch-json.svg alt=npm></a>
+         <a href=https://snyk.io/test/github/center-key/fetch-json><img src=https://snyk.io/test/github/center-key/fetch-json/badge.svg alt=vulnerabilities></a>
+         <a href=https://travis-ci.org/center-key/fetch-json><img src=https://travis-ci.org/center-key/fetch-json.svg alt=build></a>
+      </nav>
+      <div>
+         <p>
+            <i>Why would you fetch anything but json? ;)</i>
+         </p>
+         <p>
+            <b>fetch-json</b> makes REST easy &mdash; it automatically:
+         </p>
+         <ol>
+            <li>Serializes the body payload with <code>JSON.stringify()</code></li>
+            <li>Adds the HTTP header for <code>'application/json'</code> data type</code></li>
+            <li>Appends the GET <code>params</code> object items to the URL</li>
+            <li>Runs <code>.json()</code> on the response</li>
+            <li>Sets <code>credentials</code> to <code>'same-origin'</code></li>
+            <li>Converts text responses into JSON (convenient for HTTP errors)</li>
+         </ol>
+         <p>
+            Fork it:<br>
+            <a href=https://github.com/center-key/fetch-json><i data-brand=github-alt></i></a>
+         </p>
+         <p class=plain>
+            <small><a href=https://center-key.github.io/fetch-json>https://center-key.github.io/fetch-json</a></small>
+         </p>
+      </div>
+   </section>
+</main>
+
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.3/dist/jquery.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/dna.js@1.4/dna.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/web-ignition@1.0/dist/library.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/fetch-json@2.1/fetch-json.min.js></script>
+<script>$('.version-number').text(fetchJson.version);</script>
+</body>
+</html>
