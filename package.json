@@ -45,7 +45,7 @@
       }
    },
    "scripts": {
-      "lint": "eslint gulpfile.js spec/*.js fetch-json.js",
+      "lint": "eslint gulpfile.js spec/*.js docs/*.js fetch-json.js",
       "pretest": "npm run lint && gulp build",
       "test": "mocha --timeout 10000 spec/*.js",
       "quick": "npm run lint && mocha --bail spec/node.js"
@@ -54,7 +54,9 @@
    "devDependencies": {
       "@babel/core": "~7.1",
       "@babel/preset-env": "~7.1",
+      "@fortawesome/fontawesome-free": "~5.5",
       "ajv": "~6.5",
+      "dna.js": "~1.4",
       "eslint": "~5.9",
       "gulp": "~4.0",
       "gulp-babel": "~8.0",
@@ -63,11 +65,13 @@
       "gulp-rename": "~1.4",
       "gulp-replace": "~1.0",
       "gulp-size": "~3.0",
+      "jquery": "~3.3",
       "jsdom": "~13.0",
       "merge-stream": "~1.0",
       "mocha": "~5.2",
       "node-fetch": "~2.3",
       "promise-polyfill": "~8.1",
+      "web-ignition": "~1.0",
       "whatwg-fetch": "~3.0"
    }
 }
