@@ -17,30 +17,31 @@ const banner = [
    `//! ${pkg.description}\n`,
    `//! ${pkg.homepage} -- ${pkg.license} License\n`
    ];
-const transpileES6 =   ['@babel/env', { modules: false }];
+const transpileES6 = ['@babel/env', { modules: false }];
+const minify =       { presets: [transpileES6, 'minify'], comments: false };
 
 // Tasks
 const task = {
-   build: function() {
+   build: () => {
       const semVerPattern = /\d+[.]\d+[.]\d+/g;
-      function updateBanner() {
+      const updateBanner = () => {
          return gulp.src('fetch-json.js')
             .pipe(replace(/\/\/!.*\n/g, ''))
             .pipe(replace(semVerPattern, pkg.version))
             .pipe(header(banner.join('')))
             .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('.'));
-         }
-      function minify() {
+         };
+      const minifyJs = () => {
          return gulp.src('fetch-json.js')
             .pipe(rename({ extname: '.min.js' }))
-            .pipe(babel({ presets: [transpileES6, 'minify'], comments: false }))
+            .pipe(babel(minify))
             .pipe(header(banner[0] + banner[2]))
             .pipe(replace(semVerPattern, pkg.version))
             .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('.'));
-         }
-      return mergeStream(updateBanner(), minify());
+         };
+      return mergeStream(updateBanner(), minifyJs());
       }
    };
 

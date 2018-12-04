@@ -4,6 +4,7 @@
    "version": "2.1.2",
    "license": "MIT",
    "main": "fetch-json.js",
+   "browser": "fetch-json.min.js",
    "repository": "github:center-key/fetch-json",
    "homepage": "https://github.com/center-key/fetch-json",
    "bugs": "https://github.com/center-key/fetch-json/issues",
@@ -24,40 +25,31 @@
       "post",
       "rest"
    ],
-   "eslintConfig": {
-      "extends": "eslint:recommended",
-      "env": {
-         "es6": true,
-         "browser": true,
-         "node": true,
-         "mocha": true
-      },
-      "rules": {
-         "no-console": "off",
-         "quotes": [
-            "warn",
-            "single"
-         ],
-         "semi": [
-            "warn",
-            "always"
-         ]
+   "jshintConfig": {
+      "esversion": 6,
+      "strict": "implied",
+      "undef": true,
+      "unused": true,
+      "browser": true,
+      "mocha": true,
+      "node": true,
+      "globals": {
+         "fetch": true,
+         "window": true
       }
    },
    "scripts": {
-      "lint": "eslint gulpfile.js spec/*.js docs/*.js fetch-json.js",
+      "lint": "jshint gulpfile.js spec/*.js docs/*.js fetch-json.js",
       "pretest": "npm run lint && gulp build",
       "test": "mocha --timeout 10000 spec/*.js",
       "quick": "npm run lint && mocha --bail spec/node.js"
    },
    "dependencies": {},
    "devDependencies": {
-      "@babel/core": "~7.1",
-      "@babel/preset-env": "~7.1",
+      "@babel/core": "~7.2",
+      "@babel/preset-env": "~7.2",
       "@fortawesome/fontawesome-free": "~5.5",
-      "ajv": "~6.5",
-      "dna.js": "~1.4",
-      "eslint": "~5.9",
+      "dna.js": "~1.5",
       "gulp": "~4.0",
       "gulp-babel": "~8.0",
       "gulp-babel-minify": "~0.5",
@@ -67,6 +59,7 @@
       "gulp-size": "~3.0",
       "jquery": "~3.3",
       "jsdom": "~13.0",
+      "jshint": "~2.9",
       "merge-stream": "~1.0",
       "mocha": "~5.2",
       "node-fetch": "~2.3",
