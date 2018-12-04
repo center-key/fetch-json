@@ -98,7 +98,7 @@ The examples for **fetch-json** and the **Fetch API** each produce the same outp
 1. Converts text responses into JSON (convenient for HTTP errors)
 
 ## 5) API
-### API - HTTP Request
+### API &mdash; HTTP Request
 The format for using **fetch-json** is:
 #### GET
 ```javascript
@@ -134,7 +134,7 @@ fetchJson.request(method, url, data, options).then(callback);
 Where `method` is `'GET'`, `'POST'`, `'PUT'`, `'PATCH'`, or `'DELETE'`, and `data` represents
 either `params` or `resource`.
 
-### API - Logging
+### API &mdash; Logging
 Enable basic logging to the console with:
 ```javascript
 fetchJson.enableLogger();
