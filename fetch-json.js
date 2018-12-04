@@ -1,11 +1,9 @@
-//! fetch-json v2.1.3
-//! A wrapper around Fetch just for JSON
-//! https://github.com/center-key/fetch-json -- MIT License
+// fetch-json -- MIT License
 
 const fetch = typeof window === 'object' && window.fetch || require('node-fetch');
 
 const fetchJson = {
-   version: '2.1.3',
+   version: '[VERSION]',
    request: function(method, url, data, options) {
       const settings = { method: method.toUpperCase(), credentials: 'same-origin' };
       options = Object.assign(settings, options);

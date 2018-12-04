@@ -3,49 +3,39 @@
 
 // Imports
 const babel =       require('gulp-babel');
+const gap =         require('gulp-append-prepend');
 const gulp =        require('gulp');
 const header =      require('gulp-header');
-const mergeStream = require('merge-stream');
 const replace =     require('gulp-replace');
 const rename =      require('gulp-rename');
 const size =        require('gulp-size');
 
 // Setup
-const pkg = require('./package.json');
-const banner = [
-   `//! fetch-json v${pkg.version}\n`,
-   `//! ${pkg.description}\n`,
-   `//! ${pkg.homepage} -- ${pkg.license} License\n`
-   ];
-const transpileES6 = ['@babel/env', { modules: false }];
-const minify =       { presets: [transpileES6, 'minify'], comments: false };
+const pkg =            require('./package.json');
+const home =           pkg.homepage.replace('https://', '');
+const banner =         '//! fetch-json v' + pkg.version + ' -- ' + home + ' -- MIT License\n';
+const headerComments = /^[/][/].*\n/gm;
+const transpileES6 =   ['@babel/env', { modules: false }];
+const babelMinifyJs =  { presets: [transpileES6, 'minify'], comments: false };
 
 // Tasks
 const task = {
-   build: () => {
-      const semVerPattern = /\d+[.]\d+[.]\d+/g;
-      const updateBanner = () => {
-         return gulp.src('fetch-json.js')
-            .pipe(replace(/\/\/!.*\n/g, ''))
-            .pipe(replace(semVerPattern, pkg.version))
-            .pipe(header(banner.join('')))
-            .pipe(size({ showFiles: true }))
-            .pipe(gulp.dest('.'))
-            .pipe(gulp.dest('dist'));
-         };
-      const minifyJs = () => {
-         return gulp.src('fetch-json.js')
-            .pipe(rename({ extname: '.min.js' }))
-            .pipe(babel(minify))
-            .pipe(header(banner[0] + banner[2]))
-            .pipe(replace(semVerPattern, pkg.version))
-            .pipe(size({ showFiles: true }))
-            .pipe(gulp.dest('.'))
-            .pipe(gulp.dest('dist'));
-         };
-      return mergeStream(updateBanner(), minifyJs());
+   buildDistribution: () => {
+      return gulp.src('fetch-json.js')
+         .pipe(replace(headerComments, ''))
+         .pipe(header(banner))
+         .pipe(replace('[VERSION]', pkg.version))
+         .pipe(size({ showFiles: true }))
+         .pipe(gulp.dest('dist'))
+         .pipe(babel(babelMinifyJs))
+         .pipe(rename({ extname: '.min.js' }))
+         .pipe(header(banner))
+         .pipe(gap.appendText('\n'))
+         .pipe(size({ showFiles: true }))
+         .pipe(gulp.dest('dist'));
       }
    };
 
 // Gulp
 gulp.task('build', task.build);
+gulp.task('build-dist', task.buildDistribution);

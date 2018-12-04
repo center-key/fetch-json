@@ -7,7 +7,7 @@
 //    $ node docs/examples.js
 
 // Setup
-const fetchJson = require('../fetch-json.js');
+const fetchJson = require('../dist/fetch-json.js');
 fetchJson.enableLogger();
 
 // Intro

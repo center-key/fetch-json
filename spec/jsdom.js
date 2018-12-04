@@ -19,6 +19,13 @@ describe('Specification Cases: JSDOM (dist/fetch-json.min.js)', () => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Module fetch-json', () => {
 
+   it('follows semantic versioning', () => {
+      const semVerPattern = /\d+[.]\d+[.]\d+/;
+      const actual =   { version: fetchJson.version, valid: semVerPattern.test(fetchJson.version) };
+      const expected = { version: fetchJson.version, valid: true };
+      assert.deepEqual(actual, expected);
+      });
+
    it('loads as an object', () => {
       const actual =   { module: typeof fetchJson };
       const expected = { module: 'object' };

@@ -39,10 +39,8 @@
       }
    },
    "scripts": {
-      "lint": "jshint gulpfile.js spec/*.js docs/*.js fetch-json.js",
-      "pretest": "npm run lint && gulp build",
-      "test": "mocha --timeout 10000 spec/*.js",
-      "quick": "npm run lint && mocha --bail spec/node.js"
+      "pretest": "jshint *.js spec/*.js docs/*.js && gulp build-dist",
+      "test": "mocha --timeout 10000 spec/*.js"
    },
    "dependencies": {},
    "devDependencies": {
@@ -51,6 +49,7 @@
       "@fortawesome/fontawesome-free": "~5.5",
       "dna.js": "~1.5",
       "gulp": "~4.0",
+      "gulp-append-prepend": "~1.0",
       "gulp-babel": "~8.0",
       "gulp-babel-minify": "~0.5",
       "gulp-header": "~2.0",
