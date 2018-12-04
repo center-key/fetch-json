@@ -5,8 +5,10 @@
 const assert = require('assert');
 
 //Setup
-const fetchJson = require('../fetch-json.js');
-describe('Specification Cases: node (fetch-json.js)', () => {
+const fetchJson = require('../dist/fetch-json.js');
+
+// Specificaiton suite
+describe('Specification Cases: node (dist/fetch-json.js)', () => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Module fetch-json', () => {
@@ -355,4 +357,5 @@ describe('Function fetchJson.enableLogger()', () => {
 
    });
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 });

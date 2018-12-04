@@ -7,13 +7,14 @@ const fs =        require('fs');
 const { JSDOM } = require('jsdom');
 
 // Setup
-const scripts = ['node_modules/whatwg-fetch/dist/fetch.umd.js', './fetch-json.min.js'];
+const scripts = ['node_modules/whatwg-fetch/dist/fetch.umd.js', './dist/fetch-json.min.js'];
 const window = new JSDOM('', { runScripts: 'outside-only' }).window;
 const loadScript = (file) => window.eval(fs.readFileSync(file).toString());  //jshint ignore:line
 scripts.forEach(loadScript);
-
 const fetchJson = window.fetchJson;
-describe('Specification Cases: JSDOM (fetch-json.min.js)', () => {
+
+// Specification suite
+describe('Specification Cases: JSDOM (dist/fetch-json.min.js)', () => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Module fetch-json', () => {
@@ -362,4 +363,5 @@ describe('Function fetchJson.enableLogger()', () => {
 
    });
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 });

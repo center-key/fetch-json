@@ -30,7 +30,8 @@ const task = {
             .pipe(replace(semVerPattern, pkg.version))
             .pipe(header(banner.join('')))
             .pipe(size({ showFiles: true }))
-            .pipe(gulp.dest('.'));
+            .pipe(gulp.dest('.'))
+            .pipe(gulp.dest('dist'));
          };
       const minifyJs = () => {
          return gulp.src('fetch-json.js')
@@ -39,7 +40,8 @@ const task = {
             .pipe(header(banner[0] + banner[2]))
             .pipe(replace(semVerPattern, pkg.version))
             .pipe(size({ showFiles: true }))
-            .pipe(gulp.dest('.'));
+            .pipe(gulp.dest('.'))
+            .pipe(gulp.dest('dist'));
          };
       return mergeStream(updateBanner(), minifyJs());
       }
