@@ -39,7 +39,7 @@
       }
    },
    "scripts": {
-      "pretest": "jshint *.js spec/*.js docs/*.js && gulp build-dist",
+      "pretest": "jshint *.js spec/*.js docs/*.js && gulp lint-html && gulp build-dist",
       "test": "mocha --timeout 10000 spec/*.js"
    },
    "dependencies": {},
@@ -53,13 +53,14 @@
       "gulp-babel": "~8.0",
       "gulp-babel-minify": "~0.5",
       "gulp-header": "~2.0",
+      "gulp-htmlhint": "~2.2",
       "gulp-rename": "~1.4",
       "gulp-replace": "~1.0",
       "gulp-size": "~3.0",
+      "gulp-w3c-html-validator": "~1.4",
       "jquery": "~3.3",
       "jsdom": "~13.0",
       "jshint": "~2.9",
-      "merge-stream": "~1.0",
       "mocha": "~5.2",
       "node-fetch": "~2.3",
       "promise-polyfill": "~8.1",

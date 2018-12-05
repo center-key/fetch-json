@@ -91,7 +91,7 @@ The examples for **fetch-json** and the **Fetch API** each produce the same outp
 ## 4) Details
 **fetch-json** makes REST easy &mdash; it automatically:
 1. Serializes the body payload with `JSON.stringify()`
-1. Adds the HTTP header for `'application/json' data type`
+1. Adds the `application/json` HTTP header to set the data type
 1. Appends the GET `params` object items to the URL
 1. Runs `.json()` on the response
 1. Sets `credentials` to `'same-origin'` (support user sessions in Grails, Rails, PHP, Flask, etc.)
