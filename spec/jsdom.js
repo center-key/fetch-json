@@ -8,7 +8,7 @@ const { JSDOM } = require('jsdom');
 
 // Setup
 const scripts = ['node_modules/whatwg-fetch/dist/fetch.umd.js', './dist/fetch-json.min.js'];
-const window = new JSDOM('', { runScripts: 'outside-only' }).window;
+const window = new JSDOM('', { runScripts: 'outside-only' }).window;  //jshint ignore:line
 const loadScript = (file) => window.eval(fs.readFileSync(file).toString());  //jshint ignore:line
 scripts.forEach(loadScript);
 const fetchJson = window.fetchJson;

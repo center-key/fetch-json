@@ -34,8 +34,7 @@
       "mocha": true,
       "node": true,
       "globals": {
-         "fetch": true,
-         "window": true
+         "fetch": true
       }
    },
    "scripts": {
