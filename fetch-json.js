@@ -1,4 +1,4 @@
-// fetch-json -- MIT License
+// fetch-json ~ MIT License
 
 const fetch = typeof window === 'object' && window.fetch || require('node-fetch');
 

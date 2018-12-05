@@ -1,4 +1,4 @@
-// fetch-json
+// fetch-json ~ MIT License
 // Tasks
 
 // Imports
@@ -15,7 +15,7 @@ const size =          require('gulp-size');
 // Setup
 const pkg =            require('./package.json');
 const home =           pkg.homepage.replace('https://', '');
-const banner =         '//! fetch-json v' + pkg.version + ' -- ' + home + ' -- MIT License\n';
+const bannerJs =       '//! fetch-json v' + pkg.version + ' ~ ' + home + ' ~ MIT License\n';
 const htmlHintConfig = { 'attr-value-double-quotes': false };
 const headerComments = /^[/][/].*\n/gm;
 const transpileES6 =   ['@babel/env', { modules: false }];
@@ -34,13 +34,13 @@ const task = {
    buildDistribution: () => {
       return gulp.src('fetch-json.js')
          .pipe(replace(headerComments, ''))
-         .pipe(header(banner))
+         .pipe(header(bannerJs))
          .pipe(replace('[VERSION]', pkg.version))
          .pipe(size({ showFiles: true }))
          .pipe(gulp.dest('dist'))
          .pipe(babel(babelMinifyJs))
          .pipe(rename({ extname: '.min.js' }))
-         .pipe(header(banner))
+         .pipe(header(bannerJs))
          .pipe(gap.appendText('\n'))
          .pipe(size({ showFiles: true }))
          .pipe(gulp.dest('dist'));
