@@ -3,7 +3,7 @@
    "description": "A wrapper around Fetch just for JSON",
    "version": "2.2.1",
    "license": "MIT",
-   "main": "fetch-json.js",
+   "main": "dist/fetch-json.js",
    "browser": "dist/fetch-json.min.js",
    "repository": "github:center-key/fetch-json",
    "homepage": "https://github.com/center-key/fetch-json",
@@ -17,11 +17,11 @@
    "keywords": [
       "browser",
       "fetch",
-      "node-fetch",
       "get",
       "http",
       "javascript",
       "json",
+      "node-fetch",
       "post",
       "rest"
    ],
@@ -38,7 +38,7 @@
       }
    },
    "scripts": {
-      "pretest": "jshint *.js spec/*.js docs/*.js && gulp lint-html && gulp build-dist",
+      "pretest": "jshint *.js spec docs && gulp lint-html && gulp build-dist",
       "test": "mocha --timeout 10000 spec/*.js"
    },
    "dependencies": {},
