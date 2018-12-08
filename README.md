@@ -38,9 +38,8 @@ Fetch the NASA Astronomy Picture of the Day:
 // NASA APoD
 const url =    'https://api.nasa.gov/planetary/apod';
 const params = { api_key: 'DEMO_KEY' };
-function handleData(data) {
+const handleData = (data) =>
    console.log('The NASA APoD for today is at: ' + data.url);
-   }
 fetchJson.get(url, params).then(handleData);
 ```
 ### HTTP POST
@@ -48,9 +47,8 @@ Create a resource for the planet Jupiter:
 ```javascript
 // Create Jupiter
 const resource = { name: 'Jupiter', position: 5 };
-function handleData(data) {
+const handleData = (data) =>
    console.log('Planet:', data);  //http response body as an object literal
-   }
 fetchJson.post('https://httpbin.org/post', resource)
    .then(handleData)
    .catch(console.error);
@@ -78,9 +76,8 @@ const options = {
       },
    body: JSON.stringify(resource)
    };
-function handleData(data) {
+const handleData = (data) =>
    console.log(data);  //http response body as an object literal
-   }
 fetch('https://httpbin.org/post', options)
    .then(response => response.json())
    .then(handleData)

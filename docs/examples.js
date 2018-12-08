@@ -20,47 +20,43 @@ console.log();
 // Examples
 const example = {
 
-   nasa: function() {
+   nasa: () => {
 
       // NASA APoD
       const url =    'https://api.nasa.gov/planetary/apod';
       const params = { api_key: 'DEMO_KEY' };
-      function handleData(data) {
-         console.log('The NASA APoD for today is at: ' + data.url);
-         }
+      const handleData = (data) => console.log('The NASA APoD for today is at: ' + data.url);
       fetchJson.get(url, params).then(handleData);
 
       },
 
-   jupiter: function() {
+   jupiter: () => {
 
       // Create Jupiter
       const resource = { name: 'Jupiter', position: 5 };
-      function handleData(data) {
-         console.log('Planet:', data);
-         }
+      const handleData = (data) => console.log('Planet:', data);
       fetchJson.post('https://httpbin.org/post', resource)
          .then(handleData)
          .catch(console.error);
 
       },
 
-   teapot: function() {
+   teapot: () => {
 
       // Fetch me some tea
-      function handleData(data) { console.log(data.bodyText); }
+      const handleData = (data) => console.log(data.bodyText);
       fetchJson.get('https://httpbin.org/status/418').then(handleData);
 
       },
 
-   books: function() {
+   books: () => {
 
       // Get books about SpaceX
-      function handleData(data) {
-         function getTitle(book) { return book.volumeInfo.title; }
+      const handleData = (data) => {
+         const getTitle = (book) => book.volumeInfo.title;
          console.log('SpaceX books:');
          console.log(data.items.map(getTitle));
-         }
+         };
       const url = 'https://www.googleapis.com/books/v1/volumes?q=spacex';
       fetchJson.get(url).then(handleData).catch(console.error);
 
@@ -75,5 +71,5 @@ example.teapot();
 example.books();
 
 // Wait for HTTP requests to complete
-function done() { console.log('\nDone.'); }
+const done = () => console.log('\nDone.');
 setTimeout(done, 3000);
