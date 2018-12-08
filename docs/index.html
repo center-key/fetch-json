@@ -8,15 +8,17 @@
 <meta name=viewport content="width=device-width, initial-scale=1">
 <title>fetch-json &bull; A wrapper around Fetch just for JSON</title>
 <link rel=icon       href=https://centerkey.com/graphics/bookmark.png>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.5/css/all.min.css>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.6/css/all.min.css>
 <link rel=stylesheet href=https://cdn.jsdelivr.net/npm/dna.js@1.5/dist/dna.css>
 <link rel=stylesheet href=https://cdn.jsdelivr.net/npm/web-ignition@1.0/dist/reset.min.css>
 <link rel=stylesheet href=https://cdn.jsdelivr.net/npm/web-ignition@1.0/dist/layouts/letterbox.css>
 <style>
    html { background-image: url(examples.png); }
+   body >main >section h1 { color: steelblue; }
    body >main >section:first-child h2 { text-transform: none; }
    body >main >section:first-child nav { margin-bottom: 30px; }
-   body >main >section ol { max-width: 600px; text-align: left; padding-left: 100px; margin: 0px auto 30px auto; }
+   body >main >section ol { display: inline-block; text-align: left; margin-bottom: 30px; }
+   body >main >section figure code { color: deeppink; }
 </style>
 </head>
 <body>
@@ -46,6 +48,11 @@
             <li>Sets <code>credentials</code> to <code>'same-origin'</code></li>
             <li>Converts text responses into JSON (convenient for HTTP errors)</li>
          </ol>
+         <figure>
+            <code class=language-javascript>
+               fetchJson.get(<span class=code-id>url</span>, params).then(handleData);
+            </code>
+         </figure>
          <p>
             Fork it:<br>
             <a href=https://github.com/center-key/fetch-json><i data-brand=github-alt></i></a>
