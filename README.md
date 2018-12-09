@@ -1,5 +1,5 @@
 # fetch-json
-<img src=https://raw.githubusercontent.com/center-key/fetch-json/master/logos.png
+<img src=https://raw.githubusercontent.com/center-key/fetch-json/master/docs/logos.png
    align=right width=200 alt=logos>
 
 _A wrapper around Fetch just for JSON_
