@@ -22,7 +22,7 @@ or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 <script src=https://cdn.jsdelivr.net/npm/fetch-json@2.2/dist/fetch-json.min.js></script>
 ```
 ### node
-As a module:
+Install package:
 ```shell
 $ npm install node-fetch fetch-json
 ```
