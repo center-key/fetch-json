@@ -18,18 +18,18 @@ const fetchJson = {
          const contentType = response.headers.get('content-type');
          const isJson = /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
          const textToObj = (httpBody) => {
-            if (fetchJson.logger)
-               fetchJson.logger(new Date().toISOString(), options.method, response.url,
-                  response.ok, response.status, response.statusText, contentType);
             response.error =       !response.ok;
             response.contentType = contentType;
             response.bodyText =    httpBody;
             return response;
             };
+         if (fetchJson.logger)
+            fetchJson.logger(new Date().toISOString(), 'response', options.method, response.url,
+               response.ok, response.status, response.statusText, contentType);
          return isJson ? response.json() : response.text().then(textToObj);
          };
       if (fetchJson.logger)
-         fetchJson.logger(new Date().toISOString(), options.method, url);
+         fetchJson.logger(new Date().toISOString(), 'request', options.method, url);
       return fetch(url, options).then(toJson);
       },
    get:    (url, params, options) =>   fetchJson.request('GET',    url, params,   options),

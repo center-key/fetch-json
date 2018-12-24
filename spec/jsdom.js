@@ -357,12 +357,32 @@ describe('Function fetchJson.enableLogger()', () => {
    it('passes a timestamp, methed, and URL to a custom logger on GET', (done) => {
       const url = 'https://httpbin.org/get';
       const isoTimestampLength = new Date().toISOString().length;
-      const customLogger = (logTimestamp, logMethod, logUrl) => {
-         fetchJson.enableLogger(false);
-         const actual =   { timestamp: logTimestamp.length, method: logMethod, url: logUrl };
-         const expected = { timestamp: isoTimestampLength,  method: 'GET',     url: url };
+      const index = { timestamp: 0, http: 1, method: 2, url: 3, ok: 4, status: 5, text: 6, type: 7 };
+      let awaitingRequest = true;
+      const customLogger = (...logValues) => {
+         const actual =   {
+            timestamp: logValues[index.timestamp].length,
+            method:    logValues[index.method],
+            url:       logValues[index.url],
+            ok:        logValues[index.ok],
+            status:    logValues[index.status],
+            text:      logValues[index.text],
+            type:      logValues[index.type]
+            };
+         const expected = {
+            timestamp: isoTimestampLength,
+            method:    'GET',
+            url:       url,
+            ok:        awaitingRequest ? undefined : true,
+            status:    awaitingRequest ? undefined : 200,
+            text:      awaitingRequest ? undefined : 'OK',
+            type:      awaitingRequest ? undefined : 'application/json'
+            };
          assert.deepEqual(actual, expected);
-         done();
+         if (logValues[index.http] === 'request')
+            awaitingRequest = false;
+         else
+            done(fetchJson.enableLogger(false));
          };
       fetchJson.enableLogger(customLogger);
       fetchJson.get(url);
