@@ -38,6 +38,10 @@ const fetchJson = {
    patch:  (url, resource, options) => fetchJson.request('PATCH',  url, resource, options),
    delete: (url, resource, options) => fetchJson.request('DELETE', url, resource, options),
    logger: null,
+   getLogHeaders: () =>
+      ['Timestamp', 'HTTP', 'Method', 'URL', 'Ok', 'Status', 'Text', 'Type'],
+   getLogHeaderIndex: () =>
+      ({ timestamp: 0, http: 1, method: 2, url: 3, ok: 4, status: 5, text: 6, type: 7 }),
    enableLogger: (booleanOrFn) => {
       const isFn = typeof booleanOrFn === 'function';
       fetchJson.logger = isFn ? booleanOrFn : booleanOrFn === false ? null : console.log;

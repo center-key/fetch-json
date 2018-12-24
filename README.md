@@ -139,9 +139,13 @@ fetchJson.enableLogger();
 To use a custom logger, pass in a function that accepts 8 parameters to log.
 To disable logging, pass in `false`.
 
+To get an array containing the names of the parameters:
+```javascript
+fetchJson.getLogHeaders();
+```
 The default console output looks like:<br>
-`2018-09-12T07:20:12.372Z – "request" "GET" – "https://api.nasa.gov/planetary/apod"`<br>
-`2018-09-12T07:20:13.009Z – "response" "GET" – "https://api.nasa.gov/planetary/apod" - true - 200 - "OK" - "application/json"`
+`2018-09-12T07:20:12.372Z – "request" - "GET" – "https://api.nasa.gov/planetary/apod"`<br>
+`2018-09-12T07:20:13.009Z – "response" - "GET" – "https://api.nasa.gov/planetary/apod" - true - 200 - "OK" - "application/json"`
 
 ## 6) Response text converted to JSON
 The HTTP response body is considered to be JSON if the `Content-Type` is `"application/json"` or

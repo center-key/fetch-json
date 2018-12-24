@@ -351,7 +351,7 @@ describe('Function fetchJson.enableLogger()', () => {
    it('passes a timestamp, methed, and URL to a custom logger on GET', (done) => {
       const url = 'https://httpbin.org/get';
       const isoTimestampLength = new Date().toISOString().length;
-      const index = { timestamp: 0, http: 1, method: 2, url: 3, ok: 4, status: 5, text: 6, type: 7 };
+      const index = fetchJson.getLogHeaderIndex();
       let awaitingRequest = true;
       const customLogger = (...logValues) => {
          const actual =   {
