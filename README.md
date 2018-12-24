@@ -140,7 +140,7 @@ To use a custom logger, pass in a function that accepts 8 parameters to log.
 To disable logging, pass in `false`.
 
 The default console output looks like:<br>
-`2018-09-12T07:20:12.372Z – "request" "GET" – "https://api.nasa.gov/planetary/apod"`
+`2018-09-12T07:20:12.372Z – "request" "GET" – "https://api.nasa.gov/planetary/apod"`<br>
 `2018-09-12T07:20:13.009Z – "response" "GET" – "https://api.nasa.gov/planetary/apod" - true - 200 - "OK" - "application/json"`
 
 ## 6) Response text converted to JSON
