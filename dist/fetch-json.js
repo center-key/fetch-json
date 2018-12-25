@@ -1,9 +1,9 @@
-//! fetch-json v2.2.2 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.2.3 ~ github.com/center-key/fetch-json ~ MIT License
 
 const fetch = typeof window === 'object' && window.fetch || require('node-fetch');
 
 const fetchJson = {
-   version: '2.2.2',
+   version: '2.2.3',
    request: (method, url, data, options) => {
       const settings = { method: method.toUpperCase(), credentials: 'same-origin' };
       options = Object.assign(settings, options);
@@ -14,6 +14,8 @@ const fetchJson = {
          url = url + (url.includes('?') ? '&' : '?') + Object.keys(data).map(toPair).join('&');
       else if (options.method !== 'GET' && data)
          options.body = JSON.stringify(data);
+      const logUrl = url.replace(/[?].*/, '');
+      const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');
       const toJson = (response) => {
          const contentType = response.headers.get('content-type');
          const isJson = /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
@@ -24,12 +26,12 @@ const fetchJson = {
             return response;
             };
          if (fetchJson.logger)
-            fetchJson.logger(new Date().toISOString(), 'response', options.method, response.url,
-               response.ok, response.status, response.statusText, contentType);
+            fetchJson.logger(new Date().toISOString(), 'response', options.method,
+               logDomain, logUrl, response.ok, response.status, response.statusText, contentType);
          return isJson ? response.json() : response.text().then(textToObj);
          };
       if (fetchJson.logger)
-         fetchJson.logger(new Date().toISOString(), 'request', options.method, url);
+         fetchJson.logger(new Date().toISOString(), 'request', options.method, logDomain, logUrl);
       return fetch(url, options).then(toJson);
       },
    get:    (url, params, options) =>   fetchJson.request('GET',    url, params,   options),
@@ -38,6 +40,10 @@ const fetchJson = {
    patch:  (url, resource, options) => fetchJson.request('PATCH',  url, resource, options),
    delete: (url, resource, options) => fetchJson.request('DELETE', url, resource, options),
    logger: null,
+   getLogHeaders: () =>
+      ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'],
+   getLogHeaderIndex: () =>
+      ({ timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 }),
    enableLogger: (booleanOrFn) => {
       const isFn = typeof booleanOrFn === 'function';
       fetchJson.logger = isFn ? booleanOrFn : booleanOrFn === false ? null : console.log;
