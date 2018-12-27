@@ -9,17 +9,17 @@ const fetchJson = {
       options = Object.assign(settings, options);
       const jsonHeaders = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
       options.headers = Object.assign(jsonHeaders, options.headers);
-      const toPair = (key) => key + '=' + encodeURIComponent(data[key]);
+      const toPair = (key) => key + '=' + encodeURIComponent(data[key]);  //build query string field-value
       if (options.method === 'GET' && data)
          url = url + (url.includes('?') ? '&' : '?') + Object.keys(data).map(toPair).join('&');
-      else if (options.method !== 'GET' && data)
+      else if (data)
          options.body = JSON.stringify(data);
-      const logUrl = url.replace(/[?].*/, '');
-      const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');
+      const logUrl = url.replace(/[?].*/, '');  //security: prevent logging url parameters
+      const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');  //extract hostname
       const toJson = (response) => {
          const contentType = response.headers.get('content-type');
          const isJson = /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
-         const textToObj = (httpBody) => {
+         const textToObj = (httpBody) => {  //rest calls should only return json
             response.error =       !response.ok;
             response.contentType = contentType;
             response.bodyText =    httpBody;
@@ -34,12 +34,12 @@ const fetchJson = {
          fetchJson.logger(new Date().toISOString(), 'request', options.method, logDomain, logUrl);
       return fetch(url, options).then(toJson);
       },
-   get:    (url, params, options) =>   fetchJson.request('GET',    url, params,   options),
+   get:    (url, params,   options) => fetchJson.request('GET',    url, params,   options),
    post:   (url, resource, options) => fetchJson.request('POST',   url, resource, options),
    put:    (url, resource, options) => fetchJson.request('PUT',    url, resource, options),
    patch:  (url, resource, options) => fetchJson.request('PATCH',  url, resource, options),
    delete: (url, resource, options) => fetchJson.request('DELETE', url, resource, options),
-   logger: null,
+   logger: null,  //null or a function
    getLogHeaders: () =>
       ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'],
    getLogHeaderIndex: () =>
