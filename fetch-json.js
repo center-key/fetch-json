@@ -6,14 +6,18 @@ const fetchJson = {
    version: '[VERSION]',
    request: (method, url, data, options) => {
       const settings = { method: method.toUpperCase(), credentials: 'same-origin' };
-      options = Object.assign(settings, options);
-      const jsonHeaders = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
-      options.headers = Object.assign(jsonHeaders, options.headers);
+      Object.assign(settings, options);
+      const isGetRequest = settings.method === 'GET';
+      const jsonHeaders = { 'Accept': 'application/json' };
+      if (!isGetRequest && data)
+         jsonHeaders['Content-Type'] = 'application/json';
+      settings.headers = Object.assign(jsonHeaders, options && options.headers);
       const toPair = (key) => key + '=' + encodeURIComponent(data[key]);  //build query string field-value
-      if (options.method === 'GET' && data)
-         url = url + (url.includes('?') ? '&' : '?') + Object.keys(data).map(toPair).join('&');
-      else if (data)
-         options.body = JSON.stringify(data);
+      const paramKeys = isGetRequest && data && Object.keys(data);
+      if (paramKeys)
+         url = url + (url.includes('?') ? '&' : '?') + paramKeys.map(toPair).join('&');
+      if (!isGetRequest && data)
+         settings.body = JSON.stringify(data);
       const logUrl = url.replace(/[?].*/, '');  //security: prevent logging url parameters
       const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');  //extract hostname
       const toJson = (response) => {
@@ -26,13 +30,13 @@ const fetchJson = {
             return response;
             };
          if (fetchJson.logger)
-            fetchJson.logger(new Date().toISOString(), 'response', options.method,
+            fetchJson.logger(new Date().toISOString(), 'response', settings.method,
                logDomain, logUrl, response.ok, response.status, response.statusText, contentType);
          return isJson ? response.json() : response.text().then(textToObj);
          };
       if (fetchJson.logger)
-         fetchJson.logger(new Date().toISOString(), 'request', options.method, logDomain, logUrl);
-      return fetch(url, options).then(toJson);
+         fetchJson.logger(new Date().toISOString(), 'request', settings.method, logDomain, logUrl);
+      return fetch(url, settings).then(toJson);
       },
    get:    (url, params,   options) => fetchJson.request('GET',    url, params,   options),
    post:   (url, resource, options) => fetchJson.request('POST',   url, resource, options),
