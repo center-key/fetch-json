@@ -14,7 +14,7 @@ const fetchJson = {
       settings.headers = Object.assign(jsonHeaders, options && options.headers);
       const toPair = (key) => key + '=' + encodeURIComponent(data[key]);  //build query string field-value
       const paramKeys = isGetRequest && data && Object.keys(data);
-      if (paramKeys)
+      if (paramKeys && paramKeys.length)
          url = url + (url.includes('?') ? '&' : '?') + paramKeys.map(toPair).join('&');
       if (!isGetRequest && data)
          settings.body = JSON.stringify(data);
