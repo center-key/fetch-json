@@ -63,19 +63,20 @@ describe('Google Books API search result for "spacex" fetched by fetchJson.get()
    });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-describe('NASA Astronomy Picture of the Day resource fetched by fetchJson.get()', () => {
+describe('Star Wars API result for spaceships fetched by fetchJson.get()', () => {
 
-   it('contains a link to media', (done) => {
-      const url =    'https://api.nasa.gov/planetary/apod';
-      const params = { api_key: 'DEMO_KEY' };
+   it('contains an array of spaceships', (done) => {
+
+      const url = 'https://swapi.co/api/starships';
+      const params = { format: 'json' };
       const handleData = (data) => {
-         const actual =   { media: typeof data.media_type, url: data.url.match(/..../)[0] };
-         const expected = { media: 'string',               url: 'http' };
+         const actual =   { count: typeof data.count, class: typeof data.results[0].starship_class };
+         const expected = { count: 'number',          class: 'string' };
          assert.deepEqual(actual, expected);
          done();
          };
       fetchJson.get(url, params).then(handleData);
-      }).timeout(5000);  //Deep Space Network can be a little slow
+      });
 
    });
 
