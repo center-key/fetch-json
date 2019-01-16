@@ -15,9 +15,12 @@
 <style>
    html { background-image: url(examples.png); }
    body >main >section h1 { color: steelblue; }
-   body >main >section:first-child h2 { text-transform: none; }
+   body >main >section:first-child { background-color: rgba(255, 255, 255, 0.7); }
+   body >main >section:first-child h2 { font-size: 1.3rem; text-transform: none; }
    body >main >section ol { display: inline-block; text-align: left; margin-bottom: 30px; }
-   body >main >section figure code { color: deeppink; }
+   body >main >section ol li { font-size: 1.0rem; }
+   body >main >section figure code.language-javascript { color: deeppink; font-size: 1.1rem; }
+   body >main >section figure code.language-javascript .js-param { color: darkmagenta; }
 </style>
 </head>
 <body>
@@ -40,22 +43,24 @@
             <b>fetch-json</b> makes REST easy &mdash; it automatically:
          </p>
          <ol>
+            <li>Converts the HTTP response to JSON if it's not already JSON</li>
             <li>Serializes the body payload with <code>JSON.stringify()</code></li>
             <li>Adds the <code>'application/json'</code> HTTP header to set the data type</li>
             <li>Appends the GET <code>params</code> object items to the URL</li>
             <li>Runs <code>.json()</code> on the response</li>
             <li>Sets <code>credentials</code> to <code>'same-origin'</code></li>
-            <li>Converts text responses into JSON (convenient for HTTP errors)</li>
          </ol>
          <figure>
             <code class=language-javascript>
-               fetchJson.get(<span class=code-id>url</span>, params).then(handleData);
+               fetchJson.get(<span class=js-param>url</span>, <span class=js-param>params</span>)<br>
+               .then(<span class=js-param>handleData</span>);
             </code>
          </figure>
          <p>
             Fork it:<br>
             <a href=https://github.com/center-key/fetch-json><i data-brand=github-alt></i></a>
          </p>
+         <p id=social-buttons></p>
       </div>
    </section>
 </main>

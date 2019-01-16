@@ -56,6 +56,9 @@ fetchJson.post('https://httpbin.org/post', resource)
 For more examples, see the Mocha specification cases:<br>
 [spec-node.js](spec-node.js) ([Mocha output on Travis CI](https://travis-ci.org/center-key/fetch-json))
 
+To see a website that incorporates **fetch-json**, check out DataDashboard:<br>
+[https://data-dashboard.js.org](https://data-dashboard.js.org)
+
 ## 3) Leverages the Fetch API and node-fetch
 **fetch-json** calls the native
 **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**
@@ -87,12 +90,12 @@ The examples for **fetch-json** and the **Fetch API** each produce the same outp
 
 ## 4) Details
 **fetch-json** makes REST easy &mdash; it automatically:
+1. Converts the HTTP response to JSON if it's not already JSON (convenient for HTTP errors)
 1. Serializes the body payload with `JSON.stringify()`
 1. Adds the `application/json` HTTP header to set the data type
 1. Appends the GET `params` object items to the URL
 1. Runs `.json()` on the response
 1. Sets `credentials` to `'same-origin'` (support user sessions in Grails, Rails, PHP, Flask, etc.)
-1. Converts text responses into JSON (convenient for HTTP errors)
 
 ## 5) API
 ### API &mdash; HTTP Request
@@ -149,8 +152,8 @@ The default console output looks like:<br>
 
 ## 6) Response text converted to JSON
 The HTTP response body is considered to be JSON if the `Content-Type` is `"application/json"` or
-`"text/javascript"`.  If the HTTP response body is not JSON, an object containing the body as a
-string in the `bodyText` field is created and passed on through the promise.
+`"text/javascript"`.&nbsp; If the HTTP response body is not JSON, **fetch-json** passes back
+through the promise an object with a `bodyText` string field containing response body text.
 
 In addition to the `bodyText` field, the object will have the fields: `ok`, `status`, `statusText`,
 and `contentType`.

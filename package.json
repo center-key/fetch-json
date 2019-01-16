@@ -12,7 +12,8 @@
    "contributors": [
       "KahWee Teng (https://twitter.com/kahwee)",
       "Dem Pilafian (https://twitter.com/dempilafian)",
-      "Calvin Settachatgul (https://github.com/calvinsettachatgul)"
+      "Calvin Settachatgul (https://github.com/calvinsettachatgul)",
+      "Byron Becker (https://github.com/ByronBecker)"
    ],
    "keywords": [
       "browser",
@@ -46,11 +47,11 @@
       "@babel/core": "~7.2",
       "@babel/preset-env": "~7.2",
       "@fortawesome/fontawesome-free": "~5.6",
+      "babel-minify": "~0.5",
       "dna.js": "~1.5",
       "gulp": "~4.0",
       "gulp-append-prepend": "~1.0",
       "gulp-babel": "~8.0",
-      "gulp-babel-minify": "~0.5",
       "gulp-header": "~2.0",
       "gulp-htmlhint": "~2.2",
       "gulp-rename": "~1.4",
