@@ -21,6 +21,9 @@ const fetchJson = {
       const logUrl = url.replace(/[?].*/, '');  //security: prevent logging url parameters
       const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');  //extract hostname
       const toJson = (response) => {
+         if (options && options.strictErrors && response.status >= 400) {
+            throw new Error(`Received status ${response.status} which is an error when options.strictErrors is set`);
+         }
          const contentType = response.headers.get('content-type');
          const isJson = /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
          const textToObj = (httpBody) => {  //rest calls should only return json

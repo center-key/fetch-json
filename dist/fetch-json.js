@@ -14,13 +14,16 @@ const fetchJson = {
       settings.headers = Object.assign(jsonHeaders, options && options.headers);
       const toPair = (key) => key + '=' + encodeURIComponent(data[key]);  //build query string field-value
       const paramKeys = isGetRequest && data && Object.keys(data);
-      if (paramKeys)
+      if (paramKeys && paramKeys.length)
          url = url + (url.includes('?') ? '&' : '?') + paramKeys.map(toPair).join('&');
       if (!isGetRequest && data)
          settings.body = JSON.stringify(data);
       const logUrl = url.replace(/[?].*/, '');  //security: prevent logging url parameters
       const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');  //extract hostname
       const toJson = (response) => {
+         if (options && options.strictErrors && response.status >= 400) {
+            throw new Error(`Received status ${response.status} which is an error when options.strictErrors is set`);
+         }
          const contentType = response.headers.get('content-type');
          const isJson = /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
          const textToObj = (httpBody) => {  //rest calls should only return json
