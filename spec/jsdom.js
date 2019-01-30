@@ -240,7 +240,32 @@ describe('HTTP error returned by httpbin.org', () => {
          assert.deepEqual(actual, expected);
          done();
          };
-      fetchJson.get(url).then(handleData);
+      const handleError = (error) => {
+         assert.fail(error);
+         };
+      fetchJson.get(url).then(handleData).catch(handleError);
+      });
+
+   it('for status 500 throws exception in strict errors mode', (done) => {
+      const url = 'https://httpbin.org/status/500';
+      const handleData = (data) => {
+         assert.fail(data);
+         };
+      const handleError = (error) => {
+         const actual = {
+            error:   error instanceof (typeof window === 'object' ? window.Error : Error),
+            name:    error.name,
+            message: error.message
+            };
+         const expected = {
+            error:   true,
+            name:    'Error',
+            message: 'HTTP response status ("strictErrors" mode enabled): 500'
+            };
+         assert.deepEqual(actual, expected);
+         done();
+         };
+      fetchJson.get(url, {}, { strictErrors: true }).then(handleData).catch(handleError);
       });
 
    it('for status 418 contains the message "I\'M A TEAPOT"', (done) => {
@@ -262,7 +287,10 @@ describe('HTTP error returned by httpbin.org', () => {
          done();
          console.log(data.bodyText);
          };
-      fetchJson.get(url).then(handleData);
+      const handleError = (error) => {
+         assert.fail(error);
+         };
+      fetchJson.get(url).then(handleData).catch(handleError);
       });
 
    });

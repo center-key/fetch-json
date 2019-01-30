@@ -125,6 +125,7 @@ Notes:
 1. The `params` object for `fetchJson.get()` is converted into a query string and appended to the `url`.
 1. The `resource` object is turned into the body of the HTTP request.
 1. The `options` parameter is passed through to the **Fetch API** (see the `init` [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters)).
+1. `options` is enhanced with a boolean setting for `strictErrors` mode (default `false`) that throws an error to `.catch()` whenever the HTTP response status is 400 or higher.
 
 #### Dynamic HTTP method
 If you need to programmatically set the method, use the format:
