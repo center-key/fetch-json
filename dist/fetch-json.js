@@ -1,11 +1,15 @@
-//! fetch-json v2.2.4 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.2.5 ~ github.com/center-key/fetch-json ~ MIT License
 
 const fetch = typeof window === 'object' && window.fetch || require('node-fetch');
 
 const fetchJson = {
-   version: '2.2.4',
+   version: '2.2.5',
    request: (method, url, data, options) => {
-      const settings = { method: method.toUpperCase(), credentials: 'same-origin' };
+      const settings = {
+         method:       method.toUpperCase(),
+         credentials:  'same-origin',
+         strictErrors: false
+         };
       Object.assign(settings, options);
       const isGetRequest = settings.method === 'GET';
       const jsonHeaders = { 'Accept': 'application/json' };
@@ -21,9 +25,6 @@ const fetchJson = {
       const logUrl = url.replace(/[?].*/, '');  //security: prevent logging url parameters
       const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');  //extract hostname
       const toJson = (response) => {
-         if (options && options.strictErrors && response.status >= 400) {
-            throw new Error(`Received status ${response.status} which is an error when options.strictErrors is set`);
-         }
          const contentType = response.headers.get('content-type');
          const isJson = /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
          const textToObj = (httpBody) => {  //rest calls should only return json
@@ -35,6 +36,8 @@ const fetchJson = {
          if (fetchJson.logger)
             fetchJson.logger(new Date().toISOString(), 'response', settings.method,
                logDomain, logUrl, response.ok, response.status, response.statusText, contentType);
+         if (settings.strictErrors && !response.ok)
+            throw Error('HTTP response status ("strictErrors" mode enabled): ' + response.status);
          return isJson ? response.json() : response.text().then(textToObj);
          };
       if (fetchJson.logger)
