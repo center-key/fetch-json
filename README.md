@@ -183,8 +183,8 @@ To support really old browsers, include polyfills for
 ```
 **Note:**
 JSDOM does not include `fetch`, so you need to add a polyfill (see usage of `whatwg-fetch` in
-[spec-jsdom.js](spec-jsdom.js) and
-[gulpfile.js](https://github.com/dnajs/data-dashboard/blob/master/gulpfile.js).
+[spec/jsdom.js](spec/jsdom.js) and
+[gulpfile.js](gulpfile.js).
 
 ## 8) Questions or enhancements
 Feel free to submit an [issue](https://github.com/center-key/fetch-json/issues).

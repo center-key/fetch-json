@@ -27,8 +27,9 @@
       "rest"
    ],
    "jshintConfig": {
-      "esversion": 6,
+      "esversion": 9,
       "strict": "implied",
+      "eqeqeq": true,
       "undef": true,
       "unused": true,
       "browser": true,
