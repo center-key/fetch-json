@@ -27,7 +27,7 @@
       "rest"
    ],
    "jshintConfig": {
-      "esversion": 9,
+      "esversion": 6,
       "strict": "implied",
       "eqeqeq": true,
       "undef": true,
@@ -45,9 +45,9 @@
    },
    "dependencies": {},
    "devDependencies": {
-      "@babel/core": "~7.2",
-      "@babel/preset-env": "~7.2",
-      "@fortawesome/fontawesome-free": "~5.6",
+      "@babel/core": "~7.4",
+      "@babel/preset-env": "~7.4",
+      "@fortawesome/fontawesome-free": "~5.8",
       "babel-minify": "~0.5",
       "dna.js": "~1.5",
       "gulp": "~4.0",
@@ -59,13 +59,13 @@
       "gulp-replace": "~1.0",
       "gulp-size": "~3.0",
       "gulp-w3c-html-validator": "~1.4",
-      "jquery": "~3.3",
+      "jquery": "~3.4",
       "jsdom": "~13.1",
       "jshint": "~2.9",
       "mocha": "~5.2",
       "node-fetch": "~2.3",
       "promise-polyfill": "~8.1",
-      "web-ignition": "~1.0",
+      "web-ignition": "~1.1",
       "whatwg-fetch": "~3.0"
    }
 }
