@@ -95,7 +95,10 @@ The examples for **fetch-json** and the **Fetch API** each produce the same outp
 1. Adds the `application/json` HTTP header to set the data type
 1. Appends the GET `params` object items to the URL
 1. Runs `.json()` on the response
-1. Sets `credentials` to `'same-origin'` (support user sessions in Grails, Rails, PHP, Flask, etc.)
+1. Sets `credentials` to `'same-origin'` (support user sessions in Grails, Rails, PHP, Django, Flask, etc.)
+**fetch-json** is ideal for a [JAMstack](https://jamstack.org) architecture  where "dynamic
+programming during the request/response cycle is handled by JavaScript, running entirely on the
+client".
 
 ## 5) API
 ### API &mdash; HTTP Request
