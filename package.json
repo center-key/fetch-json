@@ -1,7 +1,7 @@
 {
    "name": "fetch-json",
    "description": "A wrapper around Fetch just for JSON",
-   "version": "2.2.5",
+   "version": "2.2.6",
    "license": "MIT",
    "main": "dist/fetch-json.js",
    "browser": "dist/fetch-json.min.js",
@@ -20,6 +20,7 @@
       "fetch",
       "get",
       "http",
+      "jamstack",
       "javascript",
       "json",
       "node-fetch",
