@@ -48,7 +48,7 @@
    "devDependencies": {
       "@babel/core": "~7.6",
       "@babel/preset-env": "~7.6",
-      "@fortawesome/fontawesome-free": "~5.10",
+      "@fortawesome/fontawesome-free": "~5.11",
       "babel-minify": "~0.5",
       "dna.js": "~1.5",
       "gulp": "~4.0",
