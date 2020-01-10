@@ -64,7 +64,7 @@
       "jquery": "~3.4",
       "jsdom": "~15.2",
       "jshint": "~2.10",
-      "mocha": "~6.2",
+      "mocha": "~7.0",
       "node-fetch": "~2.6",
       "promise-polyfill": "~8.1",
       "web-ignition": "~1.2",
