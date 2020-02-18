@@ -171,7 +171,7 @@ similar to:
    status:      500,
    statusText:  'INTERNAL SERVER ERROR',
    contentType: 'text/html; charset=utf-8',
-   bodyText:    '<!doctype html><html><body>Server Error</body></html>'
+   bodyText:    '<!doctype html><html lang=en><body>Server Error</body></html>'
 }
 ```
 With **fetch-json**, you know the response body will always be passed back to you as a simple
