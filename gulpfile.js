@@ -14,7 +14,7 @@ const size =          require('gulp-size');
 
 // Setup
 const pkg =            require('./package.json');
-const home =           pkg.homepage.replace('https://', '');
+const home =           pkg.repository.replace('github:', 'github.com/');
 const bannerJs =       '//! fetch-json v' + pkg.version + ' ~ ' + home + ' ~ MIT License\n';
 const htmlHintConfig = { 'attr-value-double-quotes': false };
 const headerComments = /^[/][/].*\n/gm;
@@ -45,7 +45,7 @@ const task = {
          .pipe(size({ showFiles: true }))
          .pipe(size({ showFiles: true, gzip: true }))
          .pipe(gulp.dest('dist'));
-      }
+      },
    };
 
 // Gulp
