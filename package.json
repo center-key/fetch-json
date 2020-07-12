@@ -46,8 +46,8 @@
    },
    "dependencies": {},
    "devDependencies": {
-      "@babel/core": "~7.9",
-      "@babel/preset-env": "~7.9",
+      "@babel/core": "~7.10",
+      "@babel/preset-env": "~7.10",
       "@fortawesome/fontawesome-free": "~5.13",
       "babel-minify": "~0.5",
       "canvas": "~2.6",
@@ -62,12 +62,12 @@
       "gulp-size": "~3.0",
       "gulp-w3c-html-validator": "~2.0",
       "jquery": "~3.5",
-      "jsdom": "~16.2",
+      "jsdom": "~16.3",
       "jshint": "~2.11",
-      "mocha": "~7.1",
+      "mocha": "~8.0",
       "node-fetch": "~2.6",
       "promise-polyfill": "~8.1",
       "web-ignition": "~1.2",
-      "whatwg-fetch": "~3.0"
+      "whatwg-fetch": "~3.2"
    }
 }
