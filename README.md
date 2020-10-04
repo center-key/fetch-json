@@ -190,10 +190,18 @@ JSDOM does not include `fetch`, so you need to add a polyfill (see usage of `wha
 [spec/jsdom.js](spec/jsdom.js) and
 [gulpfile.js](gulpfile.js).
 
-## 8) Questions or enhancements
-Feel free to submit an [issue](https://github.com/center-key/fetch-json/issues).
+## 8) Contributor Notes
+To be a contributor, fork the project and run the commands `npm install` and `npm test` on your
+local clone.&nbsp; Make your edits and rerun the tests.&nbsp; Pull requests welcome.
 
-_"Stop trying to make fetch happen without [#fetchJson](https://twitter.com/hashtag/fetchJson)!"_
+Pull requests should not update the `version` number in **package.json** or any files in the `dist` folder.&nbsp; The `version` number and `dist` files are all updated as part of the release process.
+
+<br>
 
 ---
+_"Stop trying to make fetch happen without [#fetchJson](https://twitter.com/hashtag/fetchJson)!"_
+
+Feel free to submit questions at:<br>
+[github.com/center-key/fetch-json/issues](https://github.com/center-key/fetch-json/issues)
+
 [MIT License](LICENSE.txt)
