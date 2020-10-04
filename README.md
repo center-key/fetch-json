@@ -57,7 +57,7 @@ For more examples, see the Mocha specification cases:<br>
 [spec-node.js](spec-node.js) ([Mocha output on Travis CI](https://travis-ci.org/center-key/fetch-json))
 
 To see a website that incorporates **fetch-json**, check out DataDashboard:<br>
-[https://data-dashboard.js.org](https://data-dashboard.js.org)
+[https://data-dashboard.js.org](https://data-dashboard.js.org 📊)
 
 ## 3) Leverages the Fetch API and node-fetch
 **fetch-json** calls the native
@@ -66,10 +66,10 @@ if in a web browser and calls
 **[node-fetch](https://www.npmjs.com/package/node-fetch)**
 if running on node.
 
-For comparison, the above POST example to create a planet would be done calling the **Fetch API**
+For comparison, the above POST example in section 2 to create a planet would be done calling the **Fetch API**
 directly with the code:
 ```javascript
-// Create Jupiter (with Fetch API instead of fetch-json)
+// Create Jupiter (WITHOUT fetch-json)
 const resource = { name: 'Jupiter', position: 5 };
 const options = {
    method: 'POST',
@@ -86,7 +86,7 @@ fetch('https://httpbin.org/post', options)
    .then(handleData)
    .catch(console.error);
 ```
-The examples for **fetch-json** and the **Fetch API** each produce the same output.
+The example _with_ **fetch-json** and the example _without_ **fetch-json** each produce the same output.
 
 ## 4) Details
 **fetch-json** makes REST easy &mdash; it automatically:
