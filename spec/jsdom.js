@@ -6,12 +6,13 @@ const assert =    require('assert');
 const fs =        require('fs');
 const { JSDOM } = require('jsdom');
 
-// Setup
+// Setup and utilities
 const scripts = ['node_modules/whatwg-fetch/dist/fetch.umd.js', './dist/fetch-json.min.js'];
 const window = new JSDOM('', { runScripts: 'outside-only' }).window;  //jshint ignore:line
 const loadScript = (file) => window.eval(fs.readFileSync(file).toString());  //jshint ignore:line
 scripts.forEach(loadScript);
 const fetchJson = window.fetchJson;
+const toPlainObj = (obj) => JSON.parse(JSON.stringify(obj));
 
 // Specification suite
 describe('Specification Cases: JSDOM (dist/fetch-json.min.js)', () => {
@@ -92,8 +93,8 @@ describe('GET response returned by httpbin.org', () => {
    it('contains empty params when none are supplied', (done) => {
       const url = 'https://httpbin.org/get';
       const handleData = (data) => {
-         const actual =   { params: data.args };
-         const expected = { params: {} };
+         const actual =   { params: Object.keys(data.args) };
+         const expected = { params: [] };
          assert.deepEqual(actual, expected);
          done();
          };
@@ -103,7 +104,7 @@ describe('GET response returned by httpbin.org', () => {
    it('contains the params from the URL query string', (done) => {
       const url = 'https://httpbin.org/get?planet=Jupiter&position=5';
       const handleData = (data) => {
-         const actual =   data.args;
+         const actual =   toPlainObj(data.args);
          const expected = { planet: 'Jupiter', position: '5' };
          assert.deepEqual(actual, expected);
          done();
@@ -115,7 +116,7 @@ describe('GET response returned by httpbin.org', () => {
       const url =    'https://httpbin.org/get';
       const params = { planet: 'Jupiter', position: 5, tip: 'Big & -148°C' };
       const handleData = (data) => {
-         const actual =   data.args;
+         const actual =   toPlainObj(data.args);
          const expected = { planet: 'Jupiter', position: '5', tip: 'Big & -148°C' };
          assert.deepEqual(actual, expected);
          done();
@@ -127,7 +128,7 @@ describe('GET response returned by httpbin.org', () => {
       const url =    'https://httpbin.org/get?sort=diameter';
       const params = { planet: 'Jupiter', position: 5 };
       const handleData = (data) => {
-         const actual =   data.args;
+         const actual =   toPlainObj(data.args);
          const expected = { sort: 'diameter', planet: 'Jupiter', position: '5' };
          assert.deepEqual(actual, expected);
          done();
@@ -144,8 +145,8 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       const url =      'https://httpbin.org/post';
       const resource = { name: 'Mercury', position: 1 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
+         const expected = { planet: resource,              type: 'object' };
          assert.deepEqual(actual, expected);
          done();
          };
@@ -156,8 +157,8 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       const url =      'https://httpbin.org/put';
       const resource = { name: 'Venus', position: 2 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
+         const expected = { planet: resource,              type: 'object' };
          assert.deepEqual(actual, expected);
          done();
          };
@@ -168,8 +169,8 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       const url =      'https://httpbin.org/patch';
       const resource = { name: 'Mars', position: 4 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
+         const expected = { planet: resource,              type: 'object' };
          assert.deepEqual(actual, expected);
          done();
          };
@@ -180,8 +181,8 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       const url =      'https://httpbin.org/delete';
       const resource = { name: 'Jupiter', position: 5 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
+         const expected = { planet: resource,              type: 'object' };
          assert.deepEqual(actual, expected);
          done();
          };
@@ -197,7 +198,7 @@ describe('The low-level fetchJson.request() function', () => {
       const url =    'https://httpbin.org/get';
       const params = { planet: 'Neptune', position: 8 };
       const handleData = (data) => {
-         const actual =   data.args;
+         const actual =   toPlainObj(data.args);
          const expected = { planet: 'Neptune', position: '8' };
          assert.deepEqual(actual, expected);
          done();
@@ -209,8 +210,8 @@ describe('The low-level fetchJson.request() function', () => {
       const url =      'https://httpbin.org/post';
       const resource = { name: 'Saturn', position: 6 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
+         const expected = { planet: resource,              type: 'object' };
          assert.deepEqual(actual, expected);
          done();
          };

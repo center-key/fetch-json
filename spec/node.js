@@ -4,8 +4,9 @@
 // Imports
 const assert = require('assert');
 
-//Setup
+// Setup and utilities
 const fetchJson = require('../dist/fetch-json.js');
+const toPlainObj = (obj) => JSON.parse(JSON.stringify(obj));
 
 // Specificaiton suite
 describe('Specification Cases: node (dist/fetch-json.js)', () => {
@@ -97,7 +98,7 @@ describe('GET response returned by httpbin.org', () => {
    it('contains the params from the URL query string', (done) => {
       const url = 'https://httpbin.org/get?planet=Jupiter&position=5';
       const handleData = (data) => {
-         const actual =   data.args;
+         const actual =   toPlainObj(data.args);
          const expected = { planet: 'Jupiter', position: '5' };
          assert.deepEqual(actual, expected);
          done();
@@ -109,7 +110,7 @@ describe('GET response returned by httpbin.org', () => {
       const url =    'https://httpbin.org/get';
       const params = { planet: 'Jupiter', position: 5, tip: 'Big & -148°C' };
       const handleData = (data) => {
-         const actual =   data.args;
+         const actual =   toPlainObj(data.args);
          const expected = { planet: 'Jupiter', position: '5', tip: 'Big & -148°C' };
          assert.deepEqual(actual, expected);
          done();
@@ -121,7 +122,7 @@ describe('GET response returned by httpbin.org', () => {
       const url =    'https://httpbin.org/get?sort=diameter';
       const params = { planet: 'Jupiter', position: 5 };
       const handleData = (data) => {
-         const actual =   data.args;
+         const actual =   toPlainObj(data.args);
          const expected = { sort: 'diameter', planet: 'Jupiter', position: '5' };
          assert.deepEqual(actual, expected);
          done();
@@ -138,8 +139,8 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       const url =      'https://httpbin.org/post';
       const resource = { name: 'Mercury', position: 1 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
+         const expected = { planet: resource,              type: 'object' };
          assert.deepEqual(actual, expected);
          done();
          };
@@ -150,8 +151,8 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       const url =      'https://httpbin.org/put';
       const resource = { name: 'Venus', position: 2 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
+         const expected = { planet: resource,              type: 'object' };
          assert.deepEqual(actual, expected);
          done();
          };
@@ -162,8 +163,8 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       const url =      'https://httpbin.org/patch';
       const resource = { name: 'Mars', position: 4 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
+         const expected = { planet: resource,              type: 'object' };
          assert.deepEqual(actual, expected);
          done();
          };
@@ -174,8 +175,8 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       const url =      'https://httpbin.org/delete';
       const resource = { name: 'Jupiter', position: 5 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
+         const expected = { planet: resource,              type: 'object' };
          assert.deepEqual(actual, expected);
          done();
          };
@@ -191,7 +192,7 @@ describe('The low-level fetchJson.request() function', () => {
       const url =    'https://httpbin.org/get';
       const params = { planet: 'Neptune', position: 8 };
       const handleData = (data) => {
-         const actual =   data.args;
+         const actual =   toPlainObj(data.args);
          const expected = { planet: 'Neptune', position: '8' };
          assert.deepEqual(actual, expected);
          done();
@@ -203,8 +204,8 @@ describe('The low-level fetchJson.request() function', () => {
       const url =      'https://httpbin.org/post';
       const resource = { name: 'Saturn', position: 6 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
+         const expected = { planet: resource,              type: 'object' };
          assert.deepEqual(actual, expected);
          done();
          };
