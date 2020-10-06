@@ -186,15 +186,19 @@ To support really old browsers, include polyfills for
 <script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0/dist/fetch.umd.min.js></script>
 ```
 **Note:**
-JSDOM does not include `fetch`, so you need to add a polyfill (see usage of `whatwg-fetch` in
-[spec/jsdom.js](spec/jsdom.js) and
-[gulpfile.js](gulpfile.js).
+JSDOM does not include `fetch`, so you need to add a polyfill.&nbsp;
+See usage of `whatwg-fetch` in [spec/jsdom.js](spec/jsdom.js) and [gulpfile.js](gulpfile.js).
 
 ## 8) Contributor Notes
 To be a contributor, fork the project and run the commands `npm install` and `npm test` on your
 local clone.&nbsp; Make your edits and rerun the tests.&nbsp; Pull requests welcome.
 
-Pull requests should not update the `version` number in **package.json** or any files in the `dist` folder.&nbsp; The `version` number and `dist` files are all updated as part of the release process.
+Pull requests (PRs) should not update the `version` number in **package.json** or any files in the
+`dist` folder.&nbsp; The `version` number and `dist` files are all updated as part of the release
+process.
+
+Issues labeled **"good first issue"** make it easy for first time contributors to participate.&nbsp;
+Only submit a PR for one of these issues if you're new to this project.
 
 <br>
 
