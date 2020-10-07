@@ -43,35 +43,25 @@ const fetchJson = {
       if (fetchJson.logger)
          fetchJson.logger(new Date().toISOString(), 'request', settings.method, logDomain, logUrl);
       return fetch(url, settings).then(toJson);
-   },
-   get(url, params, options) {
-      return fetchJson.request('GET', url, params, options);
-   },
-   post(url, resource, options) {
-      return fetchJson.request('POST', url, resource, options);
-   },
-   put(url, resource, options) {
-      return fetchJson.request('PUT', url, resource, options);
-   },
-   patch(url, resource, options) {
-      return fetchJson.request('PATCH', url, resource, options);
-   },
-   delete(url, resource, options) {
-      return fetchJson.request('DELETE', url, resource, options);
-   },
+      },
+   get:    (url, params,   options) => fetchJson.request('GET',    url, params,   options),
+   post:   (url, resource, options) => fetchJson.request('POST',   url, resource, options),
+   put:    (url, resource, options) => fetchJson.request('PUT',    url, resource, options),
+   patch:  (url, resource, options) => fetchJson.request('PATCH',  url, resource, options),
+   delete: (url, resource, options) => fetchJson.request('DELETE', url, resource, options),
    logger: null,  //null or a function
    getLogHeaders() {
       return ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'];
-   },
+      },
    getLogHeaderIndex() {
       return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
-   },
+      },
    enableLogger(booleanOrFn) {
       const isFn = typeof booleanOrFn === 'function';
       fetchJson.logger = isFn ? booleanOrFn : booleanOrFn === false ? null : console.log;
       return fetchJson.logger;
-   }
-};
+      },
+   };
 
 if (typeof module === 'object')
    module.exports = fetchJson;  //node module loading system (CommonJS)
