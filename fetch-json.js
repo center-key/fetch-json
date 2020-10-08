@@ -5,17 +5,17 @@ const fetch = typeof window === 'object' && window.fetch || require('node-fetch'
 const fetchJson = {
    version: '[VERSION]',
    request(method, url, data, options) {
-      const settings = {
+      const defaults = {
          method:       method.toUpperCase(),
          credentials:  'same-origin',
          strictErrors: false
          };
-      Object.assign(settings, options);
+      const settings = { ...defaults, ...options };
       const isGetRequest = settings.method === 'GET';
       const jsonHeaders = { 'Accept': 'application/json' };
       if (!isGetRequest && data)
          jsonHeaders['Content-Type'] = 'application/json';
-      settings.headers = Object.assign(jsonHeaders, options && options.headers);
+      settings.headers = {...jsonHeaders, ...options && options.headers};
       const toPair = (key) => key + '=' + encodeURIComponent(data[key]);  //build query string field-value
       const paramKeys = isGetRequest && data && Object.keys(data);
       if (paramKeys && paramKeys.length)

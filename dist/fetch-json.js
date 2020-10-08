@@ -4,18 +4,18 @@ const fetch = typeof window === 'object' && window.fetch || require('node-fetch'
 
 const fetchJson = {
    version: '2.2.7',
-   request: (method, url, data, options) => {
-      const settings = {
+   request(method, url, data, options) {
+      const defaults = {
          method:       method.toUpperCase(),
          credentials:  'same-origin',
          strictErrors: false
          };
-      Object.assign(settings, options);
+      const settings = { ...defaults, ...options };
       const isGetRequest = settings.method === 'GET';
       const jsonHeaders = { 'Accept': 'application/json' };
       if (!isGetRequest && data)
          jsonHeaders['Content-Type'] = 'application/json';
-      settings.headers = Object.assign(jsonHeaders, options && options.headers);
+      settings.headers = {...jsonHeaders, ...options && options.headers};
       const toPair = (key) => key + '=' + encodeURIComponent(data[key]);  //build query string field-value
       const paramKeys = isGetRequest && data && Object.keys(data);
       if (paramKeys && paramKeys.length)
@@ -50,15 +50,17 @@ const fetchJson = {
    patch:  (url, resource, options) => fetchJson.request('PATCH',  url, resource, options),
    delete: (url, resource, options) => fetchJson.request('DELETE', url, resource, options),
    logger: null,  //null or a function
-   getLogHeaders: () =>
-      ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'],
-   getLogHeaderIndex: () =>
-      ({ timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 }),
-   enableLogger: (booleanOrFn) => {
+   getLogHeaders() {
+      return ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'];
+      },
+   getLogHeaderIndex() {
+      return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
+      },
+   enableLogger(booleanOrFn) {
       const isFn = typeof booleanOrFn === 'function';
       fetchJson.logger = isFn ? booleanOrFn : booleanOrFn === false ? null : console.log;
       return fetchJson.logger;
-      }
+      },
    };
 
 if (typeof module === 'object')
