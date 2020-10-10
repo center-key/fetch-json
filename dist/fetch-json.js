@@ -1,9 +1,9 @@
-//! fetch-json v2.2.7 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.2.8 ~ github.com/center-key/fetch-json ~ MIT License
 
 const fetch = typeof window === 'object' && window.fetch || require('node-fetch');
 
 const fetchJson = {
-   version: '2.2.7',
+   version: '2.2.8',
    request(method, url, data, options) {
       const defaults = {
          method:       method.toUpperCase(),
@@ -15,7 +15,7 @@ const fetchJson = {
       const jsonHeaders = { 'Accept': 'application/json' };
       if (!isGetRequest && data)
          jsonHeaders['Content-Type'] = 'application/json';
-      settings.headers = {...jsonHeaders, ...options && options.headers};
+      settings.headers = { ...jsonHeaders, ...options && options.headers };
       const toPair = (key) => key + '=' + encodeURIComponent(data[key]);  //build query string field-value
       const paramKeys = isGetRequest && data && Object.keys(data);
       if (paramKeys && paramKeys.length)

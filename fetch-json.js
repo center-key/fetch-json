@@ -15,7 +15,7 @@ const fetchJson = {
       const jsonHeaders = { 'Accept': 'application/json' };
       if (!isGetRequest && data)
          jsonHeaders['Content-Type'] = 'application/json';
-      settings.headers = {...jsonHeaders, ...options && options.headers};
+      settings.headers = { ...jsonHeaders, ...options && options.headers };
       const toPair = (key) => key + '=' + encodeURIComponent(data[key]);  //build query string field-value
       const paramKeys = isGetRequest && data && Object.keys(data);
       if (paramKeys && paramKeys.length)
