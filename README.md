@@ -11,7 +11,20 @@ _A wrapper around Fetch just for JSON_
 
 Why would you fetch anything but json? ;)
 
-## 1) Setup
+## 1) Make REST easy
+**fetch-json** automatically:
+1. Converts the HTTP response to JSON if it's not already JSON (especially convenient for HTTP errors)
+1. Serializes the body payload with `JSON.stringify()`
+1. Adds the `application/json` HTTP header to set the data type
+1. Appends the GET `params` object items to the URL
+1. Runs `.json()` on the response
+1. Sets `credentials` to `'same-origin'` (support user sessions in Grails, Rails, PHP, Django, Flask, etc.)
+
+**fetch-json** is ideal for a [JAMstack](https://jamstack.org) architecture  where "dynamic
+programming during the request/response cycle is handled by JavaScript, running entirely on the
+client".
+
+## 2) Setup
 ### Browser
 In a web page:
 ```html
@@ -31,7 +44,7 @@ and then import:
 const fetchJson = require('fetch-json');
 ```
 
-## 2) Examples
+## 3) Examples
 ### HTTP GET
 Fetch the NASA Astronomy Picture of the Day:
 ```javascript
@@ -59,7 +72,7 @@ For more examples, see the Mocha specification cases:<br>
 To see a website that incorporates **fetch-json**, check out DataDashboard:<br>
 [data-dashboard.js.org 📊](https://data-dashboard.js.org)
 
-## 3) Leverages the Fetch API and node-fetch
+## 4) Leverages the Fetch API and node-fetch
 **fetch-json** calls the native
 **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**
 if in a web browser and calls
@@ -87,19 +100,6 @@ fetch('https://httpbin.org/post', options)
    .catch(console.error);
 ```
 The example _with_ **fetch-json** and the example _without_ **fetch-json** each produce the same output.
-
-## 4) Details
-**fetch-json** makes REST easy &mdash; it automatically:
-1. Converts the HTTP response to JSON if it's not already JSON (convenient for HTTP errors)
-1. Serializes the body payload with `JSON.stringify()`
-1. Adds the `application/json` HTTP header to set the data type
-1. Appends the GET `params` object items to the URL
-1. Runs `.json()` on the response
-1. Sets `credentials` to `'same-origin'` (support user sessions in Grails, Rails, PHP, Django, Flask, etc.)
-
-**fetch-json** is ideal for a [JAMstack](https://jamstack.org) architecture  where "dynamic
-programming during the request/response cycle is handled by JavaScript, running entirely on the
-client".
 
 ## 5) API
 ### API &mdash; HTTP Request
