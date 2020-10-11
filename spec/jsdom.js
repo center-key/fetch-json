@@ -74,7 +74,7 @@ describe('Star Wars API result for spaceships fetched by fetchJson.get()', () =>
 
    it('contains an array of spaceships', (done) => {
 
-      const url = 'https://swapi.dev/api/starships/';
+      const url = 'https://swapi.py4e.com/api/starships/';
       const params = { format: 'json' };
       const handleData = (data) => {
          const actual =   { count: typeof data.count, class: typeof data.results[0].starship_class };
