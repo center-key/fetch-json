@@ -24,13 +24,13 @@ describe('Module fetch-json', () => {
       const semVerPattern = /\d+[.]\d+[.]\d+/;
       const actual =   { version: fetchJson.version, valid: semVerPattern.test(fetchJson.version) };
       const expected = { version: fetchJson.version, valid: true };
-      assert.deepEqual(actual, expected);
+      assert.deepStrictEqual(actual, expected);
       });
 
    it('loads as an object', () => {
       const actual =   { module: typeof fetchJson };
       const expected = { module: 'object' };
-      assert.deepEqual(actual, expected);
+      assert.deepStrictEqual(actual, expected);
       });
 
    it('has functions for get(), post(), put(), patch(), and delete()', () => {
@@ -48,7 +48,7 @@ describe('Module fetch-json', () => {
          patch:  'function',
          delete: 'function'
          };
-      assert.deepEqual(actual, expected);
+      assert.deepStrictEqual(actual, expected);
       });
 
    });
@@ -61,7 +61,7 @@ describe('Google Books API search result for "spacex" fetched by fetchJson.get()
       const handleData = (data) => {
          const actual =   { total: typeof data.totalItems, kind: data.kind };
          const expected = { total: 'number',               kind: 'books#volumes' };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.get(url).then(handleData);
@@ -79,7 +79,7 @@ describe('Star Wars API result for spaceships fetched by fetchJson.get()', () =>
       const handleData = (data) => {
          const actual =   { count: typeof data.count, class: typeof data.results[0].starship_class };
          const expected = { count: 'number',          class: 'string' };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.get(url, params).then(handleData);
@@ -95,7 +95,7 @@ describe('GET response returned by httpbin.org', () => {
       const handleData = (data) => {
          const actual =   { params: Object.keys(data.args) };
          const expected = { params: [] };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.get(url).then(handleData);
@@ -106,7 +106,7 @@ describe('GET response returned by httpbin.org', () => {
       const handleData = (data) => {
          const actual =   toPlainObj(data.args);
          const expected = { planet: 'Jupiter', position: '5' };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.get(url).then(handleData);
@@ -118,7 +118,7 @@ describe('GET response returned by httpbin.org', () => {
       const handleData = (data) => {
          const actual =   toPlainObj(data.args);
          const expected = { planet: 'Jupiter', position: '5', tip: 'Big & -148°C' };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.get(url, params).then(handleData);
@@ -130,7 +130,7 @@ describe('GET response returned by httpbin.org', () => {
       const handleData = (data) => {
          const actual =   toPlainObj(data.args);
          const expected = { sort: 'diameter', planet: 'Jupiter', position: '5' };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.get(url, params).then(handleData);
@@ -147,7 +147,7 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       const handleData = (data) => {
          const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
          const expected = { planet: resource,              type: 'object' };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.post(url, resource).then(handleData);
@@ -159,7 +159,7 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       const handleData = (data) => {
          const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
          const expected = { planet: resource,              type: 'object' };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.put(url, resource).then(handleData);
@@ -171,7 +171,7 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       const handleData = (data) => {
          const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
          const expected = { planet: resource,              type: 'object' };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.patch(url, resource).then(handleData);
@@ -183,7 +183,7 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
       const handleData = (data) => {
          const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
          const expected = { planet: resource,              type: 'object' };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.delete(url, resource).then(handleData);
@@ -200,7 +200,7 @@ describe('The low-level fetchJson.request() function', () => {
       const handleData = (data) => {
          const actual =   toPlainObj(data.args);
          const expected = { planet: 'Neptune', position: '8' };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.request('get', url, params).then(handleData);
@@ -212,7 +212,7 @@ describe('The low-level fetchJson.request() function', () => {
       const handleData = (data) => {
          const actual =   { planet: toPlainObj(data.json), type: typeof data.json };
          const expected = { planet: resource,              type: 'object' };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.request('POST', url, resource).then(handleData);
@@ -238,7 +238,7 @@ describe('HTTP error returned by httpbin.org', () => {
             status:      [500, 'INTERNAL SERVER ERROR'],
             contentType: 'text/html; charset=utf-8'
             };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       const handleError = (error) => {
@@ -263,7 +263,7 @@ describe('HTTP error returned by httpbin.org', () => {
             name:    'Error',
             message: 'HTTP response status ("strictErrors" mode enabled): 500'
             };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.get(url, {}, { strictErrors: true }).then(handleData).catch(handleError);
@@ -284,7 +284,7 @@ describe('HTTP error returned by httpbin.org', () => {
             status:      [418, 'I\'M A TEAPOT'],
             contentType: null
             };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          console.log(data.bodyText);
          };
@@ -316,7 +316,7 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             contentType: 'text/html; charset=utf-8',
             firstLine:   '<!DOCTYPE html>'
             };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.get(url).then(handleData);
@@ -337,7 +337,7 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             contentType: 'application/xml',
             firstLine:   '<?xml version=\'1.0\' encoding=\'us-ascii\'?>'
             };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.get(url).then(handleData);
@@ -358,7 +358,7 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             contentType: 'text/plain',
             firstLine:   'User-agent: *'
             };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          done();
          };
       fetchJson.get(url).then(handleData);
@@ -374,14 +374,14 @@ describe('Function fetchJson.enableLogger()', () => {
       fetchJson.enableLogger(mockLogger);
       const actual =   { type: typeof fetchJson.logger, fn: fetchJson.logger };
       const expected = { type: 'function',              fn: mockLogger };
-      assert.deepEqual(actual, expected);
+      assert.deepStrictEqual(actual, expected);
       });
 
    it('disables the logger when passed false', () => {
       fetchJson.enableLogger(false);
       const actual =   { logger: fetchJson.logger, disabled: !fetchJson.logger };
       const expected = { logger: null,             disabled: true };
-      assert.deepEqual(actual, expected);
+      assert.deepStrictEqual(actual, expected);
       });
 
    it('passes a timestamp, methed, and URL to a custom logger on GET', (done) => {
@@ -411,7 +411,7 @@ describe('Function fetchJson.enableLogger()', () => {
             text:      awaitingRequest ? undefined : 'OK',
             type:      awaitingRequest ? undefined : 'application/json'
             };
-         assert.deepEqual(actual, expected);
+         assert.deepStrictEqual(actual, expected);
          if (logValues[index.http] === 'request')
             awaitingRequest = false;
          else
