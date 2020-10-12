@@ -33,6 +33,7 @@
       "eqeqeq": true,
       "undef": true,
       "unused": true,
+      "varstmt": true,
       "browser": true,
       "mocha": true,
       "node": true,
