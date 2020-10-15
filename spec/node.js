@@ -33,14 +33,14 @@ describe('Module fetch-json', () => {
          post:   typeof fetchJson.post,
          put:    typeof fetchJson.put,
          patch:  typeof fetchJson.patch,
-         delete: typeof fetchJson.delete
+         delete: typeof fetchJson.delete,
          };
       const expected = {
          get:    'function',
          post:   'function',
          put:    'function',
          patch:  'function',
-         delete: 'function'
+         delete: 'function',
          };
       assert.deepStrictEqual(actual, expected);
       });
@@ -224,13 +224,13 @@ describe('HTTP error returned by httpbin.org', () => {
             error:       data.error,
             ok:          data.ok,
             status:      [data.status, data.statusText],
-            contentType: data.contentType
+            contentType: data.contentType,
             };
          const expected = {
             error:       true,
             ok:          false,
             status:      [500, 'INTERNAL SERVER ERROR'],
-            contentType: 'text/html; charset=utf-8'
+            contentType: 'text/html; charset=utf-8',
             };
          assert.deepStrictEqual(actual, expected);
          done();
@@ -250,12 +250,12 @@ describe('HTTP error returned by httpbin.org', () => {
          const actual = {
             error:   error instanceof (typeof window === 'object' ? window.Error : Error),
             name:    error.name,
-            message: error.message
+            message: error.message,
             };
          const expected = {
             error:   true,
             name:    'Error',
-            message: 'HTTP response status ("strictErrors" mode enabled): 500'
+            message: 'HTTP response status ("strictErrors" mode enabled): 500',
             };
          assert.deepStrictEqual(actual, expected);
          done();
@@ -270,13 +270,13 @@ describe('HTTP error returned by httpbin.org', () => {
             error:       data.error,
             ok:          data.ok,
             status:      [data.status, data.statusText],
-            contentType: data.contentType
+            contentType: data.contentType,
             };
          const expected = {
             error:       true,
             ok:          false,
             status:      [418, 'I\'M A TEAPOT'],
-            contentType: null
+            contentType: null,
             };
          assert.deepStrictEqual(actual, expected);
          done();
@@ -302,13 +302,13 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             ok:          data.ok,
             status:      [data.status, data.statusText],
             contentType: data.contentType,
-            firstLine:   getFirstLine(data.bodyText)
+            firstLine:   getFirstLine(data.bodyText),
             };
          const expected = {
             ok:          true,
             status:      [200, 'OK'],
             contentType: 'text/html; charset=utf-8',
-            firstLine:   '<!DOCTYPE html>'
+            firstLine:   '<!DOCTYPE html>',
             };
          assert.deepStrictEqual(actual, expected);
          done();
@@ -323,13 +323,13 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             ok:          data.ok,
             status:      [data.status, data.statusText],
             contentType: data.contentType,
-            firstLine:   getFirstLine(data.bodyText)
+            firstLine:   getFirstLine(data.bodyText),
             };
          const expected = {
             ok:          true,
             status:      [200, 'OK'],
             contentType: 'application/xml',
-            firstLine:   '<?xml version=\'1.0\' encoding=\'us-ascii\'?>'
+            firstLine:   '<?xml version=\'1.0\' encoding=\'us-ascii\'?>',
             };
          assert.deepStrictEqual(actual, expected);
          done();
@@ -344,13 +344,13 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             ok:          data.ok,
             status:      [data.status, data.statusText],
             contentType: data.contentType,
-            firstLine:   getFirstLine(data.bodyText)
+            firstLine:   getFirstLine(data.bodyText),
             };
          const expected = {
             ok:          true,
             status:      [200, 'OK'],
             contentType: 'text/plain',
-            firstLine:   'User-agent: *'
+            firstLine:   'User-agent: *',
             };
          assert.deepStrictEqual(actual, expected);
          done();
@@ -393,7 +393,7 @@ describe('Function fetchJson.enableLogger()', () => {
             ok:        logValues[index.ok],
             status:    logValues[index.status],
             text:      logValues[index.text],
-            type:      logValues[index.type]
+            type:      logValues[index.type],
             };
          const expected = {
             timestamp: isoTimestampLength,
@@ -403,7 +403,7 @@ describe('Function fetchJson.enableLogger()', () => {
             ok:        awaitingRequest ? undefined : true,
             status:    awaitingRequest ? undefined : 200,
             text:      awaitingRequest ? undefined : 'OK',
-            type:      awaitingRequest ? undefined : 'application/json'
+            type:      awaitingRequest ? undefined : 'application/json',
             };
          assert.deepStrictEqual(actual, expected);
          if (logValues[index.http] === 'request')
