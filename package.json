@@ -39,7 +39,8 @@
       "node": true,
       "globals": {
          "fetch": true
-      }
+      },
+      "nonbsp": false
    },
    "scripts": {
       "pretest": "jshint *.js spec docs && gulp lint-html && gulp build-dist",
