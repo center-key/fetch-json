@@ -8,7 +8,7 @@ const fetchJson = {
       const defaults = {
          method:       method.toUpperCase(),
          credentials:  'same-origin',
-         strictErrors: false
+         strictErrors: false,
          };
       const settings = { ...defaults, ...options };
       const isGetRequest = settings.method === 'GET';
