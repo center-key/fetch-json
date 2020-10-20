@@ -1,7 +1,7 @@
 {
    "name": "fetch-json",
    "description": "A wrapper around Fetch just for JSON",
-   "version": "2.2.8",
+   "version": "2.2.9",
    "license": "MIT",
    "main": "dist/fetch-json.js",
    "browser": "dist/fetch-json.min.js",
@@ -49,8 +49,8 @@
    "types": "./types.d.ts",
    "dependencies": {},
    "devDependencies": {
-      "@babel/core": "~7.11",
-      "@babel/preset-env": "~7.11",
+      "@babel/core": "~7.12",
+      "@babel/preset-env": "~7.12",
       "@fortawesome/fontawesome-free": "~5.15",
       "babel-minify": "~0.5",
       "canvas": "~2.6",
@@ -67,10 +67,10 @@
       "jquery": "~3.5",
       "jsdom": "~16.4",
       "jshint": "~2.12",
-      "mocha": "~8.1",
+      "mocha": "~8.2",
       "node-fetch": "~2.6",
       "promise-polyfill": "~8.1",
-      "typescript": "^4.0.3",
+      "typescript": "~4.0",
       "web-ignition": "~1.3",
       "whatwg-fetch": "~3.4"
    }
