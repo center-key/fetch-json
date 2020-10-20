@@ -60,7 +60,7 @@ const example = {
       const url = 'https://www.googleapis.com/books/v1/volumes?q=spacex';
       fetchJson.get(url).then(handleData).catch(console.error);
 
-      }
+      },
 
    };
 
