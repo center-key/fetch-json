@@ -32,7 +32,7 @@ const task = {
          .pipe(size({ showFiles: true }));
       },
    buildDistribution: () => {
-      return gulp.src('fetch-json.js')
+      return gulp.src('dist/fetch-json.js')
          .pipe(replace(headerComments, ''))
          .pipe(header(bannerJs))
          .pipe(replace('[VERSION]', pkg.version))

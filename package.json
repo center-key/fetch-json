@@ -5,6 +5,8 @@
    "license": "MIT",
    "main": "dist/fetch-json.js",
    "browser": "dist/fetch-json.min.js",
+   "types": "dist/fetch-json.d.ts",
+   "files": ["dist"],
    "repository": "github:center-key/fetch-json",
    "homepage": "https://fetch-json.js.org",
    "bugs": "https://github.com/center-key/fetch-json/issues",
@@ -43,12 +45,11 @@
       "nonbsp": false
    },
    "scripts": {
-      "pretest": "jshint *.js spec docs && gulp lint-html && gulp build-dist",
+      "pretest": "jshint *.js spec docs && gulp lint-html && npm run build",
       "test": "mocha --timeout 10000 spec/*.js",
-      "build": "tsc",
+      "build": "tsc && gulp build-dist",
       "typecheck": "tsc --noEmit"
    },
-   "types": "./types.d.ts",
    "dependencies": {},
    "devDependencies": {
       "@babel/core": "~7.11",

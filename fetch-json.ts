@@ -1,4 +1,4 @@
-//! fetch-json v2.2.8 ~ github.com/center-key/fetch-json ~ MIT License
+// fetch-json ~ MIT License
 
 type Method =
 	| 'GET'
@@ -34,6 +34,12 @@ type RequestData = {[key: string]: string | number | boolean};
 
 type FetchRequest = (method: Method, url: string, data: RequestData, options: RequestOptions) => Promise<Response>;
 type FetchRequestWithMethod = (url: string, data: RequestData, options: RequestOptions) => Promise<Response>;
+interface TextToObjResponse {
+  error: boolean;
+  contentType: string | null;
+  bodyText: string;
+}
+type FetchResponse = Response & Partial<TextToObjResponse>;
 
 type LoggerFn = (dateIso?: string, type?: 'response' | 'request', method?: Method, logDomain?: string, logUrl?: string, ok?: boolean, status?: number, statusText?: string, contentType?: string | null) => void;
 type Log = (...x: any[]) => void;
@@ -87,16 +93,16 @@ const fetchJson: FetchJson = {
     }
     const logUrl = url.replace(/[?].*/, ''); //security: prevent logging url parameters
     const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, ''); //extract hostname
-    const toJson = (response: Response) => {
+    const toJson = (response: FetchResponse) => {
       const contentType = response.headers.get('content-type');
       const isJson = contentType && /json|javascript/.test(contentType); //match "application/json" or "text/javascript"
-      const textToObj = (httpBody: string) => ({
-        ...response,
-        error: !response.ok,
-        contentType: contentType,
-        bodyText: httpBody,
-      });
-      if (fetchJson.logger)
+      const textToObj = (httpBody: string) => {
+        response.error = !response.ok;
+        response.contentType = contentType;
+        response.bodyText = httpBody;
+        return response;
+      };
+      if (fetchJson.logger) {
         fetchJson.logger(
           new Date().toISOString(),
           'response',
@@ -108,10 +114,12 @@ const fetchJson: FetchJson = {
           response.statusText,
           contentType
         );
-      if (settings.strictErrors && !response.ok)
+      }
+      if (settings.strictErrors && !response.ok) {
         throw Error(
           `HTTP response status ("strictErrors" mode enabled): ${response.status}`
         );
+      }
       return isJson ? response.json() : response.text().then(textToObj);
     };
     if (fetchJson.logger)
