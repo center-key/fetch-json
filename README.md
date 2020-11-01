@@ -88,9 +88,9 @@ const options = {
    method: 'POST',
    headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      'Accept': 'application/json',
       },
-   body: JSON.stringify(resource)
+   body: JSON.stringify(resource),
    };
 const handleData = (data) =>
    console.log(data);  //http response body as an object literal
@@ -171,7 +171,7 @@ similar to:
    status:      500,
    statusText:  'INTERNAL SERVER ERROR',
    contentType: 'text/html; charset=utf-8',
-   bodyText:    '<!doctype html><html lang=en><body>Server Error</body></html>'
+   bodyText:    '<!doctype html><html lang=en><body>Server Error</body></html>',
 }
 ```
 With **fetch-json**, you know the response body will always be passed back to you as a simple
@@ -182,8 +182,8 @@ To support really old browsers, include polyfills for
 [Promise](https://github.com/taylorhakes/promise-polyfill/) and
 [Fetch API](https://github.com/github/fetch):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/promise-polyfill@8.1/dist/polyfill.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@3.0/dist/fetch.umd.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/promise-polyfill@8.2/dist/polyfill.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@3.4/dist/fetch.umd.min.js></script>
 ```
 **Note:**
 JSDOM does not include `fetch`, so you need to add a polyfill.&nbsp;
