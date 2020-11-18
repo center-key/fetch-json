@@ -25,7 +25,7 @@ programming during the request/response cycle is handled by JavaScript, running 
 client".
 
 ## 2) Setup
-### Browser
+### Web browser
 In a web page:
 ```html
 <script src=fetch-json.min.js></script>
@@ -34,8 +34,8 @@ or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ```html
 <script src=https://cdn.jsdelivr.net/npm/fetch-json@2.2/dist/fetch-json.min.js></script>
 ```
-### node
-Install package:
+### Node.js server
+Install package for node:
 ```shell
 $ npm install node-fetch fetch-json
 ```
@@ -189,16 +189,13 @@ To support really old browsers, include polyfills for
 JSDOM does not include `fetch`, so you need to add a polyfill.&nbsp;
 See usage of `whatwg-fetch` in [spec/jsdom.js](spec/jsdom.js) and [gulpfile.js](gulpfile.js).
 
-## 8) Contributor Notes
+## 8) Contributor notes
 To be a contributor, fork the project and run the commands `npm install` and `npm test` on your
 local clone.&nbsp; Make your edits and rerun the tests.&nbsp; Pull requests welcome.
 
 Pull requests (PRs) should not update the `version` number in **package.json** or any files in the
 `dist` folder.&nbsp; The `version` number and `dist` files are all updated as part of the release
 process.
-
-Issues labeled **"good first issue"** make it easy for first time contributors to participate.&nbsp;
-Only submit a PR for one of these issues if you're new to this project.
 
 <br>
 
