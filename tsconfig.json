@@ -3,10 +3,10 @@
     "rootDir": "./",
     "outDir": "dist",
     "alwaysStrict": false,
-    "target": "es5", // Node.js 8
+    "target": "es2015",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "declaration": true,
+    "declaration": false,
     "pretty": true,
     "newLine": "lf",
     "stripInternal": true,
@@ -19,6 +19,8 @@
     "lib": [ "es2015", "dom" ],
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   }
 }

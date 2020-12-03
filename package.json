@@ -49,10 +49,9 @@
    "scripts": {
       "pretest": "jshint *.js spec docs && gulp lint-html && npm run build",
       "test": "mocha --timeout 10000 spec/*.js",
-      "build": "tsc && gulp build-dist",
-      "typecheck": "tsc --noEmit"
+      "prebuild": "tsc --noEmit && gulp build-declarations",
+      "build": "gulp build-dist"
    },
-   "dependencies": {},
    "devDependencies": {
       "@babel/core": "~7.12",
       "@babel/preset-env": "~7.12",
@@ -69,6 +68,7 @@
       "gulp-rename": "~2.0",
       "gulp-replace": "~1.0",
       "gulp-size": "~3.0",
+      "gulp-typescript": "^6.0.0-alpha.1",
       "gulp-w3c-html-validator": "~2.0",
       "jquery": "~3.5",
       "jsdom": "~16.4",
