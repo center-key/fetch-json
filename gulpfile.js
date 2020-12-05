@@ -11,6 +11,7 @@ const htmlValidator = require('gulp-w3c-html-validator');
 const replace =       require('gulp-replace');
 const rename =        require('gulp-rename');
 const size =          require('gulp-size');
+const ts =            require('gulp-typescript');
 
 // Setup
 const pkg =            require('./package.json');
@@ -19,7 +20,10 @@ const bannerJs =       '//! fetch-json v' + pkg.version + ' ~ ' + home + ' ~ MIT
 const htmlHintConfig = { 'attr-value-double-quotes': false };
 const headerComments = /^[/][/].*\n/gm;
 const transpileES6 =   ['@babel/env', { modules: false }];
-const babelMinifyJs =  { presets: [transpileES6, 'minify'], comments: false };
+const babelMinifyJs = { presets: [transpileES6, 'minify'], comments: false };
+const tsWithConfig = ts.createProject('tsconfig.json');
+const tsWithDeclarationsOnly = ts.createProject('tsconfig.json', { 'declaration': true, 'emitDeclarationOnly': true });
+const sourceFilename = 'fetch-json.ts';
 
 // Tasks
 const task = {
@@ -32,7 +36,8 @@ const task = {
          .pipe(size({ showFiles: true }));
       },
    buildDistribution: () => {
-      return gulp.src('fetch-json.js')
+      return gulp.src(sourceFilename)
+         .pipe(tsWithConfig())
          .pipe(replace(headerComments, ''))
          .pipe(header(bannerJs))
          .pipe(replace('[VERSION]', pkg.version))
@@ -46,8 +51,14 @@ const task = {
          .pipe(size({ showFiles: true, gzip: true }))
          .pipe(gulp.dest('dist'));
       },
+      buildDeclarationFile: () => {
+         return gulp.src(sourceFilename)
+            .pipe(tsWithDeclarationsOnly())
+            .pipe(gulp.dest('dist'));
+      }
    };
 
 // Gulp
 gulp.task('lint-html',  task.analyzeHtml);
+gulp.task('build-declarations', task.buildDeclarationFile);
 gulp.task('build-dist', task.buildDistribution);

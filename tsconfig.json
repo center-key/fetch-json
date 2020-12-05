@@ -1,16 +1,12 @@
 {
-  "files": [
-    "./*.ts"
-  ],
   "compilerOptions": {
     "rootDir": "./",
-    "baseUrl": "./",
-    "target": "es2017", // Node.js 8
-    "module": "commonjs",
+    "outDir": "dist",
+    "alwaysStrict": false,
+    "target": "es2015",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "jsx": "react",
-    "declaration": true,
+    "declaration": false,
     "pretty": true,
     "newLine": "lf",
     "stripInternal": true,
@@ -24,7 +20,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "typeRoots": [
-      "./"
+      "node_modules/@types"
     ]
   }
 }
