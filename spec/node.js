@@ -197,7 +197,7 @@ describe('The low-level fetchJson.request() function', () => {
          assert.deepStrictEqual(actual, expected);
          done();
          };
-      fetchJson.request('get', url, params).then(handleData);
+      fetchJson.request('GET', url, params).then(handleData);
       });
 
    it('can successfully POST a planet', (done) => {
