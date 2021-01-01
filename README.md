@@ -68,7 +68,7 @@ fetchJson.post('https://httpbin.org/post', resource)
    .catch(console.error);
 ```
 For more examples, see the Mocha specification cases:<br>
-[spec-node.js](spec-node.js) ([Mocha output on Travis CI](https://travis-ci.org/center-key/fetch-json))
+[spec/node.js](spec/node.js) ([Mocha output on Travis CI](https://travis-ci.org/center-key/fetch-json))
 
 To see a website that incorporates **fetch-json**, check out DataDashboard:<br>
 [data-dashboard.js.org 📊](https://data-dashboard.js.org)
@@ -179,9 +179,11 @@ With **fetch-json**, you know the response body will always be passed back to yo
 object literal.
 
 ## 7) TypeScript declarations
-The **TypeScript Declaration File** file is [fetch-json.d.ts](dist/fetch-json.d.ts) in the **dist** folder.
+The **TypeScript Declaration File** file is [fetch-json.d.ts](dist/fetch-json.d.ts) in the **dist**
+folder.
 
-For example, the `fetchJson.post()` returns a `FetchResponse` **Promise**:
+The declarations provide type information about the API.  For example, the `fetchJson.post()`
+function returns a `FetchResponse` **Promise**:
 ```typescript
 fetchJson.post(url: string, resource?: RequestData,
    options?: FetchOptions): Promise<FetchResponse>
