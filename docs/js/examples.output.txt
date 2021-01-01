@@ -1,0 +1,58 @@
+
+Examples
+========
+fetch-json v2.3.0
+
+2021-01-01T13:05:01.981Z request GET api.nasa.gov https://api.nasa.gov/planetary/apod
+2021-01-01T13:05:02.001Z request POST httpbin.org https://httpbin.org/post
+2021-01-01T13:05:02.002Z request GET httpbin.org https://httpbin.org/status/418
+2021-01-01T13:05:02.003Z request GET www.googleapis.com https://www.googleapis.com/books/v1/volumes
+2021-01-01T13:05:02.412Z response POST httpbin.org https://httpbin.org/post true 200 OK application/json
+New planet: {
+  args: {},
+  data: '{"name":"Jupiter","position":5}',
+  files: {},
+  form: {},
+  headers: {
+    Accept: 'application/json',
+    'Accept-Encoding': 'gzip,deflate',
+    'Content-Length': '31',
+    'Content-Type': 'application/json',
+    Host: 'httpbin.org',
+    'User-Agent': 'node-fetch/1.0 (+https://github.com/bitinn/node-fetch)',
+    'X-Amzn-Trace-Id': 'Root=1-5fef1dfe-4c79355c65938d916b74eae2'
+  },
+  json: { name: 'Jupiter', position: 5 },
+  origin: '107.199.205.61',
+  url: 'https://httpbin.org/post'
+}
+2021-01-01T13:05:02.421Z response GET httpbin.org https://httpbin.org/status/418 false 418 I'M A TEAPOT null
+
+    -=[ teapot ]=-
+
+       _...._
+     .'  _ _ `.
+    | ."` ^ `". _,
+    \_;`"---"`|//
+      |       ;/
+      \_     _/
+        `"""`
+
+2021-01-01T13:05:02.503Z response GET api.nasa.gov https://api.nasa.gov/planetary/apod true 200 OK application/json
+The NASA APoD for today is at: https://apod.nasa.gov/apod/image/2101/2020_12_16_Kujal_Jizni_Pol_1500px-3.jpg
+2021-01-01T13:05:02.546Z response GET www.googleapis.com https://www.googleapis.com/books/v1/volumes true 200 OK application/json; charset=UTF-8
+SpaceX books:
+[
+  'SpaceX',
+  "SpaceX's Dragon: America's Next Generation Spacecraft",
+  'Summary and Analysis of Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future',
+  'Cutting-Edge SpaceX News',
+  'SpaceX and Tesla Motors Engineer Elon Musk',
+  'Liftoff: the Desperate Early Days of SpaceX, and the Launching of a New Era',
+  'Elon Musk',
+  'Wireless Satellite Monthly Newsletter March 2010',
+  'Crowded Orbits',
+  'NASA'
+]
+
+Done.

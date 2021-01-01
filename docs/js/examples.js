@@ -2,12 +2,13 @@
 // Simple examples
 
 // To run:
+//    $ git clone https://github.com/center-key/fetch-json.git
 //    $ cd fetch-json
 //    $ npm install
-//    $ node docs/examples.js
+//    $ node docs/js/examples
 
 // Setup
-const fetchJson = require('../dist/fetch-json.js');
+const fetchJson = require('../../dist/fetch-json.js');
 fetchJson.enableLogger();
 
 // Intro
@@ -34,7 +35,7 @@ const example = {
 
       // Create Jupiter
       const resource = { name: 'Jupiter', position: 5 };
-      const handleData = (data) => console.log('Planet:', data);
+      const handleData = (data) => console.log('New planet:', data);
       fetchJson.post('https://httpbin.org/post', resource)
          .then(handleData)
          .catch(console.error);

@@ -33,7 +33,7 @@ In a web page:
 ```
 or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/fetch-json@2.2/dist/fetch-json.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/fetch-json@2.3/dist/fetch-json.min.js></script>
 ```
 ### Node.js server
 Install package for node:
@@ -62,7 +62,7 @@ Create a resource for the planet Jupiter:
 // Create Jupiter
 const resource = { name: 'Jupiter', position: 5 };
 const handleData = (data) =>
-   console.log('Planet:', data);  //http response body as an object literal
+   console.log('New planet:', data);  //http response body as an object literal
 fetchJson.post('https://httpbin.org/post', resource)
    .then(handleData)
    .catch(console.error);
@@ -178,7 +178,16 @@ similar to:
 With **fetch-json**, you know the response body will always be passed back to you as a simple
 object literal.
 
-## 7) Legacy web browsers
+## 7) TypeScript declarations
+The **TypeScript Declaration File** file is [fetch-json.d.ts](dist/fetch-json.d.ts) in the **dist** folder.
+
+For example, the `fetchJson.post()` returns a `FetchResponse` **Promise**:
+```typescript
+fetchJson.post(url: string, resource?: RequestData,
+   options?: FetchOptions): Promise<FetchResponse>
+```
+
+## 8) Legacy web browsers
 To support really old browsers, include polyfills for
 [Promise](https://github.com/taylorhakes/promise-polyfill/) and
 [Fetch API](https://github.com/github/fetch):
@@ -190,7 +199,7 @@ To support really old browsers, include polyfills for
 JSDOM does not include `fetch`, so you need to add a polyfill.&nbsp;
 See usage of `whatwg-fetch` in [spec/jsdom.js](spec/jsdom.js) and [gulpfile.js](gulpfile.js).
 
-## 8) Contributor notes
+## 9) Contributor notes
 To be a contributor, fork the project and run the commands `npm install` and `npm test` on your
 local clone.&nbsp; Make your edits and rerun the tests.&nbsp; Pull requests welcome.
 
