@@ -72,6 +72,4 @@ const fetchJson = {
         return fetchJson.logger = typeof booleanOrFn === 'function' ? booleanOrFn : logger;
     },
 };
-
-if (typeof module === "object") module.exports = fetchJson;
-if (typeof window === "object") window.fetchJson = fetchJson;
+export { fetchJson };

@@ -73,5 +73,4 @@ const fetchJson = {
     },
 };
 
-if (typeof module === "object") module.exports = fetchJson;
-if (typeof window === "object") window.fetchJson = fetchJson;
+module.exports = fetchJson;
