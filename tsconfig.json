@@ -1,26 +1,18 @@
 {
-  "compilerOptions": {
-    "rootDir": "./",
-    "outDir": "dist",
-    "alwaysStrict": false,
-    "target": "es2015",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "declaration": false,
-    "pretty": true,
-    "newLine": "lf",
-    "stripInternal": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noEmitOnError": true,
-    "lib": [ "es2015", "dom" ],
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ]
-  }
+   "compilerOptions": {
+      "target": "ES2020",
+      "module": "es2020",
+      "declaration": true,
+      "outDir": "build",
+      "strict": true,
+      "noImplicitAny": true,
+      "noImplicitThis": true,
+      "alwaysStrict": true,
+      "noUnusedLocals": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "noUncheckedIndexedAccess": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true
+   }
 }

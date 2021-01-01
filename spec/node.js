@@ -5,11 +5,11 @@
 const assert = require('assert');
 
 // Setup and utilities
-const fetchJson = require('../dist/fetch-json.js');
+const fetchJson = require('../dist/fetch-json.cjs.js');
 const toPlainObj = (obj) => JSON.parse(JSON.stringify(obj));
 
 // Specificaiton suite
-describe('Specification Cases: node (dist/fetch-json.js)', () => {
+describe('Specification Cases: node (dist/fetch-json.cjs.js)', () => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Module fetch-json', () => {

@@ -4,6 +4,7 @@
    "version": "2.3.0",
    "license": "MIT",
    "main": "dist/fetch-json.js",
+   "module": "dist/fetch-json.es.js",
    "browser": "dist/fetch-json.min.js",
    "types": "dist/fetch-json.d.ts",
    "files": [
@@ -13,12 +14,6 @@
    "homepage": "https://fetch-json.js.org",
    "bugs": "https://github.com/center-key/fetch-json/issues",
    "docs": "https://github.com/center-key/fetch-json#readme",
-   "contributors": [
-      "KahWee Teng (https://twitter.com/kahwee)",
-      "Dem Pilafian (https://twitter.com/dempilafian)",
-      "Calvin Settachatgul (https://github.com/calvinsettachatgul)",
-      "Byron Becker (https://github.com/ByronBecker)"
-   ],
    "keywords": [
       "browser",
       "fetch",
@@ -29,12 +24,14 @@
       "json",
       "node-fetch",
       "post",
-      "rest"
+      "rest",
+      "typescript"
    ],
    "jshintConfig": {
       "esversion": 9,
       "strict": "implied",
       "eqeqeq": true,
+      "nonbsp": false,
       "undef": true,
       "unused": true,
       "varstmt": true,
@@ -43,36 +40,54 @@
       "node": true,
       "globals": {
          "fetch": true
-      },
-      "nonbsp": false
+      }
+   },
+   "eslintConfig": {
+      "ignorePatterns": [
+         "build",
+         "dist",
+         "node_modules"
+      ],
+      "root": true,
+      "parser": "@typescript-eslint/parser",
+      "plugins": [
+         "@typescript-eslint"
+      ],
+      "extends": [
+         "eslint:recommended",
+         "plugin:@typescript-eslint/recommended"
+      ]
    },
    "scripts": {
-      "pretest": "jshint *.js spec docs && gulp lint-html && npm run build",
-      "test": "mocha --timeout 10000 spec/*.js",
-      "prebuild": "tsc --noEmit && gulp build-declarations",
-      "build": "gulp build-dist"
+      "lint": "jshint *.js spec && eslint --max-warnings 0 . --ext .ts",
+      "pretest": "npm run lint && tsc --version && tsc --project . && gulp make-dist",
+      "test": "mocha --timeout 10000 spec/*.js"
    },
+   "dependencies": {},
    "devDependencies": {
       "@babel/core": "~7.12",
       "@babel/preset-env": "~7.12",
       "@fortawesome/fontawesome-free": "~5.15",
       "@types/node": "~14.14",
+      "@typescript-eslint/eslint-plugin": "~4.11",
+      "@typescript-eslint/parser": "~4.11",
       "babel-minify": "~0.5",
       "canvas": "~2.6",
       "dna.js": "~1.6",
+      "eslint": "~7.16",
       "gulp": "~4.0",
       "gulp-append-prepend": "~1.0",
       "gulp-babel": "~8.0",
       "gulp-header": "~2.0",
-      "gulp-htmlhint": "~3.0",
+      "gulp-htmlhint": "~4.0",
       "gulp-rename": "~2.0",
       "gulp-replace": "~1.0",
       "gulp-size": "~3.0",
-      "gulp-typescript": "^6.0.0-alpha.1",
       "gulp-w3c-html-validator": "~2.0",
       "jquery": "~3.5",
       "jsdom": "~16.4",
       "jshint": "~2.12",
+      "merge-stream": "~2.0",
       "mocha": "~8.2",
       "node-fetch": "~2.6",
       "promise-polyfill": "~8.2",

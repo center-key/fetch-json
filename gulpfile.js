@@ -8,25 +8,24 @@ const gulp =          require('gulp');
 const header =        require('gulp-header');
 const htmlHint =      require('gulp-htmlhint');
 const htmlValidator = require('gulp-w3c-html-validator');
-const replace =       require('gulp-replace');
+const mergeStream =   require('merge-stream');
 const rename =        require('gulp-rename');
+const replace =       require('gulp-replace');
 const size =          require('gulp-size');
-const ts =            require('gulp-typescript');
 
 // Setup
-const pkg =            require('./package.json');
-const home =           pkg.repository.replace('github:', 'github.com/');
-const bannerJs =       '//! fetch-json v' + pkg.version + ' ~ ' + home + ' ~ MIT License\n';
-const htmlHintConfig = { 'attr-value-double-quotes': false };
-const headerComments = /^[/][/].*\n/gm;
-const transpileES6 =   ['@babel/env', { modules: false }];
-const babelMinifyJs = { presets: [transpileES6, 'minify'], comments: false };
-const tsWithConfig = ts.createProject('tsconfig.json');
-const tsWithDeclarationsOnly = ts.createProject('tsconfig.json', { 'declaration': true, 'emitDeclarationOnly': true });
-const sourceFilename = 'fetch-json.ts';
+const pkg =             require('./package.json');
+const home =            pkg.repository.replace('github:', 'github.com/');
+const bannerJs =        '//! fetch-json v' + pkg.version + ' ~ ' + home + ' ~ MIT License\n\n';
+const htmlHintConfig =  { 'attr-value-double-quotes': false };
+const headerComments =  /^[/][/].*\n/gm;
+const transpileES6 =    ['@babel/env', { modules: false }];
+const babelMinifyJs =   { presets: [transpileES6, 'minify'], comments: false };
+const exportStatement = /^export { (.*) };/m;
 
 // Tasks
 const task = {
+
    analyzeHtml: () => {
       return gulp.src('docs/*.html')
          .pipe(htmlHint(htmlHintConfig))
@@ -35,30 +34,53 @@ const task = {
          .pipe(htmlValidator.reporter())
          .pipe(size({ showFiles: true }));
       },
-   buildDistribution: () => {
-      return gulp.src(sourceFilename)
-         .pipe(tsWithConfig())
-         .pipe(replace(headerComments, ''))
-         .pipe(header(bannerJs))
-         .pipe(replace('[VERSION]', pkg.version))
-         .pipe(size({ showFiles: true }))
-         .pipe(gulp.dest('dist'))
-         .pipe(babel(babelMinifyJs))
-         .pipe(rename({ extname: '.min.js' }))
-         .pipe(header(bannerJs))
-         .pipe(gap.appendText('\n'))
-         .pipe(size({ showFiles: true }))
-         .pipe(size({ showFiles: true, gzip: true }))
-         .pipe(gulp.dest('dist'));
-      },
-      buildDeclarationFile: () => {
-         return gulp.src(sourceFilename)
-            .pipe(tsWithDeclarationsOnly())
+
+   makeDistribution: () => {
+      const umd = '\n' +
+         'if (typeof module === "object") module.exports = $1;\n' +
+         'if (typeof window === "object") window.$1 = $1;';
+      const buildDef = () =>
+         gulp.src('build/fetch-json.d.ts')
+            .pipe(header(bannerJs))
+            .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('dist'));
-      }
+      const buildEs = () =>
+         gulp.src('build/fetch-json.js')
+            .pipe(replace(headerComments, ''))
+            .pipe(header(bannerJs))
+            .pipe(replace('[VERSION]', pkg.version))
+            .pipe(size({ showFiles: true }))
+            .pipe(rename({ extname: '.es.js' }))
+            .pipe(gulp.dest('dist'));
+      const buildCjs = () =>
+         gulp.src('build/fetch-json.js')
+            .pipe(replace(headerComments, ''))
+            .pipe(header(bannerJs))
+            .pipe(replace('[VERSION]', pkg.version))
+            .pipe(replace(exportStatement, '\nmodule.exports = $1;'))
+            .pipe(rename({ extname: '.cjs.js' }))
+            .pipe(size({ showFiles: true }))
+            .pipe(gulp.dest('dist'));
+      const buildJs = () =>
+         gulp.src('build/fetch-json.js')
+            .pipe(replace(headerComments, ''))
+            .pipe(header(bannerJs))
+            .pipe(replace('[VERSION]', pkg.version))
+            .pipe(replace(exportStatement, umd))
+            .pipe(size({ showFiles: true }))
+            .pipe(gulp.dest('dist'))
+            .pipe(babel(babelMinifyJs))
+            .pipe(rename({ extname: '.min.js' }))
+            .pipe(header(bannerJs.replace('\n\n', '\n')))
+            .pipe(gap.appendText('\n'))
+            .pipe(size({ showFiles: true }))
+            .pipe(size({ showFiles: true, gzip: true }))
+            .pipe(gulp.dest('dist'));
+      return mergeStream(buildDef(), buildEs(), buildCjs(), buildJs());
+      },
+
    };
 
 // Gulp
-gulp.task('lint-html',  task.analyzeHtml);
-gulp.task('build-declarations', task.buildDeclarationFile);
-gulp.task('build-dist', task.buildDistribution);
+gulp.task('lint-html', task.analyzeHtml);
+gulp.task('make-dist', task.makeDistribution);
