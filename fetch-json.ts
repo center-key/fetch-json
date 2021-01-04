@@ -8,11 +8,11 @@ type RequestDataValue = number | string | boolean | null | RequestData;
 type UrlParams =        { [key in number | string]: UrlParamValue };
 type UrlParamValue =    number | string | boolean;
 type FetchResponseText = {
-   error?:       boolean;
-   contentType?: string | null;
-   bodyText?:    string;
+   error:       boolean;
+   contentType: string | null;
+   bodyText:    string;
    };
-type FetchResponse = Response & FetchResponseText;
+type FetchResponse = Response & Partial<FetchResponseText>;
 type Logger = (
    dateIso?:     string,
    type?:        'response' | 'request',
