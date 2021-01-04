@@ -183,7 +183,7 @@ The **TypeScript Declaration File** file is [fetch-json.d.ts](dist/fetch-json.d.
 folder.
 
 The declarations provide type information about the API.  For example, the `fetchJson.post()`
-function returns a `FetchResponse` **Promise**:
+function returns a **Promise** for a `FetchResponse`:
 ```typescript
 fetchJson.post(url: string, resource?: RequestData,
    options?: FetchOptions): Promise<FetchResponse>
