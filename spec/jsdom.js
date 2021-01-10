@@ -90,7 +90,7 @@ describe('Star Wars API result for spaceships fetched by fetchJson.get()', () =>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Awaiting a berry from the PokéAPI with fetchJson.get() [async/await]', () => {
 
-   it('is rewared with a tasty treat', async () => {
+   it('is rewarded with a tasty treat', async () => {
       const url = 'https://pokeapi.co/api/v2/berry/razz';
       const data = await fetchJson.get(url);
       const actual =   { id: data.id, name: data.name, growth_time: data.growth_time };

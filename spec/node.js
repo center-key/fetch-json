@@ -5,11 +5,11 @@
 const assert = require('assert');
 
 // Setup and utilities
-const fetchJson = require('../dist/fetch-json.cjs.js');
+const { fetchJson } = require('../dist/fetch-json.umd.js');
 const toPlainObj = (obj) => JSON.parse(JSON.stringify(obj));
 
 // Specificaiton suite
-describe('Specification Cases: node (dist/fetch-json.cjs.js)', () => {
+describe('Specification Cases: node (dist/fetch-json.umd.js)', () => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Module fetch-json', () => {
@@ -84,7 +84,7 @@ describe('Star Wars API result for spaceships fetched by fetchJson.get()', () =>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Awaiting a berry from the PokéAPI with fetchJson.get() [async/await]', () => {
 
-   it('is rewared with a tasty treat', async () => {
+   it('is rewarded with a tasty treat', async () => {
       const url = 'https://pokeapi.co/api/v2/berry/razz';
       const data = await fetchJson.get(url);
       const actual =   { id: data.id, name: data.name, growth_time: data.growth_time };

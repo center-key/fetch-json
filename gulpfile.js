@@ -14,14 +14,13 @@ const replace =       require('gulp-replace');
 const size =          require('gulp-size');
 
 // Setup
-const pkg =             require('./package.json');
-const home =            pkg.repository.replace('github:', 'github.com/');
-const bannerJs =        '//! fetch-json v' + pkg.version + ' ~ ' + home + ' ~ MIT License\n\n';
-const htmlHintConfig =  { 'attr-value-double-quotes': false };
-const headerComments =  /^[/][/].*\n/gm;
-const transpileES6 =    ['@babel/env', { modules: false }];
-const babelMinifyJs =   { presets: [transpileES6, 'minify'], comments: false };
-const exportStatement = /^export { (.*) };/m;
+const pkg =            require('./package.json');
+const home =           pkg.repository.replace('github:', 'github.com/');
+const bannerJs =       '//! fetch-json v' + pkg.version + ' ~ ' + home + ' ~ MIT License\n\n';
+const htmlHintConfig = { 'attr-value-double-quotes': false };
+const headerComments = /^[/][/].*\n/gm;
+const transpileES6 =   ['@babel/env', { modules: false }];
+const babelMinifyJs =  { presets: [transpileES6, 'minify'], comments: false };
 
 // Tasks
 const task = {
@@ -36,37 +35,32 @@ const task = {
       },
 
    makeDistribution: () => {
-      const umd = '\n' +
-         'if (typeof module === "object") module.exports = $1;\n' +
-         'if (typeof window === "object") window.$1 = $1;';
-      const buildDef = () =>
+      const buildDts = () =>
          gulp.src('build/fetch-json.d.ts')
             .pipe(header(bannerJs))
             .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('dist'));
-      const buildEs = () =>
+      const buildEsm = () =>
          gulp.src('build/fetch-json.js')
-            .pipe(replace(headerComments, ''))
+            .pipe(replace(headerComments.js, ''))
             .pipe(header(bannerJs))
             .pipe(replace('[VERSION]', pkg.version))
             .pipe(size({ showFiles: true }))
-            .pipe(rename({ extname: '.es.js' }))
+            .pipe(rename({ extname: '.esm.js' }))
             .pipe(gulp.dest('dist'));
-      const buildCjs = () =>
-         gulp.src('build/fetch-json.js')
-            .pipe(replace(headerComments, ''))
+      const buildUmd = () =>
+         gulp.src('build/umd/fetch-json.js')
             .pipe(header(bannerJs))
             .pipe(replace('[VERSION]', pkg.version))
-            .pipe(replace(exportStatement, '\nmodule.exports = $1;'))
-            .pipe(rename({ extname: '.cjs.js' }))
+            .pipe(rename({ extname: '.umd.js' }))
             .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('dist'));
       const buildJs = () =>
          gulp.src('build/fetch-json.js')
-            .pipe(replace(headerComments, ''))
+            .pipe(replace(headerComments.js, ''))
             .pipe(header(bannerJs))
             .pipe(replace('[VERSION]', pkg.version))
-            .pipe(replace(exportStatement, umd))
+            .pipe(replace(/^export { (.*) };/m, 'if (typeof window === "object") window.$1 = $1;'))
             .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('dist'))
             .pipe(babel(babelMinifyJs))
@@ -76,7 +70,7 @@ const task = {
             .pipe(size({ showFiles: true }))
             .pipe(size({ showFiles: true, gzip: true }))
             .pipe(gulp.dest('dist'));
-      return mergeStream(buildDef(), buildEs(), buildCjs(), buildJs());
+      return mergeStream(buildDts(), buildEsm(), buildUmd(), buildJs());
       },
 
    };

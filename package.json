@@ -3,8 +3,8 @@
    "description": "A wrapper around Fetch just for JSON",
    "version": "2.3.0",
    "license": "MIT",
-   "main": "dist/fetch-json.js",
-   "module": "dist/fetch-json.es.js",
+   "main": "dist/fetch-json.umd.js",
+   "module": "dist/fetch-json.esm.js",
    "browser": "dist/fetch-json.min.js",
    "types": "dist/fetch-json.d.ts",
    "files": [
@@ -60,8 +60,9 @@
    },
    "scripts": {
       "lint": "jshint *.js spec && eslint --max-warnings 0 . --ext .ts",
-      "pretest": "npm run lint && tsc --version && tsc --project . && gulp make-dist",
-      "test": "mocha --timeout 10000 spec/*.js"
+      "tsc": "tsc --version && tsc --project . --removeComments && tsc --project . --module UMD --removeComments --outDir build/umd",
+      "pretest": "npm run lint && rimraf build dist **/.DS_Store && npm run tsc && gulp make-dist",
+      "test": "mocha spec/*.js --timeout 10000"
    },
    "dependencies": {},
    "devDependencies": {
@@ -69,11 +70,11 @@
       "@babel/preset-env": "~7.12",
       "@fortawesome/fontawesome-free": "~5.15",
       "@types/node": "~14.14",
-      "@typescript-eslint/eslint-plugin": "~4.11",
-      "@typescript-eslint/parser": "~4.11",
+      "@typescript-eslint/eslint-plugin": "~4.12",
+      "@typescript-eslint/parser": "~4.12",
       "babel-minify": "~0.5",
       "canvas": "~2.6",
-      "dna.js": "~1.6",
+      "dna.js": "~1.7",
       "eslint": "~7.17",
       "gulp": "~4.0",
       "gulp-append-prepend": "~1.0",
