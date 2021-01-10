@@ -73,7 +73,31 @@ For more examples, see the Mocha specification cases:<br>
 To see a website that incorporates **fetch-json**, check out DataDashboard:<br>
 [data-dashboard.js.org 📊](https://data-dashboard.js.org)
 
-## 4) Leverages the Fetch API and node-fetch
+## 4) Examples using async/await
+### HTTP GET
+Fetch the NASA Astronomy Picture of the Day:
+```javascript
+// NASA APoD
+const show = async () => {
+   const url =    'https://api.nasa.gov/planetary/apod';
+   const params = { api_key: 'DEMO_KEY' };
+   const data =   await fetchJson.get(url, params);
+   console.log('The NASA APoD for today is at: ' + data.url);
+   };
+show();
+```
+### HTTP POST
+Create a resource for the planet Jupiter:
+```javascript
+// Create Jupiter
+const create = async (resource) => {
+   const data = await fetchJson.post('https://httpbin.org/post', resource);
+   console.log('New planet:', data);  //http response body as an object literal
+   };
+create({ name: 'Jupiter', position: 5 });
+```
+
+## 5) Leverages the Fetch API and node-fetch
 **fetch-json** calls the native
 **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**
 if in a web browser and calls
@@ -102,7 +126,7 @@ fetch('https://httpbin.org/post', options)
 ```
 The example _with_ **fetch-json** and the example _without_ **fetch-json** each produce the same output.
 
-## 5) API
+## 6) API
 ### API &mdash; HTTP Request
 The format for using **fetch-json** is:
 #### GET
@@ -156,7 +180,7 @@ The default console output looks like:<br>
 `2018-09-12T07:20:12.372Z – "request" - "GET" – "api.nasa.gov" – "https://api.nasa.gov/planetary/apod"`<br>
 `2018-09-12T07:20:13.009Z – "response" - "GET" – "api.nasa.gov" – "https://api.nasa.gov/planetary/apod" - true - 200 - "OK" - "application/json"`
 
-## 6) Response text converted to JSON
+## 7) Response text converted to JSON
 The HTTP response body is considered to be JSON if the `Content-Type` is `"application/json"` or
 `"text/javascript"`.&nbsp; If the HTTP response body is not JSON, **fetch-json** passes back
 through the promise an object with a `bodyText` string field containing response body text.
@@ -178,7 +202,7 @@ similar to:
 With **fetch-json**, you know the response body will always be passed back to you as a simple
 object literal.
 
-## 7) TypeScript declarations
+## 8) TypeScript declarations
 The **TypeScript Declaration File** file is [fetch-json.d.ts](dist/fetch-json.d.ts) in the **dist**
 folder.
 
@@ -189,7 +213,7 @@ fetchJson.post(url: string, resource?: RequestData,
    options?: FetchOptions): Promise<FetchResponse>
 ```
 
-## 8) Legacy web browsers
+## 9) Legacy web browsers
 To support really old browsers, include polyfills for
 [Promise](https://github.com/taylorhakes/promise-polyfill/) and
 [Fetch API](https://github.com/github/fetch):
@@ -201,13 +225,9 @@ To support really old browsers, include polyfills for
 JSDOM does not include `fetch`, so you need to add a polyfill.&nbsp;
 See usage of `whatwg-fetch` in [spec/jsdom.js](spec/jsdom.js) and [gulpfile.js](gulpfile.js).
 
-## 9) Contributor notes
-To be a contributor, fork the project and run the commands `npm install` and `npm test` on your
+## 10) Contributor notes
+To be a contributor, **fork** the project and run the commands `npm install` and `npm test` on your
 local clone.&nbsp; Make your edits and rerun the tests.&nbsp; Pull requests welcome.
-
-Pull requests (PRs) should not update the `version` number in **package.json** or any files in the
-`dist` folder.&nbsp; The `version` number and `dist` files are all updated as part of the release
-process.
 
 <br>
 

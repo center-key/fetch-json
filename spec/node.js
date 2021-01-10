@@ -82,6 +82,19 @@ describe('Star Wars API result for spaceships fetched by fetchJson.get()', () =>
    });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+describe('Awaiting a berry from the PokéAPI with fetchJson.get() [async/await]', () => {
+
+   it('is rewared with a tasty treat', async () => {
+      const url = 'https://pokeapi.co/api/v2/berry/razz';
+      const data = await fetchJson.get(url);
+      const actual =   { id: data.id, name: data.name, growth_time: data.growth_time };
+      const expected = { id: 16,      name: 'razz',    growth_time: 2 };
+      assert.deepStrictEqual(actual, expected);
+      });
+
+   });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('GET response returned by httpbin.org', () => {
 
    it('contains empty params when none are supplied', (done) => {
