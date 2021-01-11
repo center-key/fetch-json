@@ -42,7 +42,7 @@ $ npm install node-fetch fetch-json
 ```
 and then import:
 ```javascript
-const fetchJson = require('fetch-json');
+import { fetchJson } from 'fetch-json';
 ```
 
 ## 3) Examples

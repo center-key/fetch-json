@@ -2,20 +2,22 @@
 // Run specification cases in jsdom (a headless web browser)
 
 // Imports
-const assert =    require('assert');
-const fs =        require('fs');
-const { JSDOM } = require('jsdom');
+import assert from           'assert';
+import { JSDOM } from        'jsdom';
+import { readFileSync } from 'fs';
 
-// Setup and utilities
-const scripts = ['node_modules/whatwg-fetch/dist/fetch.umd.js', './dist/fetch-json.min.js'];
-const window = new JSDOM('', { runScripts: 'outside-only' }).window;  //jshint ignore:line
-const loadScript = (file) => window.eval(fs.readFileSync(file).toString());  //jshint ignore:line
+// Setup
+const mode =     { type: 'Minified', file: 'dist/fetch-json.min.js' };
+const filename = import.meta.url.replace(/.*\//, '');  //jshint ignore:line
+const dom =        new JSDOM('', { runScripts: 'outside-only' });
+const scripts =    ['node_modules/whatwg-fetch/dist/fetch.umd.js', mode.file];
+const loadScript = (file) => dom.window.eval(readFileSync(file).toString());  //jshint ignore:line
 scripts.forEach(loadScript);
-const fetchJson = window.fetchJson;
+const { fetchJson } = dom.window;
 const toPlainObj = (obj) => JSON.parse(JSON.stringify(obj));
 
 // Specification suite
-describe('Specification Cases: JSDOM (dist/fetch-json.min.js)', () => {
+describe(`Specifications: ${filename} - ${mode.type} (${mode.file})`, () => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Module fetch-json', () => {
@@ -267,12 +269,12 @@ describe('HTTP error returned by httpbin.org', () => {
          };
       const handleError = (error) => {
          const actual = {
-            error:   error instanceof (typeof window === 'object' ? window.Error : Error),
+            object:  error.constructor.name,
             name:    error.name,
             message: error.message,
             };
          const expected = {
-            error:   true,
+            object:  'Error',
             name:    'Error',
             message: 'HTTP response status ("strictErrors" mode enabled): 500'
             };

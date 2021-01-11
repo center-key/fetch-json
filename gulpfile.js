@@ -2,23 +2,24 @@
 // Tasks
 
 // Imports
-const babel =         require('gulp-babel');
-const gap =           require('gulp-append-prepend');
-const gulp =          require('gulp');
-const header =        require('gulp-header');
-const htmlHint =      require('gulp-htmlhint');
-const htmlValidator = require('gulp-w3c-html-validator');
-const mergeStream =   require('merge-stream');
-const rename =        require('gulp-rename');
-const replace =       require('gulp-replace');
-const size =          require('gulp-size');
+import babel from         'gulp-babel';
+import gap from           'gulp-append-prepend';
+import gulp from          'gulp';
+import header from        'gulp-header';
+import htmlHint from      'gulp-htmlhint';
+import htmlValidator from 'gulp-w3c-html-validator';
+import mergeStream from   'merge-stream';
+import rename from        'gulp-rename';
+import replace from       'gulp-replace';
+import size from          'gulp-size';
+import { readFileSync } from 'fs';
 
 // Setup
-const pkg =            require('./package.json');
+const pkg =            JSON.parse(readFileSync('./package.json'));
 const home =           pkg.repository.replace('github:', 'github.com/');
 const bannerJs =       '//! fetch-json v' + pkg.version + ' ~ ' + home + ' ~ MIT License\n\n';
 const htmlHintConfig = { 'attr-value-double-quotes': false };
-const headerComments = /^[/][/].*\n/gm;
+const headerComments = { js: /^[/][/].*\n/gm };
 const transpileES6 =   ['@babel/env', { modules: false }];
 const babelMinifyJs =  { presets: [transpileES6, 'minify'], comments: false };
 
@@ -60,6 +61,7 @@ const task = {
             .pipe(replace(headerComments.js, ''))
             .pipe(header(bannerJs))
             .pipe(replace('[VERSION]', pkg.version))
+            .pipe(replace(/^import .* from .*;/m, ''))
             .pipe(replace(/^export { (.*) };/m, 'if (typeof window === "object") window.$1 = $1;'))
             .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('dist'))

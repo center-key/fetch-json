@@ -2,14 +2,16 @@
 // Run specification cases on a node server
 
 // Imports
-const assert = require('assert');
+import assert from 'assert';
 
-// Setup and utilities
-const { fetchJson } = require('../dist/fetch-json.umd.js');
+// Setup
+import { fetchJson } from '../dist/fetch-json.esm.js';
+const mode =       { type: 'ES Module', file: 'dist/fetch-json.esm.js' };
+const filename =   import.meta.url.replace(/.*\//, '');  //jshint ignore:line
 const toPlainObj = (obj) => JSON.parse(JSON.stringify(obj));
 
-// Specificaiton suite
-describe('Specification Cases: node (dist/fetch-json.umd.js)', () => {
+// Specification suite
+describe(`Specifications: ${filename} - ${mode.type} (${mode.file})`, () => {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Module fetch-json', () => {

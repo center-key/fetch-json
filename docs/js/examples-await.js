@@ -8,7 +8,7 @@
 //    $ node docs/js/examples-await
 
 // Setup
-const fetchJson = require('../../dist/fetch-json.js');
+import { fetchJson } from '../../dist/fetch-json.esm.js';
 fetchJson.enableLogger();
 
 // Intro
