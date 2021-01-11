@@ -7,8 +7,8 @@ import { JSDOM } from        'jsdom';
 import { readFileSync } from 'fs';
 
 // Setup
-const mode =     { type: 'Minified', file: 'dist/fetch-json.min.js' };
-const filename = import.meta.url.replace(/.*\//, '');  //jshint ignore:line
+const mode =       { type: 'Minified', file: 'dist/fetch-json.min.js' };
+const filename =   import.meta.url.replace(/.*\//, '');  //jshint ignore:line
 const dom =        new JSDOM('', { runScripts: 'outside-only' });
 const scripts =    ['node_modules/whatwg-fetch/dist/fetch.umd.js', mode.file];
 const loadScript = (file) => dom.window.eval(readFileSync(file).toString());  //jshint ignore:line
