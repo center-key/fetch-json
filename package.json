@@ -1,10 +1,10 @@
 {
    "name": "fetch-json",
    "description": "A wrapper around Fetch just for JSON",
-   "version": "2.4.0",
+   "version": "2.4.1",
    "license": "MIT",
    "type": "module",
-   "main": "dist/fetch-json.umd.js",
+   "main": "dist/fetch-json.umd.cjs",
    "module": "dist/fetch-json.esm.js",
    "browser": "dist/fetch-json.min.js",
    "types": "dist/fetch-json.d.ts",
