@@ -61,7 +61,7 @@ const task = {
             .pipe(replace(headerComments.js, ''))
             .pipe(header(bannerJs))
             .pipe(replace('[VERSION]', pkg.version))
-            .pipe(replace(/^import .* from .*;/m, ''))
+            .pipe(replace(/^import .* from .*;\n/m, ''))
             .pipe(replace(/^export { (.*) };/m, 'if (typeof window === "object") window.$1 = $1;'))
             .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('dist'))

@@ -1,8 +1,8 @@
-//! fetch-json v2.3.0 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.4.0 ~ github.com/center-key/fetch-json ~ MIT License
 
-const fetchApi = typeof window === 'object' && window.fetch || require('node-fetch');
+import fetch from 'node-fetch';
 const fetchJson = {
-    version: '2.3.0',
+    version: '2.4.0',
     request(method, url, data, options) {
         const defaults = {
             method: method,
@@ -18,17 +18,17 @@ const fetchJson = {
         settings.headers = { ...jsonHeaders, ...(options && options.headers) };
         const paramKeys = isGetRequest && data ? Object.keys(data) : [];
         const toPair = (key) => key + '=' +
-            encodeURIComponent(data[key]); //build query string field-value
+            encodeURIComponent(data ? data[key] : '');
         if (paramKeys.length)
             url = url + (url.includes('?') ? '&' : '?') + paramKeys.map(toPair).join('&');
-        if (!isGetRequest && data)
-            settings.body = JSON.stringify(data);
+        settings.body = !isGetRequest && data ? JSON.stringify(data) : null;
         const now = () => new Date().toISOString();
-        const logUrl = url.replace(/[?].*/, ''); //security: prevent logging url parameters
-        const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, ''); //extract hostname
-        const toJson = (response) => {
+        const logUrl = url.replace(/[?].*/, '');
+        const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');
+        const toJson = (value) => {
+            const response = value;
             const contentType = response.headers.get('content-type');
-            const isJson = contentType && /json|javascript/.test(contentType); //match "application/json" or "text/javascript"
+            const isJson = contentType && /json|javascript/.test(contentType);
             const textToObj = (httpBody) => {
                 response.error = !response.ok;
                 response.contentType = contentType;
@@ -43,7 +43,8 @@ const fetchJson = {
         };
         if (fetchJson.logger)
             fetchJson.logger(now(), 'request', settings.method, logDomain, logUrl);
-        return fetchApi(url, settings).then(toJson);
+        const settingsRequestInit = JSON.parse(JSON.stringify(settings));
+        return fetch(url, settingsRequestInit).then(toJson);
     },
     get(url, params, options) {
         return fetchJson.request('GET', url, params, options);
