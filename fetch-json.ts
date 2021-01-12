@@ -94,7 +94,7 @@ const fetchJson = {
    getLogHeaderIndex(): { [header: string]: number } {
       return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
       },
-   enableLogger(booleanOrFn: boolean | FetchJsonLogger): FetchJsonLogger | null {
+   enableLogger(booleanOrFn?: boolean | FetchJsonLogger): FetchJsonLogger | null {
       const logger = booleanOrFn === false ? null : console.log;
       return fetchJson.logger = typeof booleanOrFn === 'function' ? booleanOrFn : logger;
       },
