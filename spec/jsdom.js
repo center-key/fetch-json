@@ -2,8 +2,8 @@
 // Run specification cases in jsdom (a headless web browser)
 
 // Imports
-import assert from           'assert';
-import { JSDOM } from        'jsdom';
+import assert from 'assert';
+import { JSDOM } from 'jsdom';
 import { readFileSync } from 'fs';
 
 // Setup
