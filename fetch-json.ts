@@ -5,13 +5,18 @@ type FetchJsonInit = {
    };
 type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
 type FetchJsonMethod =  RequestInit['method'];
-type FetchJsonBody =    RequestInit['body'];
-type FetchJsonResponseExtra = {
+type FetchJsonObject =  Record<string | number, unknown>;
+type FetchJsonParams =  FetchJsonObject;
+type FetchJsonBody =    FetchJsonObject | unknown[];
+type FetchJsonTextResponse = {
+   ok:          boolean,
    error:       boolean,
+   status:      number,
    contentType: string | null,
    bodyText:    string,
+   response:    Response,
    };
-type FetchJsonResponse = Response & Partial<FetchJsonResponseExtra>;
+type FetchJsonResponse = unknown | FetchJsonTextResponse;
 type FetchJsonLogger = (
    dateIso:      string,
    type?:        'response' | 'request',
@@ -28,7 +33,7 @@ import fetch from 'node-fetch';
 
 const fetchJson = {
    version: '[VERSION]',
-   request(method: FetchJsonMethod, url: string, data?: FetchJsonBody, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   request(method: FetchJsonMethod, url: string, data?: FetchJsonParams | FetchJsonBody, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
       const defaults: FetchJsonOptions = {
          method:       method,
          credentials:  'same-origin',
@@ -50,29 +55,34 @@ const fetchJson = {
       const now = () => new Date().toISOString();
       const logUrl = url.replace(/[?].*/, '');  //security: prevent logging url parameters
       const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');  //extract hostname
-      const toJson = (value: unknown): FetchJsonResponse | PromiseLike<FetchJsonResponse> => {
-         const response = <FetchJsonResponse>value;
+
+      // const toJson = (response: Response): Promise<any | FetchJsonTextResponse> => {
+      const toJson = (value: unknown): FetchJsonResponse => {
+         const response = <Response>value;
          const contentType = response.headers.get('content-type');
          const isJson = contentType && /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
-         const textToObj = (httpBody: string): FetchJsonResponse => {
-            response.error =       !response.ok;
-            response.contentType = contentType;
-            response.bodyText =    httpBody;
-            return response;
-            };
+         const textToObj = (httpBody: string): FetchJsonTextResponse => ({
+            ok:          response.ok,
+            error:       !response.ok,
+            status:      response.status,
+            contentType: contentType,
+            bodyText:    httpBody,
+            response:    response,
+            });
          if (fetchJson.logger)
             fetchJson.logger(now(), 'response', settings.method, logDomain, logUrl,
                response.ok, response.status, response.statusText, contentType);
          if (settings.strictErrors && !response.ok)
             throw Error('HTTP response status ("strictErrors" mode enabled): ' + response.status);
          return isJson ? response.json() : response.text().then(textToObj);
+
          };
       if (fetchJson.logger)
          fetchJson.logger(now(), 'request', settings.method, logDomain, logUrl);
       const settingsRequestInit = JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
       return fetch(url, settingsRequestInit).then(toJson);
       },
-   get(url: string, params?: FetchJsonBody, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   get(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
       return fetchJson.request('GET', url, params, options);
       },
    post(url: string, resource?: FetchJsonBody, options?: FetchJsonOptions): Promise<FetchJsonResponse> {

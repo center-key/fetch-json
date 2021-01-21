@@ -30,7 +30,7 @@ describe('Module fetch-json', () => {
       });
 
    it('has functions for get(), post(), put(), patch(), and delete()', () => {
-      const actual =   {
+      const actual = {
          get:    typeof fetchJson.get,
          post:   typeof fetchJson.post,
          put:    typeof fetchJson.put,
@@ -235,15 +235,15 @@ describe('HTTP error returned by httpbin.org', () => {
    it('for status 500 contains the message "INTERNAL SERVER ERROR"', (done) => {
       const url = 'https://httpbin.org/status/500';
       const handleData = (data) => {
-         const actual =   {
-            error:       data.error,
+         const actual = {
             ok:          data.ok,
-            status:      [data.status, data.statusText],
+            error:       data.error,
+            status:      [data.status, data.response.statusText],
             contentType: data.contentType,
             };
          const expected = {
-            error:       true,
             ok:          false,
+            error:       true,
             status:      [500, 'INTERNAL SERVER ERROR'],
             contentType: 'text/html; charset=utf-8',
             };
@@ -281,15 +281,15 @@ describe('HTTP error returned by httpbin.org', () => {
    it('for status 418 contains the message "I\'M A TEAPOT"', (done) => {
       const url = 'https://httpbin.org/status/418';
       const handleData = (data) => {
-         const actual =   {
-            error:       data.error,
+         const actual = {
             ok:          data.ok,
-            status:      [data.status, data.statusText],
+            error:       data.error,
+            status:      [data.status, data.response.statusText],
             contentType: data.contentType,
             };
          const expected = {
-            error:       true,
             ok:          false,
+            error:       true,
             status:      [418, 'I\'M A TEAPOT'],
             contentType: null,
             };
@@ -313,9 +313,9 @@ describe('The "bodyText" field of the object returned from requesting', () => {
    it('an HTML web page is a string that begins with "<!DOCTYPE html>"', (done) => {
       const url = 'https://httpbin.org/html';
       const handleData = (data) => {
-         const actual =   {
+         const actual = {
             ok:          data.ok,
-            status:      [data.status, data.statusText],
+            status:      [data.status, data.response.statusText],
             contentType: data.contentType,
             firstLine:   getFirstLine(data.bodyText),
             };
@@ -334,9 +334,9 @@ describe('The "bodyText" field of the object returned from requesting', () => {
    it('an XML document is a string that begins with "<!DOCTYPE xml>"', (done) => {
       const url = 'https://httpbin.org/xml';
       const handleData = (data) => {
-         const actual =   {
+         const actual = {
             ok:          data.ok,
-            status:      [data.status, data.statusText],
+            status:      [data.status, data.response.statusText],
             contentType: data.contentType,
             firstLine:   getFirstLine(data.bodyText),
             };
@@ -355,9 +355,9 @@ describe('The "bodyText" field of the object returned from requesting', () => {
    it('a "robots.txt" text file is a string that begins with "User-agent: *"', (done) => {
       const url = 'https://httpbin.org/robots.txt';
       const handleData = (data) => {
-         const actual =   {
+         const actual = {
             ok:          data.ok,
-            status:      [data.status, data.statusText],
+            status:      [data.status, data.response.statusText],
             contentType: data.contentType,
             firstLine:   getFirstLine(data.bodyText),
             };
@@ -400,7 +400,7 @@ describe('Function fetchJson.enableLogger()', () => {
       const index = fetchJson.getLogHeaderIndex();
       let awaitingRequest = true;
       const customLogger = (...logValues) => {
-         const actual =   {
+         const actual = {
             timestamp: logValues[index.timestamp].length,
             method:    logValues[index.method],
             domain:    logValues[index.domain],
