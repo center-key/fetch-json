@@ -1,7 +1,7 @@
 {
    "name": "fetch-json",
    "description": "A wrapper around Fetch just for JSON",
-   "version": "2.4.1",
+   "version": "2.4.2",
    "license": "MIT",
    "type": "module",
    "main": "dist/fetch-json.umd.cjs",
@@ -18,6 +18,7 @@
    "keywords": [
       "browser",
       "fetch",
+      "fetch-json",
       "get",
       "http",
       "jamstack",
@@ -72,8 +73,8 @@
       "@fortawesome/fontawesome-free": "~5.15",
       "@types/node": "~14.14",
       "@types/node-fetch": "~2.5",
-      "@typescript-eslint/eslint-plugin": "~4.13",
-      "@typescript-eslint/parser": "~4.13",
+      "@typescript-eslint/eslint-plugin": "~4.14",
+      "@typescript-eslint/parser": "~4.14",
       "babel-minify": "~0.5",
       "canvas": "~2.6",
       "dna.js": "~1.7",
@@ -95,7 +96,7 @@
       "node-fetch": "~2.6",
       "promise-polyfill": "~8.2",
       "typescript": "~4.1",
-      "web-ignition": "~1.3",
+      "web-ignition": "~1.4",
       "whatwg-fetch": "~3.5"
    }
 }

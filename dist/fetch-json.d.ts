@@ -1,31 +1,33 @@
-//! fetch-json v2.4.1 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.4.2 ~ github.com/center-key/fetch-json ~ MIT License
 
 declare type FetchJsonInit = {
     strictErrors: boolean;
 };
 declare type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
 declare type FetchJsonMethod = RequestInit['method'];
-declare type FetchJsonBody = RequestInit['body'];
-declare type FetchJsonResponseExtra = {
+declare type FetchJsonTextResponse = {
+    ok: boolean;
     error: boolean;
+    status: number;
     contentType: string | null;
     bodyText: string;
+    response: Response;
 };
-declare type FetchJsonResponse = Response & Partial<FetchJsonResponseExtra>;
+declare type FetchJsonResponse = unknown | FetchJsonTextResponse;
 declare type FetchJsonLogger = (dateIso: string, type?: 'response' | 'request', method?: FetchJsonMethod, logDomain?: string, logUrl?: string, ok?: boolean, status?: number, statusText?: string, contentType?: string | null) => void;
 declare const fetchJson: {
     version: string;
-    request(method: FetchJsonMethod, url: string, data?: FetchJsonBody, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
-    get(url: string, params?: FetchJsonBody, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
-    post(url: string, resource?: FetchJsonBody, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
-    put(url: string, resource?: FetchJsonBody, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
-    patch(url: string, resource?: FetchJsonBody, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
-    delete(url: string, resource?: FetchJsonBody, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
+    request(method: FetchJsonMethod, url: string, data?: unknown[] | Record<string | number, unknown> | undefined, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
+    get(url: string, params?: Record<string | number, unknown> | undefined, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
+    post(url: string, resource?: unknown[] | Record<string | number, unknown> | undefined, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
+    put(url: string, resource?: unknown[] | Record<string | number, unknown> | undefined, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
+    patch(url: string, resource?: unknown[] | Record<string | number, unknown> | undefined, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
+    delete(url: string, resource?: unknown[] | Record<string | number, unknown> | undefined, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
     logger: FetchJsonLogger | null;
     getLogHeaders(): string[];
     getLogHeaderIndex(): {
         [header: string]: number;
     };
-    enableLogger(booleanOrFn: boolean | FetchJsonLogger): FetchJsonLogger | null;
+    enableLogger(booleanOrFn?: boolean | FetchJsonLogger | undefined): FetchJsonLogger | null;
 };
 export { fetchJson };
