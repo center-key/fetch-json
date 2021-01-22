@@ -1,14 +1,14 @@
 // fetch-json ~ MIT License
 
-type FetchJsonInit = {
+export type FetchJsonInit = {
    strictErrors: boolean,
    };
-type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
-type FetchJsonMethod =  RequestInit['method'];
-type FetchJsonObject =  Record<string | number, unknown>;
-type FetchJsonParams =  FetchJsonObject;
-type FetchJsonBody =    FetchJsonObject | unknown[];
-type FetchJsonTextResponse = {
+export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
+export type FetchJsonMethod =  RequestInit['method'];
+export type FetchJsonObject =  Record<string | number, unknown>;
+export type FetchJsonParams =  FetchJsonObject;
+export type FetchJsonBody =    FetchJsonObject | unknown[];
+export type FetchJsonTextResponse = {
    ok:          boolean,
    error:       boolean,
    status:      number,
@@ -16,8 +16,8 @@ type FetchJsonTextResponse = {
    bodyText:    string,
    response:    Response,
    };
-type FetchJsonResponse = unknown | FetchJsonTextResponse;
-type FetchJsonLogger = (
+export type FetchJsonResponse = unknown | FetchJsonTextResponse;
+export type FetchJsonLogger = (
    dateIso:      string,
    type?:        'response' | 'request',
    method?:      FetchJsonMethod,
