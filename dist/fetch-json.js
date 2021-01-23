@@ -1,7 +1,7 @@
-//! fetch-json v2.4.2 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.4.3 ~ github.com/center-key/fetch-json ~ MIT License
 
 const fetchJson = {
-    version: '2.4.2',
+    version: '2.4.3',
     request(method, url, data, options) {
         const defaults = {
             method: method,

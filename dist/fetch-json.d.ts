@@ -1,11 +1,14 @@
-//! fetch-json v2.4.2 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.4.3 ~ github.com/center-key/fetch-json ~ MIT License
 
-declare type FetchJsonInit = {
+export declare type FetchJsonInit = {
     strictErrors: boolean;
 };
-declare type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
-declare type FetchJsonMethod = RequestInit['method'];
-declare type FetchJsonTextResponse = {
+export declare type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
+export declare type FetchJsonMethod = RequestInit['method'];
+export declare type FetchJsonObject = Record<string | number, unknown>;
+export declare type FetchJsonParams = FetchJsonObject;
+export declare type FetchJsonBody = FetchJsonObject | unknown[];
+export declare type FetchJsonTextResponse = {
     ok: boolean;
     error: boolean;
     status: number;
@@ -13,8 +16,8 @@ declare type FetchJsonTextResponse = {
     bodyText: string;
     response: Response;
 };
-declare type FetchJsonResponse = unknown | FetchJsonTextResponse;
-declare type FetchJsonLogger = (dateIso: string, type?: 'response' | 'request', method?: FetchJsonMethod, logDomain?: string, logUrl?: string, ok?: boolean, status?: number, statusText?: string, contentType?: string | null) => void;
+export declare type FetchJsonResponse = unknown | FetchJsonTextResponse;
+export declare type FetchJsonLogger = (dateIso: string, type?: 'response' | 'request', method?: FetchJsonMethod, logDomain?: string, logUrl?: string, ok?: boolean, status?: number, statusText?: string, contentType?: string | null) => void;
 declare const fetchJson: {
     version: string;
     request(method: FetchJsonMethod, url: string, data?: unknown[] | Record<string | number, unknown> | undefined, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
