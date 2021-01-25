@@ -1,7 +1,7 @@
-//! fetch-json v2.4.3 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.4.4 ~ github.com/center-key/fetch-json ~ MIT License
 
 const fetchJson = {
-    version: '2.4.3',
+    version: '2.4.4',
     request(method, url, data, options) {
         const defaults = {
             method: method,
@@ -27,7 +27,7 @@ const fetchJson = {
         const toJson = (value) => {
             const response = value;
             const contentType = response.headers.get('content-type');
-            const isJson = contentType && /json|javascript/.test(contentType);
+            const isJson = !!contentType && /json|javascript/.test(contentType);
             const textToObj = (httpBody) => ({
                 ok: response.ok,
                 error: !response.ok,

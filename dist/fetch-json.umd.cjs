@@ -1,4 +1,4 @@
-//! fetch-json v2.4.3 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.4.4 ~ github.com/center-key/fetch-json ~ MIT License
 
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -17,7 +17,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     exports.fetchJson = void 0;
     const node_fetch_1 = __importDefault(require("node-fetch"));
     const fetchJson = {
-        version: '2.4.3',
+        version: '2.4.4',
         request(method, url, data, options) {
             const defaults = {
                 method: method,
@@ -43,7 +43,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
             const toJson = (value) => {
                 const response = value;
                 const contentType = response.headers.get('content-type');
-                const isJson = contentType && /json|javascript/.test(contentType);
+                const isJson = !!contentType && /json|javascript/.test(contentType);
                 const textToObj = (httpBody) => ({
                     ok: response.ok,
                     error: !response.ok,
