@@ -1,13 +1,15 @@
 // fetch-json ~ MIT License
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export type FetchJsonInit = {
    strictErrors: boolean,
    };
 export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
-export type FetchJsonMethod =  RequestInit['method'];
-export type FetchJsonObject =  Record<string | number, unknown>;
-export type FetchJsonParams =  FetchJsonObject;
-export type FetchJsonBody =    FetchJsonObject | unknown[];
+export type FetchJsonMethod = RequestInit['method'];
+export type FetchJsonParams = Record<string, string | number | boolean | null | undefined>;
+export type FetchJsonBody = Record<string | number, any> | any[];
+export type FetchJsonParsedResponse = string | number | boolean | null | any |
+   FetchJsonParsedResponse[] | { [prop: string]: FetchJsonParsedResponse };
 export type FetchJsonTextResponse = {
    ok:          boolean,
    error:       boolean,
@@ -16,7 +18,7 @@ export type FetchJsonTextResponse = {
    bodyText:    string,
    response:    Response,
    };
-export type FetchJsonResponse = unknown | FetchJsonTextResponse;
+export type FetchJsonResponse = FetchJsonParsedResponse | FetchJsonTextResponse;
 export type FetchJsonLogger = (
    dateIso:      string,
    type?:        'response' | 'request',
@@ -33,7 +35,8 @@ import fetch from 'node-fetch';
 
 const fetchJson = {
    version: '[VERSION]',
-   request(method: FetchJsonMethod, url: string, data?: FetchJsonParams | FetchJsonBody, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   request(method: FetchJsonMethod, url: string, data?: FetchJsonParams | FetchJsonBody,
+         options?: FetchJsonOptions): Promise<FetchJsonResponse> {
       const defaults: FetchJsonOptions = {
          method:       method,
          credentials:  'same-origin',
@@ -55,12 +58,10 @@ const fetchJson = {
       const now = () => new Date().toISOString();
       const logUrl = url.replace(/[?].*/, '');  //security: prevent logging url parameters
       const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');  //extract hostname
-
-      // const toJson = (response: Response): Promise<any | FetchJsonTextResponse> => {
-      const toJson = (value: unknown): FetchJsonResponse => {
+      const toJson = (value: unknown): Promise<FetchJsonResponse> => {
          const response = <Response>value;
          const contentType = response.headers.get('content-type');
-         const isJson = contentType && /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
+         const isJson = !!contentType && /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
          const textToObj = (httpBody: string): FetchJsonTextResponse => ({
             ok:          response.ok,
             error:       !response.ok,
@@ -75,7 +76,6 @@ const fetchJson = {
          if (settings.strictErrors && !response.ok)
             throw Error('HTTP response status ("strictErrors" mode enabled): ' + response.status);
          return isJson ? response.json() : response.text().then(textToObj);
-
          };
       if (fetchJson.logger)
          fetchJson.logger(now(), 'request', settings.method, logDomain, logUrl);
