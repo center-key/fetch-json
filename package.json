@@ -1,6 +1,6 @@
 {
    "name": "fetch-json",
-   "description": "A wrapper around Fetch just for JSON",
+   "description": "A wrapper around Fetch just for JSON (written in TypeScript)",
    "version": "2.4.4",
    "license": "MIT",
    "type": "module",
@@ -61,10 +61,10 @@
       ]
    },
    "scripts": {
-      "lint": "jshint *.js spec && eslint --max-warnings 0 . --ext .ts",
-      "tsc": "tsc --version && tsc --project . --removeComments && tsc --project . --module UMD --removeComments --outDir build/umd",
+      "lint": "   jshint *.js spec && eslint --max-warnings 0 . --ext .ts",
+      "tsc": "    tsc --version && tsc --project . --removeComments && tsc --project . --module UMD --removeComments --outDir build/umd",
       "pretest": "npm run lint && rimraf build dist **/.DS_Store && npm run tsc && gulp make-dist",
-      "test": "mocha spec/*.js --timeout 10000"
+      "test": "   mocha spec/*.js --timeout 10000"
    },
    "dependencies": {},
    "devDependencies": {
@@ -78,7 +78,7 @@
       "babel-minify": "~0.5",
       "canvas": "~2.6",
       "dna.js": "~1.7",
-      "eslint": "~7.18",
+      "eslint": "~7.19",
       "gulp": "~4.0",
       "gulp-append-prepend": "~1.0",
       "gulp-babel": "~8.0",
