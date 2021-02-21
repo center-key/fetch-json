@@ -9,6 +9,7 @@ _A wrapper around Fetch just for JSON_
 [![Size](https://badgen.net/bundlephobia/minzip/fetch-json)](https://bundlephobia.com/result?p=fetch-json)
 [![Vulnerabilities](https://snyk.io/test/github/center-key/fetch-json/badge.svg)](https://snyk.io/test/github/center-key/fetch-json)
 [![Build](https://travis-ci.org/center-key/fetch-json.svg)](https://travis-ci.org/center-key/fetch-json)
+[![Build](https://github.com/center-key/fetch-json/workflows/build/badge.svg)](https://github.com/center-key/fetch-json/actions?query=workflow%3Abuild)
 
 Why would you fetch anything but json? ;)
 
@@ -46,7 +47,7 @@ import { fetchJson } from 'fetch-json';
 ```
 or for older CommonJS modules use:
 ```javascript
-const { fetchJson } = require('fetch-json');
+const { fetchJson } = require('fetch-json');  //deprecated
 ```
 
 ## 3) Examples
