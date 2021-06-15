@@ -5,7 +5,7 @@
 #     $ chmod +x *.sh.command
 
 banner="fetch-json"
-projectHome=$(cd $(dirname $0)/..; pwd)
+projectHome=$(cd $(dirname $0); pwd)
 
 setupTools() {
    # Check for Node.js installation and download project dependencies
@@ -28,7 +28,7 @@ setupTools() {
 releaseInstructions() {
    cd $projectHome
    repository=$(grep repository package.json | awk -F'"' '{print $4}' | sed s/github://)
-   package=https://raw.githubusercontent.com/$repository/master/package.json
+   package=https://raw.githubusercontent.com/$repository/main/package.json
    version=v$(grep '"version"' package.json | awk -F'"' '{print $4}')
    pushed=v$(curl --silent $package | grep '"version":' | awk -F'"' '{print $4}')
    released=$(git tag | tail -1)

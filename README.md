@@ -1,19 +1,18 @@
 # fetch-json
-<img src=https://raw.githubusercontent.com/center-key/fetch-json/master/docs/logos.png
+<img src=https://raw.githubusercontent.com/center-key/fetch-json/main/docs/logos.png
    align=right width=180 alt=logos>
 
 _A wrapper around Fetch just for JSON_
 
-[![License:MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/fetch-json/blob/master/LICENSE.txt)
+[![License:MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/fetch-json/blob/main/LICENSE.txt)
 [![npm](https://img.shields.io/npm/v/fetch-json.svg)](https://www.npmjs.com/package/fetch-json)
 [![Size](https://badgen.net/bundlephobia/minzip/fetch-json)](https://bundlephobia.com/result?p=fetch-json)
 [![Vulnerabilities](https://snyk.io/test/github/center-key/fetch-json/badge.svg)](https://snyk.io/test/github/center-key/fetch-json)
-[![Build](https://travis-ci.org/center-key/fetch-json.svg)](https://travis-ci.org/center-key/fetch-json)
 [![Build](https://github.com/center-key/fetch-json/workflows/build/badge.svg)](https://github.com/center-key/fetch-json/actions?query=workflow%3Abuild)
 
 Why would you fetch anything but json? ;)
 
-## 1) Make REST easy
+## 1) Make REST Easy
 **fetch-json** automatically:
 1. Converts the HTTP response to JSON if it's not already JSON (especially convenient for HTTP errors)
 1. Serializes the body payload with `JSON.stringify()`
@@ -73,12 +72,13 @@ fetchJson.post('https://httpbin.org/post', resource)
    .catch(console.error);
 ```
 For more examples, see the Mocha specification cases:<br>
-[spec/node.js](spec/node.js) ([Mocha output on Travis CI](https://travis-ci.org/center-key/fetch-json))
+[spec/node.js](spec/node.js)
+([Mocha output for each **build** under `Run npm test`](https://github.com/center-key/fetch-json/actions?query=workflow%3Abuild))
 
 To see a website that incorporates **fetch-json**, check out DataDashboard:<br>
 [data-dashboard.js.org 📊](https://data-dashboard.js.org)
 
-## 4) Examples using async/await
+## 4) Examples Using async/await
 ### HTTP GET
 Fetch the NASA Astronomy Picture of the Day:
 ```javascript
@@ -185,7 +185,7 @@ The default console output looks like:<br>
 `2018-09-12T07:20:12.372Z – "request" - "GET" – "api.nasa.gov" – "https://api.nasa.gov/planetary/apod"`<br>
 `2018-09-12T07:20:13.009Z – "response" - "GET" – "api.nasa.gov" – "https://api.nasa.gov/planetary/apod" - true - 200 - "OK" - "application/json"`
 
-## 7) Response text converted to JSON
+## 7) Response Text Converted to JSON
 The HTTP response body is considered to be JSON if the `Content-Type` is `"application/json"` or
 `"text/javascript"`.&nbsp; If the HTTP response body is not JSON, **fetch-json** passes back
 through the promise an object with a `bodyText` string field containing response body text.
@@ -207,7 +207,7 @@ similar to:
 With **fetch-json**, you know the response body will always be passed back to you as a simple
 object literal.
 
-## 8) TypeScript declarations
+## 8) TypeScript Declarations
 The **TypeScript Declaration File** file is [fetch-json.d.ts](dist/fetch-json.d.ts) in the **dist**
 folder.
 
@@ -218,7 +218,7 @@ fetchJson.post(url: string, resource?: RequestData,
    options?: FetchOptions): Promise<FetchResponse>
 ```
 
-## 9) Legacy web browsers
+## 9) Legacy Web Browsers
 To support really old browsers, include polyfills for
 [Promise](https://github.com/taylorhakes/promise-polyfill/) and
 [Fetch API](https://github.com/github/fetch):
@@ -230,7 +230,7 @@ To support really old browsers, include polyfills for
 JSDOM does not include `fetch`, so you need to add a polyfill.&nbsp;
 See usage of `whatwg-fetch` in [spec/jsdom.js](spec/jsdom.js) and [gulpfile.js](gulpfile.js).
 
-## 10) Contributor notes
+## 10) Contributor Notes
 To be a contributor, **fork** the project and run the commands `npm install` and `npm test` on your
 local clone.&nbsp; Make your edits and rerun the tests.&nbsp; Pull requests welcome.
 
