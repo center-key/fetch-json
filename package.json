@@ -4,8 +4,9 @@
    "version": "2.4.4",
    "license": "MIT",
    "type": "module",
-   "main": "dist/fetch-json.umd.cjs",
    "module": "dist/fetch-json.esm.js",
+   "exports": "dist/fetch-json.esm.js",
+   "main": "dist/fetch-json.umd.cjs",
    "browser": "dist/fetch-json.min.js",
    "types": "dist/fetch-json.d.ts",
    "files": [
