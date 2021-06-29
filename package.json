@@ -79,6 +79,7 @@
       "@types/node-fetch": "~2.5",
       "@typescript-eslint/eslint-plugin": "~4.28",
       "@typescript-eslint/parser": "~4.28",
+      "assert-deep-strict-equal": "~0.0",
       "babel-minify": "~0.5",
       "canvas": "~2.8",
       "dna.js": "~1.8",

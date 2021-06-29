@@ -3,25 +3,12 @@
 
 // Imports
 import assert from 'assert';
+import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
 
 // Setup
 import { fetchJson } from '../dist/fetch-json.esm.js';
 const mode =       { type: 'ES Module', file: 'dist/fetch-json.esm.js' };
 const filename =   import.meta.url.replace(/.*\//, '');  //jshint ignore:line
-const assertDeepStrictEqual = (actual, expected, done) => {
-   const toPlainObj = (obj) => JSON.parse(JSON.stringify(obj));
-   try {
-      assert.deepStrictEqual(toPlainObj(actual), toPlainObj(expected));
-      if (done)
-         done();
-      }
-   catch(error) {
-      if (done)
-         done(error);
-      else
-         throw error;
-      }
-   };
 
 // Specification suite
 describe(`Specifications: ${filename} - ${mode.type} (${mode.file})`, () => {

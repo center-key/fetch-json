@@ -3,6 +3,7 @@
 
 // Imports
 import assert from 'assert';
+import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
 import { JSDOM } from 'jsdom';
 import { readFileSync } from 'fs';
 
@@ -14,20 +15,6 @@ const scripts =    ['node_modules/whatwg-fetch/dist/fetch.umd.js', mode.file];
 const loadScript = (file) => dom.window.eval(readFileSync(file).toString());  //jshint ignore:line
 scripts.forEach(loadScript);
 const { fetchJson } = dom.window;
-const assertDeepStrictEqual = (actual, expected, done) => {
-   const toPlainObj = (obj) => JSON.parse(JSON.stringify(obj));
-   try {
-      assert.deepStrictEqual(toPlainObj(actual), toPlainObj(expected));
-      if (done)
-         done();
-      }
-   catch(error) {
-      if (done)
-         done(error);
-      else
-         throw error;
-      }
-   };
 
 // Specification suite
 describe(`Specifications: ${filename} - ${mode.type} (${mode.file})`, () => {
