@@ -1,8 +1,8 @@
-//! fetch-json v2.4.6 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.4.7 ~ github.com/center-key/fetch-json ~ MIT License
 
 import fetch from 'node-fetch';
 const fetchJson = {
-    version: '2.4.6',
+    version: '2.4.7',
     request(method, url, data, options) {
         const defaults = {
             method: method,
