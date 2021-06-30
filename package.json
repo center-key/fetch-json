@@ -4,13 +4,13 @@
    "version": "2.4.5",
    "license": "MIT",
    "type": "module",
-   "module": "dist/fetch-json.esm.js",
-   "exports": "dist/fetch-json.esm.js",
-   "main": "dist/fetch-json.umd.cjs",
-   "browser": "dist/fetch-json.min.js",
-   "types": "dist/fetch-json.d.ts",
+   "module": "./dist/fetch-json.esm.js",
+   "exports": "./dist/fetch-json.esm.js",
+   "main": "./dist/fetch-json.umd.cjs",
+   "browser": "./dist/fetch-json.min.js",
+   "types": "./dist/fetch-json.d.ts",
    "files": [
-      "dist"
+      "./dist"
    ],
    "repository": "github:center-key/fetch-json",
    "homepage": "https://fetch-json.js.org",
