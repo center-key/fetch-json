@@ -6,7 +6,6 @@
    "type": "module",
    "module": "dist/fetch-json.esm.js",
    "main": "dist/fetch-json.umd.cjs",
-   "browser": "dist/fetch-json.min.js",
    "types": "dist/fetch-json.d.ts",
    "files": [
       "dist"
@@ -81,7 +80,7 @@
       "@babel/core": "~7.14",
       "@babel/preset-env": "~7.14",
       "@fortawesome/fontawesome-free": "~5.15",
-      "@types/node": "~15.12",
+      "@types/node": "~15.14",
       "@types/node-fetch": "~2.5",
       "@typescript-eslint/eslint-plugin": "~4.28",
       "@typescript-eslint/parser": "~4.28",
