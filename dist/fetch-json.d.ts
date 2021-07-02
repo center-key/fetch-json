@@ -1,4 +1,4 @@
-//! fetch-json v2.4.8 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.4.9 ~ github.com/center-key/fetch-json ~ MIT License
 
 export declare type FetchJsonInit = {
     strictErrors: boolean;
