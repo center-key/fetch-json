@@ -1,14 +1,14 @@
-//! fetch-json v2.4.10 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.5.0 ~ github.com/center-key/fetch-json ~ MIT License
 
 const fetchJson = {
-    version: '2.4.10',
+    version: '2.5.0',
     baseOptions: {},
     getBaseOptions() {
-        return fetchJson.baseOptions;
+        return this.baseOptions;
     },
     setBaseOptions(options) {
-        fetchJson.baseOptions = options;
-        return fetchJson.baseOptions;
+        this.baseOptions = options;
+        return this.baseOptions;
     },
     request(method, url, data, options) {
         const defaults = {
@@ -44,31 +44,31 @@ const fetchJson = {
                 bodyText: httpBody,
                 response: response,
             });
-            if (fetchJson.logger)
-                fetchJson.logger(now(), 'response', settings.method, logDomain, logUrl, response.ok, response.status, response.statusText, contentType);
+            if (this.logger)
+                this.logger(now(), 'response', settings.method, logDomain, logUrl, response.ok, response.status, response.statusText, contentType);
             if (settings.strictErrors && !response.ok)
                 throw Error('HTTP response status ("strictErrors" mode enabled): ' + response.status);
             return isJson ? response.json() : response.text().then(textToObj);
         };
-        if (fetchJson.logger)
-            fetchJson.logger(now(), 'request', settings.method, logDomain, logUrl);
+        if (this.logger)
+            this.logger(now(), 'request', settings.method, logDomain, logUrl);
         const settingsRequestInit = JSON.parse(JSON.stringify(settings));
         return fetch(url, settingsRequestInit).then(toJson);
     },
     get(url, params, options) {
-        return fetchJson.request('GET', url, params, options);
+        return this.request('GET', url, params, options);
     },
     post(url, resource, options) {
-        return fetchJson.request('POST', url, resource, options);
+        return this.request('POST', url, resource, options);
     },
     put(url, resource, options) {
-        return fetchJson.request('PUT', url, resource, options);
+        return this.request('PUT', url, resource, options);
     },
     patch(url, resource, options) {
-        return fetchJson.request('PATCH', url, resource, options);
+        return this.request('PATCH', url, resource, options);
     },
     delete(url, resource, options) {
-        return fetchJson.request('DELETE', url, resource, options);
+        return this.request('DELETE', url, resource, options);
     },
     logger: null,
     getLogHeaders() {
@@ -79,7 +79,13 @@ const fetchJson = {
     },
     enableLogger(booleanOrFn) {
         const logger = booleanOrFn === false ? null : console.log;
-        return fetchJson.logger = typeof booleanOrFn === 'function' ? booleanOrFn : logger;
+        return this.logger = typeof booleanOrFn === 'function' ? booleanOrFn : logger;
     },
 };
-if (typeof window === "object") window.fetchJson = fetchJson;
+class FetchJson {
+    constructor(options) {
+        this.fetchJson = { ...fetchJson };
+        this.fetchJson.setBaseOptions(options || {});
+    }
+}
+if (typeof window === "object") { window.fetchJson = fetchJson; window.FetchJson = FetchJson; }

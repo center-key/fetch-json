@@ -1,4 +1,4 @@
-//! fetch-json v2.4.10 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.5.0 ~ github.com/center-key/fetch-json ~ MIT License
 
 export declare type FetchJsonInit = {
     strictErrors: boolean;
@@ -38,4 +38,8 @@ declare const fetchJson: {
     };
     enableLogger(booleanOrFn?: boolean | FetchJsonLogger | undefined): FetchJsonLogger | null;
 };
-export { fetchJson };
+declare class FetchJson {
+    fetchJson: typeof fetchJson;
+    constructor(options?: FetchJsonOptions);
+}
+export { fetchJson, FetchJson };
