@@ -37,11 +37,11 @@ const fetchJson = {
    version: '[VERSION]',
    baseOptions: <FetchJsonOptions>{},
    getBaseOptions(): FetchJsonOptions {
-      return fetchJson.baseOptions;
+      return this.baseOptions;
       },
    setBaseOptions(options: FetchJsonOptions): FetchJsonOptions {
-      fetchJson.baseOptions = options;
-      return fetchJson.baseOptions;
+      this.baseOptions = options;
+      return this.baseOptions;
       },
    request(method: FetchJsonMethod, url: string, data?: FetchJsonParams | FetchJsonBody,
          options?: FetchJsonOptions): Promise<FetchJsonResponse> {
@@ -78,32 +78,32 @@ const fetchJson = {
             bodyText:    httpBody,
             response:    response,
             });
-         if (fetchJson.logger)
-            fetchJson.logger(now(), 'response', settings.method, logDomain, logUrl,
+         if (this.logger)
+            this.logger(now(), 'response', settings.method, logDomain, logUrl,
                response.ok, response.status, response.statusText, contentType);
          if (settings.strictErrors && !response.ok)
             throw Error('HTTP response status ("strictErrors" mode enabled): ' + response.status);
          return isJson ? response.json() : response.text().then(textToObj);
          };
-      if (fetchJson.logger)
-         fetchJson.logger(now(), 'request', settings.method, logDomain, logUrl);
+      if (this.logger)
+         this.logger(now(), 'request', settings.method, logDomain, logUrl);
       const settingsRequestInit = JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
       return fetch(url, settingsRequestInit).then(toJson);
       },
    get(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
-      return fetchJson.request('GET', url, params, options);
+      return this.request('GET', url, params, options);
       },
    post(url: string, resource?: FetchJsonBody, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
-      return fetchJson.request('POST', url, resource, options);
+      return this.request('POST', url, resource, options);
       },
    put(url: string, resource?: FetchJsonBody, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
-      return fetchJson.request('PUT', url, resource, options);
+      return this.request('PUT', url, resource, options);
       },
    patch(url: string, resource?: FetchJsonBody, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
-      return fetchJson.request('PATCH', url, resource, options);
+      return this.request('PATCH', url, resource, options);
       },
    delete(url: string, resource?: FetchJsonBody, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
-      return fetchJson.request('DELETE', url, resource, options);
+      return this.request('DELETE', url, resource, options);
       },
    logger: <FetchJsonLogger | null>null,
    getLogHeaders(): string[] {
@@ -114,8 +114,16 @@ const fetchJson = {
       },
    enableLogger(booleanOrFn?: boolean | FetchJsonLogger): FetchJsonLogger | null {
       const logger = booleanOrFn === false ? null : console.log;
-      return fetchJson.logger = typeof booleanOrFn === 'function' ? booleanOrFn : logger;
+      return this.logger = typeof booleanOrFn === 'function' ? booleanOrFn : logger;
       },
    };
 
-export { fetchJson };
+class FetchJson {
+   fetchJson: typeof fetchJson;
+   constructor(options?: FetchJsonOptions) {
+      this.fetchJson = { ...fetchJson };
+      this.fetchJson.setBaseOptions(options || {});
+      }
+   }
+
+export { fetchJson, FetchJson };
