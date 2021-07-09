@@ -14,7 +14,7 @@ const dom =        new JSDOM('', { runScripts: 'outside-only' });
 const scripts =    ['node_modules/whatwg-fetch/dist/fetch.umd.js', mode.file];
 const loadScript = (file) => dom.window.eval(readFileSync(file).toString());  //jshint ignore:line
 scripts.forEach(loadScript);
-const { fetchJson } = dom.window;
+const { fetchJson, FetchJson } = dom.window;
 
 // Specification suite
 describe(`Specifications: ${filename} - ${mode.type} (${mode.file})`, () => {
@@ -425,6 +425,9 @@ describe('Base options', () => {
 
    it('can be set to automatically add an "Authorization" HTTP header', (done) => {
       const url = 'https://httpbin.org/get';
+      const baseOptions = { headers: { Authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } };
+      const options =     { referrerPolicy: 'no-referrer' };
+      fetchJson.setBaseOptions(baseOptions);
       const handleData = (data) => {
          const actual = {
             auth:   data.headers.Authorization,
@@ -438,15 +441,13 @@ describe('Base options', () => {
             };
          assertDeepStrictEqual(actual, expected, done);
          };
-      const baseOptions = { headers: { Authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } };
-      const options =     { referrerPolicy: 'no-referrer' };
-      fetchJson.setBaseOptions(baseOptions);
       fetchJson.get(url, { planet: 'Mars' }, options).then(handleData);
       });
 
    it('can be cleared', (done) => {
       const url = 'https://httpbin.org/get';
       const previousBaseOptions = fetchJson.getBaseOptions();
+      fetchJson.setBaseOptions({ });
       const handleData = (data) => {
          const actual = {
             previous: previousBaseOptions,
@@ -462,8 +463,42 @@ describe('Base options', () => {
             };
          assertDeepStrictEqual(actual, expected, done);
          };
-      fetchJson.setBaseOptions({ });
       fetchJson.get(url, { planet: 'Mercury' }).then(handleData);
+      });
+
+   });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+describe('FetchJson class instances', () => {
+
+   it('can each set different base options', (done) => {
+      const url = 'https://httpbin.org/get';
+      const baseOptionsA = { headers: { From: 'aaa@example.com' } };
+      const baseOptionsB = { headers: { From: 'bbb@example.com' } };
+      const fetchJsonA = new FetchJson(baseOptionsA).fetchJson;
+      const fetchJsonB = new FetchJson(baseOptionsB).fetchJson;
+      const handleData = (data) => {
+         const actual = {
+            acceptA: data[0].headers.Accept,
+            acceptB: data[1].headers.Accept,
+            fromA:   data[0].headers.From,
+            fromB:   data[1].headers.From,
+            paramsA: data[0].args,
+            paramsB: data[1].args,
+            };
+         const expected = {
+            acceptA: 'application/json',
+            acceptB: 'application/json',
+            fromA:   'aaa@example.com',
+            fromB:   'bbb@example.com',
+            paramsA: { planet: 'Venus' },
+            paramsB: { planet: 'Earth' },
+            };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      const promiseA = fetchJsonA.get(url, { planet: 'Venus' });
+      const promiseB = fetchJsonB.get(url, { planet: 'Earth' });
+      Promise.all([promiseA, promiseB]).then(handleData);
       });
 
    });

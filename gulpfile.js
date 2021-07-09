@@ -22,6 +22,7 @@ const htmlHintConfig = { 'attr-value-double-quotes': false };
 const headerComments = { js: /^[/][/].*\n/gm };
 const transpileES6 =   ['@babel/env', { modules: false }];
 const babelMinifyJs =  { presets: [transpileES6, 'minify'], comments: false };
+const browserEnv =     'if (typeof window === "object") { window.fetchJson = fetchJson; window.FetchJson = FetchJson; }';
 
 // Tasks
 const task = {
@@ -62,7 +63,7 @@ const task = {
             .pipe(header(bannerJs))
             .pipe(replace('[VERSION]', pkg.version))
             .pipe(replace(/^import .* from .*;\n/m, ''))
-            .pipe(replace(/^export { (.*) };/m, 'if (typeof window === "object") window.$1 = $1;'))
+            .pipe(replace(/^export { .* };/m, browserEnv))
             .pipe(size({ showFiles: true }))
             .pipe(gulp.dest('dist'))
             .pipe(babel(babelMinifyJs))

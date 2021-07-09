@@ -218,6 +218,16 @@ fetchJson.get('https://dnajs.org/api/books/').then(displayBooks);  //with auth h
 fetchJson.delete('https://dnajs.org/api/books/1001');              //with auth header
 ```
 
+To have multiple base options available at the same time, use the `FetchJson` class to instantiate
+multiple copies of `fetchJson`:
+```javascript
+import { FetchJson } from 'fetch-json';
+const fetchJsonA = new FetchJson({ headers: { From: 'aaa@example.com' } }).fetchJson;
+const fetchJsonB = new FetchJson({ headers: { From: 'bbb@example.com' } }).fetchJson;
+fetchJsonA.get('https://dnajs.org/api/books/').then(displayBooks);  //from aaa@example.com
+fetchJsonB.delete('https://dnajs.org/api/books/1001');              //from bbb@example.com
+```
+
 ## 9) TypeScript Declarations
 The **TypeScript Declaration File** file is [fetch-json.d.ts](dist/fetch-json.d.ts) in the **dist**
 folder.
