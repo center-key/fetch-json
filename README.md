@@ -77,7 +77,7 @@ fetchJson.post('https://httpbin.org/post', resource)
    .catch(console.error);
 ```
 For more examples, see the Mocha specification cases:<br>
-[spec/node.js](spec/node.js)
+[spec/node.spec.js](spec/node.spec.js)
 ([Mocha output for each **build** under `Run npm test`](https://github.com/center-key/fetch-json/actions?query=workflow%3Abuild))
 
 To see a website that incorporates **fetch-json**, check out DataDashboard:<br>
@@ -221,8 +221,8 @@ The example below sets the `Authorization` HTTP header so it is sent on the subs
 DELETE requests:
 ```javascript
 fetchJson.setBaseOptions({ headers: { Authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } });
-fetchJson.get('https://dnajs.org/api/books/').then(displayBooks);  //with auth header
-fetchJson.delete('https://dnajs.org/api/books/1001');              //with auth header
+fetchJson.get('https://dnajs.org/api/books/').then(display);  //with auth header
+fetchJson.delete('https://dnajs.org/api/books/3/');           //with auth header
 ```
 
 To have multiple base options available at the same time, use the `FetchJson` class to instantiate
@@ -231,8 +231,8 @@ multiple copies of `fetchJson`:
 import { FetchJson } from 'fetch-json';
 const fetchJsonA = new FetchJson({ headers: { From: 'aaa@example.com' } }).fetchJson;
 const fetchJsonB = new FetchJson({ headers: { From: 'bbb@example.com' } }).fetchJson;
-fetchJsonA.get('https://dnajs.org/api/books/').then(displayBooks);  //from aaa@example.com
-fetchJsonB.delete('https://dnajs.org/api/books/1001');              //from bbb@example.com
+fetchJsonA.get('https://dnajs.org/api/books/').then(display);  //from aaa@example.com
+fetchJsonB.delete('https://dnajs.org/api/books/3/');           //from bbb@example.com
 ```
 
 ## 9) TypeScript Declarations
@@ -256,7 +256,7 @@ To support really old browsers, include polyfills for
 ```
 **Note:**
 JSDOM does not include `fetch`, so you need to add a polyfill.&nbsp;
-See usage of `whatwg-fetch` in [spec/jsdom.js](spec/jsdom.js) and [gulpfile.js](gulpfile.js).
+See usage of `whatwg-fetch` in [spec/jsdom.spec.js](spec/jsdom.spec.js) and [gulpfile.js](gulpfile.js).
 
 ## 10) Contributor Notes
 To be a contributor, **fork** the project and run the commands `npm install` and `npm test` on your
