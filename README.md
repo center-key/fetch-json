@@ -114,7 +114,8 @@ if in a web browser and calls
 **[node-fetch](https://www.npmjs.com/package/node-fetch)**
 if running on node.
 
-For comparison, the above POST example in section 2 to create a planet would be done calling the **Fetch API**
+For comparison, the POST example in section [3) Examples](#3-examples) to create a planet would be
+done calling the **Fetch API**
 directly with the code:
 ```javascript
 // Create Jupiter (WITHOUT fetch-json)
@@ -134,7 +135,8 @@ fetch('https://httpbin.org/post', options)
    .then(handleData)
    .catch(console.error);
 ```
-The example _with_ **fetch-json** and the example _without_ **fetch-json** each produce the same output.
+The example _with_ **fetch-json** and the example _without_ **fetch-json** each produce the same
+output.
 
 ## 6) API
 ### API &mdash; HTTP Request
