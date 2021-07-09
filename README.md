@@ -33,7 +33,7 @@ In a web page:
 ```
 or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/fetch-json@2.4/dist/fetch-json.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/fetch-json@2.5/dist/fetch-json.min.js></script>
 ```
 ### Node.js server
 Install package for node:
@@ -57,8 +57,13 @@ Fetch the NASA Astronomy Picture of the Day:
 const url =    'https://api.nasa.gov/planetary/apod';
 const params = { api_key: 'DEMO_KEY' };
 const handleData = (data) =>
-   console.log('The NASA APoD for today is at: ' + data.url);
+   console.log('The NASA APoD for today is at:', data.url);
 fetchJson.get(url, params).then(handleData);
+```
+Example output:
+```
+> The NASA APoD for today is at:
+> https://apod.nasa.gov/apod/image/2107/LRVBPIX3M82Crop1024.jpg
 ```
 ### HTTP POST
 Create a resource for the planet Jupiter:
