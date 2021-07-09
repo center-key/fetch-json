@@ -2,7 +2,7 @@
 <img src=https://raw.githubusercontent.com/center-key/fetch-json/main/docs/logos.png
    align=right width=180 alt=logos>
 
-_A wrapper around Fetch just for JSON_
+_A wrapper around Fetch just for JSON (written in TypeScript)_
 
 [![License:MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/fetch-json/blob/main/LICENSE.txt)
 [![npm](https://img.shields.io/npm/v/fetch-json.svg)](https://www.npmjs.com/package/fetch-json)
@@ -207,7 +207,18 @@ similar to:
 With **fetch-json**, you know the response body will always be passed back to you as a simple
 object literal.
 
-## 8) TypeScript Declarations
+## 8) Base Options
+Use `fetchJson.setBaseOptions()` to configure options to be used on future **fetchJson** requests.
+
+The example below sets the `Authorization` HTTP header so it is sent on the subsequent GET and
+DELETE requests:
+```javascript
+fetchJson.setBaseOptions({ headers: { Authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } });
+fetchJson.get('https://dnajs.org/api/books/').then(displayBooks);  //with auth header
+fetchJson.delete('https://dnajs.org/api/books/1001');              //with auth header
+```
+
+## 9) TypeScript Declarations
 The **TypeScript Declaration File** file is [fetch-json.d.ts](dist/fetch-json.d.ts) in the **dist**
 folder.
 
@@ -218,7 +229,7 @@ fetchJson.post(url: string, resource?: RequestData,
    options?: FetchOptions): Promise<FetchResponse>
 ```
 
-## 9) Legacy Web Browsers
+## 10) Legacy Web Browsers
 To support really old browsers, include polyfills for
 [Promise](https://github.com/taylorhakes/promise-polyfill/) and
 [Fetch API](https://github.com/github/fetch):

@@ -421,4 +421,52 @@ describe('Function fetchJson.enableLogger()', () => {
    });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+describe('Base options', () => {
+
+   it('can be set to automatically add an "Authorization" HTTP header', (done) => {
+      const url = 'https://httpbin.org/get';
+      const handleData = (data) => {
+         const actual = {
+            auth:   data.headers.Authorization,
+            accept: data.headers.Accept,
+            params: data.args,
+            };
+         const expected = {
+            auth:   'Basic WE1MIGlzIGhpZGVvdXM=',
+            accept: 'application/json',
+            params: { planet: 'Mars' },
+            };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      const baseOptions = { headers: { Authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } };
+      const options =     { referrerPolicy: 'no-referrer' };
+      fetchJson.setBaseOptions(baseOptions);
+      fetchJson.get(url, { planet: 'Mars' }, options).then(handleData);
+      });
+
+   it('can be cleared', (done) => {
+      const url = 'https://httpbin.org/get';
+      const previousBaseOptions = fetchJson.getBaseOptions();
+      const handleData = (data) => {
+         const actual = {
+            previous: previousBaseOptions,
+            auth:     data.headers.Authorization,
+            accept:   data.headers.Accept,
+            params:   data.args,
+            };
+         const expected = {
+            previous: { headers: { Authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } },
+            auth:     undefined,
+            accept:   'application/json',
+            params:   { planet: 'Mercury' },
+            };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      fetchJson.setBaseOptions({ });
+      fetchJson.get(url, { planet: 'Mercury' }).then(handleData);
+      });
+
+   });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 });

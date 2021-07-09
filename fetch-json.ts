@@ -35,6 +35,14 @@ import fetch from 'node-fetch';
 
 const fetchJson = {
    version: '[VERSION]',
+   baseOptions: <FetchJsonOptions>{},
+   getBaseOptions(): FetchJsonOptions {
+      return fetchJson.baseOptions;
+      },
+   setBaseOptions(options: FetchJsonOptions): FetchJsonOptions {
+      fetchJson.baseOptions = options;
+      return fetchJson.baseOptions;
+      },
    request(method: FetchJsonMethod, url: string, data?: FetchJsonParams | FetchJsonBody,
          options?: FetchJsonOptions): Promise<FetchJsonResponse> {
       const defaults: FetchJsonOptions = {
@@ -42,13 +50,13 @@ const fetchJson = {
          credentials:  'same-origin',
          strictErrors: false,
          };
-      const settings = { ...defaults, ...options };
+      const settings = { ...defaults, ...this.baseOptions, ...options };
       settings.method = (<string>settings.method).toUpperCase();
       const isGetRequest = settings.method === 'GET';
       const jsonHeaders = { Accept: 'application/json' };
       if (!isGetRequest && data)
          jsonHeaders['Content-Type'] = 'application/json';
-      settings.headers = { ...jsonHeaders, ...(options && options.headers) };
+      settings.headers = { ...jsonHeaders, ...settings.headers };
       const paramKeys: string[] = isGetRequest && data ? Object.keys(data) : [];
       const toPair = (key: string) => key + '=' +
          encodeURIComponent(data ? data[key] : '');  //build query string field-value
