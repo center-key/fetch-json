@@ -1,20 +1,28 @@
-//! fetch-json v2.4.9 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.4.10 ~ github.com/center-key/fetch-json ~ MIT License
 
 const fetchJson = {
-    version: '2.4.9',
+    version: '2.4.10',
+    baseOptions: {},
+    getBaseOptions() {
+        return fetchJson.baseOptions;
+    },
+    setBaseOptions(options) {
+        fetchJson.baseOptions = options;
+        return fetchJson.baseOptions;
+    },
     request(method, url, data, options) {
         const defaults = {
             method: method,
             credentials: 'same-origin',
             strictErrors: false,
         };
-        const settings = { ...defaults, ...options };
+        const settings = { ...defaults, ...this.baseOptions, ...options };
         settings.method = settings.method.toUpperCase();
         const isGetRequest = settings.method === 'GET';
         const jsonHeaders = { Accept: 'application/json' };
         if (!isGetRequest && data)
             jsonHeaders['Content-Type'] = 'application/json';
-        settings.headers = { ...jsonHeaders, ...(options && options.headers) };
+        settings.headers = { ...jsonHeaders, ...settings.headers };
         const paramKeys = isGetRequest && data ? Object.keys(data) : [];
         const toPair = (key) => key + '=' +
             encodeURIComponent(data ? data[key] : '');

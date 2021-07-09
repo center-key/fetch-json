@@ -1,7 +1,7 @@
 {
    "name": "fetch-json",
    "description": "A wrapper around Fetch just for JSON (written in TypeScript)",
-   "version": "2.4.9",
+   "version": "2.4.10",
    "license": "MIT",
    "type": "module",
    "module": "dist/fetch-json.esm.js",
@@ -80,7 +80,7 @@
       "@babel/core": "~7.14",
       "@babel/preset-env": "~7.14",
       "@fortawesome/fontawesome-free": "~5.15",
-      "@types/node": "~16.0",
+      "@types/node": "~16.3",
       "@types/node-fetch": "~2.5",
       "@typescript-eslint/eslint-plugin": "~4.28",
       "@typescript-eslint/parser": "~4.28",

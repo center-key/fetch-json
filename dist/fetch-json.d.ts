@@ -1,4 +1,4 @@
-//! fetch-json v2.4.9 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.4.10 ~ github.com/center-key/fetch-json ~ MIT License
 
 export declare type FetchJsonInit = {
     strictErrors: boolean;
@@ -22,6 +22,9 @@ export declare type FetchJsonResponse = FetchJsonParsedResponse | FetchJsonTextR
 export declare type FetchJsonLogger = (dateIso: string, type?: 'response' | 'request', method?: FetchJsonMethod, logDomain?: string, logUrl?: string, ok?: boolean, status?: number, statusText?: string, contentType?: string | null) => void;
 declare const fetchJson: {
     version: string;
+    baseOptions: FetchJsonOptions;
+    getBaseOptions(): FetchJsonOptions;
+    setBaseOptions(options: FetchJsonOptions): FetchJsonOptions;
     request(method: FetchJsonMethod, url: string, data?: FetchJsonParams | FetchJsonBody | undefined, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
     get(url: string, params?: FetchJsonParams | undefined, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
     post(url: string, resource?: FetchJsonBody | undefined, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
