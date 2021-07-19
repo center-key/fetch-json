@@ -1,5 +1,5 @@
-// Mocha Specification Cases
-// Run specification cases on a node server
+// Mocha Specification Suite
+// Run on a node server
 
 // Imports
 import assert from 'assert';

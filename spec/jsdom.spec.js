@@ -1,5 +1,5 @@
-// Mocha Specification Cases
-// Run specification cases in jsdom (a headless web browser)
+// Mocha Specification Suite
+// Run in jsdom (a headless web browser) with whatwg-fetch polyfill
 
 // Imports
 import assert from 'assert';

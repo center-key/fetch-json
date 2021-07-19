@@ -1,5 +1,5 @@
 #!/bin/bash
-# Execute specification cases
+# Execute specification suites
 
 # To make this file runnable:
 #     $ chmod +x *.sh.command

@@ -76,7 +76,7 @@ fetchJson.post('https://httpbin.org/post', resource)
    .then(handleData)
    .catch(console.error);
 ```
-For more examples, see the Mocha specification cases:<br>
+For more examples, see the Mocha specification suite:<br>
 [spec/node.spec.js](spec/node.spec.js)
 ([Mocha output for each **build** under `Run npm test`](https://github.com/center-key/fetch-json/actions?query=workflow%3Abuild))
 
