@@ -1,7 +1,7 @@
-//! fetch-json v2.5.0 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.5.1 ~ github.com/center-key/fetch-json ~ MIT License
 
 const fetchJson = {
-    version: '2.5.0',
+    version: '2.5.1',
     baseOptions: {},
     getBaseOptions() {
         return this.baseOptions;
