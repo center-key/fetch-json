@@ -5,6 +5,7 @@
    "license": "MIT",
    "type": "module",
    "module": "dist/fetch-json.esm.js",
+   "jsdelivr": "dist/fetch-json.min.js",
    "main": "dist/fetch-json.umd.cjs",
    "types": "dist/fetch-json.d.ts",
    "files": [
@@ -80,7 +81,7 @@
       "@babel/core": "~7.14",
       "@babel/preset-env": "~7.14",
       "@fortawesome/fontawesome-free": "~5.15",
-      "@types/node": "~16.3",
+      "@types/node": "~16.4",
       "@types/node-fetch": "~2.5",
       "@typescript-eslint/eslint-plugin": "~4.28",
       "@typescript-eslint/parser": "~4.28",
