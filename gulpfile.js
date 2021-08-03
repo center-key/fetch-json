@@ -2,23 +2,20 @@
 // Tasks
 
 // Imports
-import babel from         'gulp-babel';
-import gap from           'gulp-append-prepend';
-import gulp from          'gulp';
-import header from        'gulp-header';
-import htmlHint from      'gulp-htmlhint';
-import mergeStream from   'merge-stream';
-import rename from        'gulp-rename';
-import replace from       'gulp-replace';
-import size from          'gulp-size';
-import { htmlValidator } from 'gulp-w3c-html-validator';
+import babel from       'gulp-babel';
+import gap from         'gulp-append-prepend';
+import gulp from        'gulp';
+import header from      'gulp-header';
+import mergeStream from 'merge-stream';
+import rename from      'gulp-rename';
+import replace from     'gulp-replace';
+import size from        'gulp-size';
 import { readFileSync } from 'fs';
 
 // Setup
 const pkg =            JSON.parse(readFileSync('./package.json'));
 const home =           pkg.repository.replace('github:', 'github.com/');
 const bannerJs =       '//! fetch-json v' + pkg.version + ' ~ ' + home + ' ~ MIT License\n\n';
-const htmlHintConfig = { 'attr-value-double-quotes': false };
 const headerComments = { js: /^[/][/].*\n/gm };
 const transpileES6 =   ['@babel/env', { modules: false }];
 const babelMinifyJs =  { presets: [transpileES6, 'minify'], comments: false };
@@ -26,15 +23,6 @@ const browserEnv =     'if (typeof window === "object") { window.fetchJson = fet
 
 // Tasks
 const task = {
-
-   analyzeHtml: () => {
-      return gulp.src('docs/*.html')
-         .pipe(htmlHint(htmlHintConfig))
-         .pipe(htmlHint.reporter())
-         .pipe(htmlValidator.analyzer())
-         .pipe(htmlValidator.reporter())
-         .pipe(size({ showFiles: true }));
-      },
 
    makeDistribution: () => {
       const buildDts = () =>
@@ -79,5 +67,4 @@ const task = {
    };
 
 // Gulp
-gulp.task('lint-html', task.analyzeHtml);
 gulp.task('make-dist', task.makeDistribution);
