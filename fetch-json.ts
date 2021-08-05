@@ -1,15 +1,20 @@
 // fetch-json ~ MIT License
 
+import fetch from 'node-fetch';
+
 /* eslint-disable  @typescript-eslint/no-explicit-any */
+export type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
+export type JsonObject = { [key: string]: Json };
+export type JsonArray = Json[];
+export type JsonData = JsonObject | JsonArray;
 export type FetchJsonInit = {
    strictErrors: boolean,
    };
 export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
 export type FetchJsonMethod = RequestInit['method'];
 export type FetchJsonParams = Record<string, string | number | boolean | null | undefined>;
-export type FetchJsonBody = Record<string | number, any> | any[];
-export type FetchJsonParsedResponse = string | number | boolean | null | any |
-   FetchJsonParsedResponse[] | { [prop: string]: FetchJsonParsedResponse };
+export type FetchJsonBody = Json | any;
+export type FetchJsonParsedResponse = Json | any;
 export type FetchJsonTextResponse = {
    ok:          boolean,
    error:       boolean,
@@ -30,8 +35,6 @@ export type FetchJsonLogger = (
    statusText?:  string,
    contentType?: string | null,
    ) => void;
-
-import fetch from 'node-fetch';
 
 const fetchJson = {
    version: '[VERSION]',
