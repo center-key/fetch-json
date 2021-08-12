@@ -79,7 +79,8 @@
       "step:06": "gulp make-dist",
       "step:07": "w3c-html-validator",
       "step:08": "mocha spec/*.spec.js --timeout 5000",
-      "test": "npm-run-all step:*"
+      "test": "npm-run-all step:*",
+      "examples": "node docs/js/examples.js && tsc && node build/docs/ts/examples.js"
    },
    "dependencies": {},
    "devDependencies": {
