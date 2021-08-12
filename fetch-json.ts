@@ -3,7 +3,7 @@
 import fetch from 'node-fetch';
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-export type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
+export type Json = string | number | boolean | null | undefined | Json[] | { [key: string]: Json };
 export type JsonObject = { [key: string]: Json };
 export type JsonArray = Json[];
 export type JsonData = JsonObject | JsonArray;
@@ -12,8 +12,7 @@ export type FetchJsonInit = {
    };
 export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
 export type FetchJsonMethod = RequestInit['method'];
-export type FetchJsonParams = Record<string, string | number | boolean | null | undefined>;
-export type FetchJsonBody = Json | any;
+export type FetchJsonParams = { [field: string]: string | number | boolean | null | undefined };
 export type FetchJsonParsedResponse = Json | any;
 export type FetchJsonTextResponse = {
    ok:          boolean,
@@ -46,7 +45,7 @@ const fetchJson = {
       this.baseOptions = options;
       return this.baseOptions;
       },
-   request(method: FetchJsonMethod, url: string, data?: FetchJsonParams | FetchJsonBody,
+   request<T>(method: FetchJsonMethod, url: string, data?: FetchJsonParams | Json | T,
          options?: FetchJsonOptions): Promise<FetchJsonResponse> {
       const defaults: FetchJsonOptions = {
          method:       method,
@@ -96,16 +95,16 @@ const fetchJson = {
    get(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
       return this.request('GET', url, params, options);
       },
-   post(url: string, resource?: FetchJsonBody, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   post<T>(url: string, resource?: Json | T, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
       return this.request('POST', url, resource, options);
       },
-   put(url: string, resource?: FetchJsonBody, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   put<T>(url: string, resource?: Json | T, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
       return this.request('PUT', url, resource, options);
       },
-   patch(url: string, resource?: FetchJsonBody, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   patch<T>(url: string, resource?: Json | T, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
       return this.request('PATCH', url, resource, options);
       },
-   delete(url: string, resource?: FetchJsonBody, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   delete<T>(url: string, resource?: Json | T, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
       return this.request('DELETE', url, resource, options);
       },
    logger: <FetchJsonLogger | null>null,
