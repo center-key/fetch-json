@@ -4,7 +4,7 @@
    "version": "2.5.2",
    "license": "MIT",
    "type": "module",
-   "module": "dist/fetch-json.esm.js",
+   "module": "dist/fetch-json.js",
    "jsdelivr": "dist/fetch-json.min.js",
    "main": "dist/fetch-json.umd.cjs",
    "types": "dist/fetch-json.d.ts",
@@ -13,7 +13,7 @@
    ],
    "exports": {
       ".": {
-         "import": "./dist/fetch-json.esm.js",
+         "import": "./dist/fetch-json.js",
          "require": "./dist/fetch-json.umd.cjs"
       },
       "./": "./dist/"

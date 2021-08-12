@@ -6,8 +6,8 @@ import assert from 'assert';
 import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
 
 // Setup
-import { fetchJson, FetchJson } from '../dist/fetch-json.esm.js';
-const mode =       { type: 'ES Module', file: 'dist/fetch-json.esm.js' };
+import { fetchJson, FetchJson } from '../dist/fetch-json.js';
+const mode =       { type: 'ES Module', file: 'dist/fetch-json.js' };
 const filename =   import.meta.url.replace(/.*\//, '');  //jshint ignore:line
 
 // Specification suite

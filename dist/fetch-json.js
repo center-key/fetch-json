@@ -1,5 +1,6 @@
 //! fetch-json v2.5.2 ~ github.com/center-key/fetch-json ~ MIT License
 
+import fetch from 'node-fetch';
 const fetchJson = {
     version: '2.5.2',
     baseOptions: {},
@@ -88,4 +89,4 @@ class FetchJson {
         this.fetchJson.setBaseOptions(options || {});
     }
 }
-if (typeof window === "object") { window.fetchJson = fetchJson; window.FetchJson = FetchJson; }
+export { fetchJson, FetchJson };

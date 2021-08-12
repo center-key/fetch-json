@@ -1,15 +1,14 @@
 // fetch-json
-// Simple examples
+// Simple examples (JavaScript)
 
 // To run:
 //    $ git clone https://github.com/center-key/fetch-json.git
 //    $ cd fetch-json
 //    $ npm install
-//    $ node docs/js/examples
+//    $ node docs/js/examples.js
 
 // Setup
-import { fetchJson } from '../../dist/fetch-json.esm.js';
-fetchJson.enableLogger();
+import { fetchJson } from '../../dist/fetch-json.js';
 
 // Intro
 console.log();
@@ -17,11 +16,12 @@ console.log('Examples');
 console.log('========');
 console.log('fetch-json v' + fetchJson.version);
 console.log();
+fetchJson.enableLogger();
 
 // Examples
 const example = {
 
-   nasa: () => {
+   nasa() {
 
       // NASA APoD
       const url =    'https://api.nasa.gov/planetary/apod';
@@ -31,7 +31,7 @@ const example = {
 
       },
 
-   jupiter: () => {
+   jupiter() {
 
       // Create Jupiter
       const resource = { name: 'Jupiter', position: 5 };
@@ -42,7 +42,7 @@ const example = {
 
       },
 
-   teapot: () => {
+   teapot() {
 
       // Fetch me some tea
       const handleData = (data) => console.log(data.bodyText);
@@ -50,7 +50,7 @@ const example = {
 
       },
 
-   books: () => {
+   books() {
 
       // Get books about SpaceX
       const handleData = (data) => {

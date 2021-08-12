@@ -5,10 +5,10 @@
 //    $ git clone https://github.com/center-key/fetch-json.git
 //    $ cd fetch-json
 //    $ npm install
-//    $ node docs/js/examples-await
+//    $ node docs/js/examples-await.js
 
 // Setup
-import { fetchJson } from '../../dist/fetch-json.esm.js';
+import { fetchJson } from '../../dist/fetch-json.js';
 fetchJson.enableLogger();
 
 // Intro
