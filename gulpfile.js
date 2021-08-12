@@ -44,6 +44,7 @@ const task = {
             .pipe(header(bannerJs.replace('\n\n', '\n')))
             .pipe(gap.appendText('\n'))
             .pipe(size({ showFiles: true }))
+            .pipe(size({ showFiles: true, gzip: true }))
             .pipe(gulp.dest('dist'));
       const buildUmd = () =>
          gulp.src('build/umd/fetch-json.js')

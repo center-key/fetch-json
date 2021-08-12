@@ -1,4 +1,4 @@
-//! fetch-json v2.5.2 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.6.0 ~ github.com/center-key/fetch-json ~ MIT License
 
 export declare type Json = string | number | boolean | null | undefined | Json[] | {
     [key: string]: Json;
