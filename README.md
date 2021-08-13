@@ -33,7 +33,7 @@ In a web page:
 ```
 or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/fetch-json@2.5/dist/fetch-json.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/fetch-json@2.6/dist/fetch-json.min.js></script>
 ```
 ### Node.js server
 Install package for node:
