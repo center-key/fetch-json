@@ -11,7 +11,7 @@ export type FetchJsonInit = {
    strictErrors: boolean,
    };
 export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
-export type FetchJsonMethod = RequestInit['method'];
+export type FetchJsonMethod = string;
 export type FetchJsonParams = { [field: string]: string | number | boolean | null | undefined };
 export type FetchJsonParsedResponse = Json | any;
 export type FetchJsonTextResponse = {
