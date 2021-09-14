@@ -3,10 +3,9 @@
 import fetch from 'node-fetch';
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-export type Json = string | number | boolean | null | undefined | Json[] | { [key: string]: Json };
+export type Json = string | number | boolean | null | undefined | JsonObject | Json[];
 export type JsonObject = { [key: string]: Json };
-export type JsonArray = Json[];
-export type JsonData = JsonObject | JsonArray;
+export type JsonData = JsonObject | Json[];
 export type FetchJsonInit = {
    strictErrors: boolean,
    };
