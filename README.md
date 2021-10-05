@@ -6,7 +6,7 @@ _A wrapper around Fetch just for JSON (written in TypeScript)_
 
 [![License:MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/fetch-json/blob/main/LICENSE.txt)
 [![npm](https://img.shields.io/npm/v/fetch-json.svg)](https://www.npmjs.com/package/fetch-json)
-[![Size](https://badgen.net/bundlephobia/minzip/fetch-json)](https://bundlephobia.com/result?p=fetch-json)
+[![Size](https://badgen.net/bundlephobia/minzip/fetch-json)](https://bundlephobia.com/package/fetch-json)
 [![Vulnerabilities](https://snyk.io/test/github/center-key/fetch-json/badge.svg)](https://snyk.io/test/github/center-key/fetch-json)
 [![Build](https://github.com/center-key/fetch-json/workflows/build/badge.svg)](https://github.com/center-key/fetch-json/actions?query=workflow%3Abuild)
 

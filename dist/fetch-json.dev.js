@@ -1,7 +1,7 @@
-//! fetch-json v2.6.0 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.6.1 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '2.6.0',
+    version: '2.6.1',
     baseOptions: {},
     getBaseOptions() {
         return this.baseOptions;

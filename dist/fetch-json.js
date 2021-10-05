@@ -1,8 +1,8 @@
-//! fetch-json v2.6.0 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.6.1 ~~ https://fetch-json.js.org ~~ MIT License
 
 import fetch from 'node-fetch';
 const fetchJson = {
-    version: '2.6.0',
+    version: '2.6.1',
     baseOptions: {},
     getBaseOptions() {
         return this.baseOptions;

@@ -2,12 +2,12 @@
 // Tasks
 
 // Imports
-import babel from       'gulp-babel';
-import gap from         'gulp-append-prepend';
-import gulp from        'gulp';
-import rename from      'gulp-rename';
-import replace from     'gulp-replace';
-import size from        'gulp-size';
+import babel   from 'gulp-babel';
+import gap     from 'gulp-append-prepend';
+import gulp    from 'gulp';
+import rename  from 'gulp-rename';
+import replace from 'gulp-replace';
+import size    from 'gulp-size';
 
 // Setup
 const transpileES6 =  ['@babel/env', { modules: false }];

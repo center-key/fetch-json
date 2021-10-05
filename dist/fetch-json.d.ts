@@ -1,18 +1,15 @@
-//! fetch-json v2.6.0 ~ github.com/center-key/fetch-json ~ MIT License
+//! fetch-json v2.6.1 ~~ https://fetch-json.js.org ~~ MIT License
 
-export declare type Json = string | number | boolean | null | undefined | Json[] | {
-    [key: string]: Json;
-};
+export declare type Json = string | number | boolean | null | undefined | JsonObject | Json[];
 export declare type JsonObject = {
     [key: string]: Json;
 };
-export declare type JsonArray = Json[];
-export declare type JsonData = JsonObject | JsonArray;
+export declare type JsonData = JsonObject | Json[];
 export declare type FetchJsonInit = {
     strictErrors: boolean;
 };
 export declare type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
-export declare type FetchJsonMethod = RequestInit['method'];
+export declare type FetchJsonMethod = string;
 export declare type FetchJsonParams = {
     [field: string]: string | number | boolean | null | undefined;
 };
