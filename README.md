@@ -252,7 +252,7 @@ To support really old browsers, include polyfills for
 [Fetch API](https://github.com/github/fetch):
 ```html
 <script src=https://cdn.jsdelivr.net/npm/promise-polyfill@8.2/dist/polyfill.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@3.5/dist/fetch.umd.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@3.6/dist/fetch.umd.min.js></script>
 ```
 **Note:**
 JSDOM does not include `fetch`, so you need to add a polyfill.&nbsp;
