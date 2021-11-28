@@ -1,8 +1,8 @@
-//! fetch-json v2.6.1 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v2.6.2 ~~ https://fetch-json.js.org ~~ MIT License
 
 import fetch from 'node-fetch';
 const fetchJson = {
-    version: '2.6.1',
+    version: '2.6.2',
     baseOptions: {},
     getBaseOptions() {
         return this.baseOptions;
@@ -49,7 +49,15 @@ const fetchJson = {
                 this.logger(now(), 'response', settings.method, logDomain, logUrl, response.ok, response.status, response.statusText, contentType);
             if (settings.strictErrors && !response.ok)
                 throw Error('HTTP response status ("strictErrors" mode enabled): ' + response.status);
-            return isJson ? response.json() : response.text().then(textToObj);
+            const errToObj = (error) => ({
+                ok: false,
+                error: true,
+                status: 500,
+                contentType: contentType,
+                bodyText: 'Invalid JSON [' + error.toString() + ']',
+                response: response,
+            });
+            return isJson ? response.json().catch(errToObj) : response.text().then(textToObj);
         };
         if (this.logger)
             this.logger(now(), 'request', settings.method, logDomain, logUrl);
