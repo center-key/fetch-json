@@ -498,4 +498,23 @@ describe('FetchJson class instances', () => {
    });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+describe('Correct error is thrown', () => {
+
+   it('when the HTTP method is missing', (done) => {
+      const exception = /^Error: .fetch-json. HTTP method missing or invalid$/;
+      const makeBogusRequest = () => fetchJson.request(null, 'http://example.com');
+      assert.throws(makeBogusRequest, exception);
+      done();
+      });
+
+   it('when the HTTP method is invalid', (done) => {
+      const exception = /^Error: .fetch-json. HTTP method missing or invalid$/;
+      const makeBogusRequest = () => fetchJson.request(Infinity, 'http://example.com');
+      assert.throws(makeBogusRequest, exception);
+      done();
+      });
+
+   });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 });

@@ -52,7 +52,9 @@ const fetchJson = {
          strictErrors: false,
          };
       const settings = { ...defaults, ...this.baseOptions, ...options };
-      settings.method = (<string>settings.method).toUpperCase();
+      if (!settings.method || typeof settings.method !== 'string')
+         throw Error('[fetch-json] HTTP method missing or invalid');
+      settings.method = settings.method.trim().toUpperCase();
       const isGetRequest = settings.method === 'GET';
       const jsonHeaders = { Accept: 'application/json' };
       if (!isGetRequest && data)
