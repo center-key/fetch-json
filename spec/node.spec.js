@@ -250,14 +250,14 @@ describe('HTTP error returned by httpbin.org', () => {
          };
       const handleError = (error) => {
          const actual = {
-            error:   error instanceof (typeof window === 'object' ? window.Error : Error),
+            object:  error.constructor.name,
             name:    error.name,
             message: error.message,
             };
          const expected = {
-            error:   true,
+            object:  'Error',
             name:    'Error',
-            message: 'HTTP response status ("strictErrors" mode enabled): 500',
+            message: 'HTTP response status ("strictErrors" mode enabled): 500'
             };
          assertDeepStrictEqual(actual, expected, done);
          };
@@ -512,6 +512,37 @@ describe('Correct error is thrown', () => {
       const makeBogusRequest = () => fetchJson.request(Infinity, 'http://example.com');
       assert.throws(makeBogusRequest, exception);
       done();
+      });
+
+   it('for a bogus protocol', (done) => {
+      const handleError = (error) => {
+         const actual = {
+            object:  error.constructor.name,
+            name:    error.name,
+            message: /Network request failed|cannot load/.test(error.message) || error.message,
+            };
+         const expected = {
+            object:  'TypeError',
+            name:    'TypeError',
+            message: true,
+            };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      fetchJson.get('bogus://example.com').catch(handleError);
+      });
+
+   it('for a bogus domain', (done) => {
+      const specEnv = typeof JSDOM === 'function' ? 'jsdom' : 'node';
+      const message = {
+         jsdom: 'Network request failed',
+         node:  'request to https://bogus.bogus/ failed, reason: getaddrinfo ENOTFOUND bogus.bogus',
+         };
+      const handleError = (error) => {
+         const actual =   { message: error.message };
+         const expected = { message: message[specEnv] };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      fetchJson.get('https://bogus.bogus').catch(handleError);
       });
 
    });

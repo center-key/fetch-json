@@ -4,13 +4,24 @@
 // Imports
 import assert from 'assert';
 import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
-import { JSDOM } from 'jsdom';
+import { JSDOM, VirtualConsole } from 'jsdom';
 import { readFileSync } from 'fs';
+
+// JSDOM Virtual Console
+const expectedErrors = [
+   'TypeError [ERR_INVALID_PROTOCOL]: Protocol "bogus:" not supported. Expected "http:"',
+   'Error: getaddrinfo ENOTFOUND bogus.bogus',
+   ];
+const logMessage = (error) => '      Verified message -- ' + error.message;
+const virtualConsole = new VirtualConsole();
+virtualConsole.on('jsdomError', (error) =>
+   console.log(expectedErrors.includes(error.message) ? logMessage(error) : error.stack));
+virtualConsole.sendTo(console, { omitJSDOMErrors: true });
 
 // Setup
 const mode =       { type: 'Minified', file: 'dist/fetch-json.min.js' };
 const filename =   import.meta.url.replace(/.*\//, '');  //jshint ignore:line
-const dom =        new JSDOM('', { runScripts: 'outside-only' });
+const dom =        new JSDOM('', { runScripts: 'outside-only', virtualConsole: virtualConsole });
 const scripts =    ['node_modules/whatwg-fetch/dist/fetch.umd.js', mode.file];
 const loadScript = (file) => dom.window.eval(readFileSync(file).toString());  //jshint ignore:line
 scripts.forEach(loadScript);
@@ -263,7 +274,7 @@ describe('HTTP error returned by httpbin.org', () => {
          const expected = {
             object:  'Error',
             name:    'Error',
-            message: 'HTTP response status ("strictErrors" mode enabled): 500'
+            message: 'HTTP response status ("strictErrors" mode enabled): 500',
             };
          assertDeepStrictEqual(actual, expected, done);
          };
@@ -518,6 +529,37 @@ describe('Correct error is thrown', () => {
       const makeBogusRequest = () => fetchJson.request(Infinity, 'http://example.com');
       assert.throws(makeBogusRequest, exception);
       done();
+      });
+
+   it('for a bogus protocol', (done) => {
+      const handleError = (error) => {
+         const actual = {
+            object:  error.constructor.name,
+            name:    error.name,
+            message: /Network request failed|cannot load/.test(error.message) || error.message,
+            };
+         const expected = {
+            object:  'TypeError',
+            name:    'TypeError',
+            message: true,
+            };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      fetchJson.get('bogus://example.com').catch(handleError);
+      });
+
+   it('for a bogus domain', (done) => {
+      const specEnv = typeof JSDOM === 'function' ? 'jsdom' : 'node';
+      const message = {
+         jsdom: 'Network request failed',
+         node:  'request to https://bogus.bogus/ failed, reason: getaddrinfo ENOTFOUND bogus.bogus',
+         };
+      const handleError = (error) => {
+         const actual =   { message: error.message };
+         const expected = { message: message[specEnv] };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      fetchJson.get('https://bogus.bogus').catch(handleError);
       });
 
    });
