@@ -257,7 +257,7 @@ describe('HTTP error returned by httpbin.org', () => {
          const expected = {
             object:  'Error',
             name:    'Error',
-            message: 'HTTP response status ("strictErrors" mode enabled): 500'
+            message: '[fetch-json] HTTP response status ("strictErrors" mode enabled): 500',
             };
          assertDeepStrictEqual(actual, expected, done);
          };
@@ -500,18 +500,16 @@ describe('FetchJson class instances', () => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('Correct error is thrown', () => {
 
-   it('when the HTTP method is missing', (done) => {
-      const exception = /^Error: .fetch-json. HTTP method missing or invalid$/;
+   it('when the HTTP method is missing', () => {
       const makeBogusRequest = () => fetchJson.request(null, 'http://example.com');
+      const exception = { message: '[fetch-json] HTTP method missing or invalid.' };
       assert.throws(makeBogusRequest, exception);
-      done();
       });
 
-   it('when the HTTP method is invalid', (done) => {
-      const exception = /^Error: .fetch-json. HTTP method missing or invalid$/;
+   it('when the HTTP method is invalid', () => {
       const makeBogusRequest = () => fetchJson.request(Infinity, 'http://example.com');
+      const exception = { message: '[fetch-json] HTTP method missing or invalid.' };
       assert.throws(makeBogusRequest, exception);
-      done();
       });
 
    it('for a bogus protocol', (done) => {

@@ -53,7 +53,7 @@ const fetchJson = {
          };
       const settings = { ...defaults, ...this.baseOptions, ...options };
       if (!settings.method || typeof settings.method !== 'string')
-         throw Error('[fetch-json] HTTP method missing or invalid');
+         throw Error('[fetch-json] HTTP method missing or invalid.');
       settings.method = settings.method.trim().toUpperCase();
       const isGetRequest = settings.method === 'GET';
       const jsonHeaders = { Accept: 'application/json' };
@@ -85,7 +85,7 @@ const fetchJson = {
             this.logger(now(), 'response', settings.method, logDomain, logUrl,
                response.ok, response.status, response.statusText, contentType);
          if (settings.strictErrors && !response.ok)
-            throw Error('HTTP response status ("strictErrors" mode enabled): ' + response.status);
+            throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
          const errToObj = (error: Error): FetchJsonTextResponse => ({
             ok:          false,
             error:       true,
@@ -130,6 +130,8 @@ const fetchJson = {
    };
 
 class FetchJson {
+   // A Class version of fetchJson to support creating multiple instances each with its own base
+   // options.
    fetchJson: typeof fetchJson;
    constructor(options?: FetchJsonOptions) {
       this.fetchJson = { ...fetchJson };
