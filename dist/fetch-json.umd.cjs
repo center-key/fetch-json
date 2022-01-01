@@ -1,4 +1,4 @@
-//! fetch-json v2.6.2 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v2.6.3 ~~ https://fetch-json.js.org ~~ MIT License
 
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -17,7 +17,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     exports.FetchJson = exports.fetchJson = void 0;
     const node_fetch_1 = __importDefault(require("node-fetch"));
     const fetchJson = {
-        version: '2.6.2',
+        version: '2.6.3',
         baseOptions: {},
         getBaseOptions() {
             return this.baseOptions;
@@ -33,7 +33,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
                 strictErrors: false,
             };
             const settings = { ...defaults, ...this.baseOptions, ...options };
-            settings.method = settings.method.toUpperCase();
+            if (!settings.method || typeof settings.method !== 'string')
+                throw Error('[fetch-json] HTTP method missing or invalid.');
+            settings.method = settings.method.trim().toUpperCase();
             const isGetRequest = settings.method === 'GET';
             const jsonHeaders = { Accept: 'application/json' };
             if (!isGetRequest && data)
@@ -63,7 +65,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
                 if (this.logger)
                     this.logger(now(), 'response', settings.method, logDomain, logUrl, response.ok, response.status, response.statusText, contentType);
                 if (settings.strictErrors && !response.ok)
-                    throw Error('HTTP response status ("strictErrors" mode enabled): ' + response.status);
+                    throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
                 const errToObj = (error) => ({
                     ok: false,
                     error: true,

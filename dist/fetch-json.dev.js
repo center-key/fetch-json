@@ -1,7 +1,7 @@
-//! fetch-json v2.6.2 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v2.6.3 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '2.6.2',
+    version: '2.6.3',
     baseOptions: {},
     getBaseOptions() {
         return this.baseOptions;
@@ -17,7 +17,9 @@ const fetchJson = {
             strictErrors: false,
         };
         const settings = { ...defaults, ...this.baseOptions, ...options };
-        settings.method = settings.method.toUpperCase();
+        if (!settings.method || typeof settings.method !== 'string')
+            throw Error('[fetch-json] HTTP method missing or invalid.');
+        settings.method = settings.method.trim().toUpperCase();
         const isGetRequest = settings.method === 'GET';
         const jsonHeaders = { Accept: 'application/json' };
         if (!isGetRequest && data)
@@ -47,7 +49,7 @@ const fetchJson = {
             if (this.logger)
                 this.logger(now(), 'response', settings.method, logDomain, logUrl, response.ok, response.status, response.statusText, contentType);
             if (settings.strictErrors && !response.ok)
-                throw Error('HTTP response status ("strictErrors" mode enabled): ' + response.status);
+                throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
             const errToObj = (error) => ({
                 ok: false,
                 error: true,

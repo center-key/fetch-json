@@ -529,7 +529,7 @@ describe('Correct error is thrown', () => {
       assert.throws(makeBogusRequest, exception);
       });
 
-   it('for a bogus protocol', (done) => {
+   it('when the HTTP protocol is bogus', (done) => {
       const handleError = (error) => {
          const actual = {
             object:  error.constructor.name,
@@ -546,7 +546,7 @@ describe('Correct error is thrown', () => {
       fetchJson.get('bogus://example.com').catch(handleError);
       });
 
-   it('for a bogus domain', (done) => {
+   it('when the HTTP domain is bogus', (done) => {
       const specEnv = typeof JSDOM === 'function' ? 'jsdom' : 'node';
       const message = {
          jsdom: 'Network request failed',
