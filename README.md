@@ -8,7 +8,7 @@ _A wrapper around Fetch just for JSON (written in TypeScript)_
 [![npm](https://img.shields.io/npm/v/fetch-json.svg)](https://www.npmjs.com/package/fetch-json)
 [![Size](https://badgen.net/bundlephobia/minzip/fetch-json)](https://bundlephobia.com/package/fetch-json)
 [![Vulnerabilities](https://snyk.io/test/github/center-key/fetch-json/badge.svg)](https://snyk.io/test/github/center-key/fetch-json)
-[![Build](https://github.com/center-key/fetch-json/workflows/build/badge.svg)](https://github.com/center-key/fetch-json/actions?query=workflow%3Abuild)
+[![Build](https://github.com/center-key/fetch-json/workflows/build/badge.svg)](https://github.com/center-key/fetch-json/actions/workflows/run-spec-on-push.yaml)
 
 Why would you fetch anything but json? ;)
 
@@ -78,7 +78,7 @@ fetchJson.post('https://httpbin.org/post', resource)
 ```
 For more examples, see the Mocha specification suite:<br>
 [spec/node.spec.js](spec/node.spec.js)
-([Mocha output for each **build** under `Run npm test`](https://github.com/center-key/fetch-json/actions?query=workflow%3Abuild))
+([Mocha output for each **build** under `Run npm test`](https://github.com/center-key/fetch-json/actions/workflows/run-spec-on-push.yaml))
 
 To see a website that incorporates **fetch-json**, check out DataDashboard:<br>
 [data-dashboard.js.org 📊](https://data-dashboard.js.org)

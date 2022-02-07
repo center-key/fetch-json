@@ -1,9 +1,12 @@
-// fetch-json
-// Simple examples (TypeScript)
+//////////////////////////////////
+// fetch-json                   //
+// Simple examples (TypeScript) //
+//////////////////////////////////
 
 // To run:
 //    $ cd fetch-json
 //    $ npm install
+//    $ grep out tsconfig.json
 //    $ npx tsc
 //    $ node build/docs/ts/examples.js
 

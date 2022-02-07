@@ -1,5 +1,8 @@
-// fetch-json
-// Simple examples (JavaScript)
+#!/usr/bin/env node
+//////////////////////////////////
+// fetch-json                   //
+// Simple examples (JavaScript) //
+//////////////////////////////////
 
 // To run:
 //    $ git clone https://github.com/center-key/fetch-json.git
