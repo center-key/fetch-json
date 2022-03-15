@@ -1,8 +1,8 @@
-//! fetch-json v2.6.3 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v2.6.4 ~~ https://fetch-json.js.org ~~ MIT License
 
 import fetch from 'node-fetch';
 const fetchJson = {
-    version: '2.6.3',
+    version: '2.6.4',
     baseOptions: {},
     getBaseOptions() {
         return this.baseOptions;
@@ -17,7 +17,7 @@ const fetchJson = {
             credentials: 'same-origin',
             strictErrors: false,
         };
-        const settings = { ...defaults, ...this.baseOptions, ...options };
+        const settings = Object.assign(Object.assign(Object.assign({}, defaults), this.baseOptions), options);
         if (!settings.method || typeof settings.method !== 'string')
             throw Error('[fetch-json] HTTP method missing or invalid.');
         settings.method = settings.method.trim().toUpperCase();
@@ -25,7 +25,7 @@ const fetchJson = {
         const jsonHeaders = { Accept: 'application/json' };
         if (!isGetRequest && data)
             jsonHeaders['Content-Type'] = 'application/json';
-        settings.headers = { ...jsonHeaders, ...settings.headers };
+        settings.headers = Object.assign(Object.assign({}, jsonHeaders), settings.headers);
         const paramKeys = isGetRequest && data ? Object.keys(data) : [];
         const toPair = (key) => key + '=' +
             encodeURIComponent(data ? data[key] : '');
@@ -95,7 +95,7 @@ const fetchJson = {
 };
 class FetchJson {
     constructor(options) {
-        this.fetchJson = { ...fetchJson };
+        this.fetchJson = Object.assign({}, fetchJson);
         this.fetchJson.setBaseOptions(options || {});
     }
 }
