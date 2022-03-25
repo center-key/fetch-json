@@ -46,7 +46,7 @@ import { fetchJson } from 'fetch-json';
 ```
 or for older CommonJS modules use:
 ```javascript
-const { fetchJson } = require('fetch-json');  //deprecated
+const { fetchJson } = require('fetch-json');  //deprecated -- use ES modules instead
 ```
 
 ## 3) Examples
