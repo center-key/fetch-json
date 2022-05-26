@@ -1,4 +1,4 @@
-//! fetch-json v2.6.4 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v2.6.5 ~~ https://fetch-json.js.org ~~ MIT License
 
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -17,7 +17,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     exports.FetchJson = exports.fetchJson = void 0;
     const node_fetch_1 = __importDefault(require("node-fetch"));
     const fetchJson = {
-        version: '2.6.4',
+        version: '2.6.5',
         baseOptions: {},
         getBaseOptions() {
             return this.baseOptions;

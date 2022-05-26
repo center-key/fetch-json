@@ -1,4 +1,4 @@
-//! fetch-json v2.6.4 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v2.6.5 ~~ https://fetch-json.js.org ~~ MIT License
 
 export declare type Json = string | number | boolean | null | undefined | JsonObject | Json[];
 export declare type JsonObject = {
@@ -29,18 +29,18 @@ declare const fetchJson: {
     baseOptions: FetchJsonOptions;
     getBaseOptions(): FetchJsonOptions;
     setBaseOptions(options: FetchJsonOptions): FetchJsonOptions;
-    request<T>(method: FetchJsonMethod, url: string, data?: Json | FetchJsonParams | T, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
-    get(url: string, params?: FetchJsonParams | undefined, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
-    post<T_1>(url: string, resource?: Json | T_1, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
-    put<T_2>(url: string, resource?: Json | T_2, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
-    patch<T_3>(url: string, resource?: Json | T_3, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
-    delete<T_4>(url: string, resource?: Json | T_4, options?: FetchJsonOptions | undefined): Promise<FetchJsonResponse>;
+    request<T>(method: FetchJsonMethod, url: string, data?: Json | FetchJsonParams | T, options?: FetchJsonOptions): Promise<FetchJsonResponse>;
+    get(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<FetchJsonResponse>;
+    post<T_1>(url: string, resource?: Json | T_1, options?: FetchJsonOptions): Promise<FetchJsonResponse>;
+    put<T_2>(url: string, resource?: Json | T_2, options?: FetchJsonOptions): Promise<FetchJsonResponse>;
+    patch<T_3>(url: string, resource?: Json | T_3, options?: FetchJsonOptions): Promise<FetchJsonResponse>;
+    delete<T_4>(url: string, resource?: Json | T_4, options?: FetchJsonOptions): Promise<FetchJsonResponse>;
     logger: FetchJsonLogger | null;
     getLogHeaders(): string[];
     getLogHeaderIndex(): {
         [header: string]: number;
     };
-    enableLogger(booleanOrFn?: boolean | FetchJsonLogger | undefined): FetchJsonLogger | null;
+    enableLogger(booleanOrFn?: boolean | FetchJsonLogger): FetchJsonLogger | null;
 };
 declare class FetchJson {
     fetchJson: typeof fetchJson;
