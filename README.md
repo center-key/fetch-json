@@ -13,6 +13,9 @@ _A wrapper around Fetch just for JSON (written in TypeScript)_
 Why would you fetch anything but json? ;)
 
 ## 1) Make REST Easy
+**fetch-json** is a lightweight JavaScript library to reduce the boilerplate code needed to make
+HTTP calls to JSON endpoints.
+
 **fetch-json** automatically:
 1. Converts the HTTP response to JSON if it's not already JSON (especially convenient for HTTP errors)
 1. Serializes the body payload with `JSON.stringify()`
