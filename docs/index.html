@@ -37,7 +37,7 @@
    <script defer src=https://cdn.jsdelivr.net/npm/dna.js@2.0/dist/dna.min.js></script>
    <script defer src=https://cdn.jsdelivr.net/npm/web-ignition@1.5/dist/lib-x.min.js></script>
    <script defer src=https://cdn.jsdelivr.net/npm/fetch-json@2.6/dist/fetch-json.min.js></script>
-   <script>
+   <script data-on-load=setup>
       const setup = () => {
          $('.version-number').text(fetchJson.version);
          fetchJson.enableLogger();
@@ -48,7 +48,7 @@
          };
    </script>
 </head>
-<body data-on-load=setup>
+<body>
 
 <main>
    <section>
@@ -65,7 +65,7 @@
          </p>
          <p>
             <b>fetch-json</b> makes REST easy.&nbsp;
-            It is a lightweight JavaScript library to reduce the boilerplate code needed to make
+            It's a lightweight JavaScript library to reduce the boilerplate code needed to make
             HTTP calls to JSON endpoints.
          </p>
          <p>
