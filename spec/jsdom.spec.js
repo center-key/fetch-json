@@ -23,7 +23,7 @@ const mode =       { type: 'Minified', file: 'dist/fetch-json.min.js' };
 const filename =   import.meta.url.replace(/.*\//, '');  //jshint ignore:line
 const dom =        new JSDOM('', { runScripts: 'outside-only', virtualConsole: virtualConsole });
 const scripts =    ['node_modules/whatwg-fetch/dist/fetch.umd.js', mode.file];
-const loadScript = (file) => dom.window.eval(readFileSync(file).toString());  //jshint ignore:line
+const loadScript = (file) => dom.window.eval(readFileSync(file, 'utf8'));
 scripts.forEach(loadScript);
 const { fetchJson, FetchJson } = dom.window;
 

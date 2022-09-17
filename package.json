@@ -91,7 +91,7 @@
       "@types/node": "~18.7",
       "@typescript-eslint/eslint-plugin": "~5.37",
       "@typescript-eslint/parser": "~5.37",
-      "add-dist-header": "~0.1",
+      "add-dist-header": "~0.2",
       "assert-deep-strict-equal": "~1.0",
       "babel-minify": "~0.5",
       "canvas": "~2.10",
