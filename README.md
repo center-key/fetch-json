@@ -12,7 +12,7 @@ _A wrapper around Fetch just for JSON (written in TypeScript)_
 
 Why would you fetch anything but json? ;)
 
-## 1) Make REST Easy
+## A) Make REST Easy
 **fetch-json** is a lightweight JavaScript library to reduce the boilerplate code needed to make
 HTTP calls to JSON endpoints.
 
@@ -28,8 +28,8 @@ HTTP calls to JSON endpoints.
 programming during the request/response cycle is handled by JavaScript, running entirely on the
 client".
 
-## 2) Setup
-### Web browser
+## B) Setup
+### 1. Web browser
 In a web page:
 ```html
 <script src=fetch-json.min.js></script>
@@ -38,7 +38,7 @@ or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ```html
 <script src=https://cdn.jsdelivr.net/npm/fetch-json@2.6/dist/fetch-json.min.js></script>
 ```
-### Node.js server
+### 2. Node.js server
 Install package for node:
 ```shell
 $ npm install node-fetch fetch-json
@@ -52,8 +52,8 @@ or for older CommonJS modules use:
 const { fetchJson } = require('fetch-json');  //deprecated -- use ES modules instead
 ```
 
-## 3) Examples
-### HTTP GET
+## C) Examples
+### 1. HTTP GET
 Fetch the NASA Astronomy Picture of the Day:
 ```javascript
 // NASA APoD
@@ -68,7 +68,7 @@ Example output:
 > The NASA APoD for today is at:
 > https://apod.nasa.gov/apod/image/2107/LRVBPIX3M82Crop1024.jpg
 ```
-### HTTP POST
+### 2. HTTP POST
 Create a resource for the planet Jupiter:
 ```javascript
 // Create Jupiter
@@ -86,8 +86,8 @@ For more examples, see the Mocha specification suite:<br>
 To see a website that incorporates **fetch-json**, check out DataDashboard:<br>
 [data-dashboard.js.org 📊](https://data-dashboard.js.org)
 
-## 4) Examples Using async/await
-### HTTP GET
+## D) Examples Using async/await
+### 1. HTTP GET
 Fetch the NASA Astronomy Picture of the Day:
 ```javascript
 // NASA APoD
@@ -99,7 +99,7 @@ const show = async () => {
    };
 show();
 ```
-### HTTP POST
+### 2. HTTP POST
 Create a resource for the planet Jupiter:
 ```javascript
 // Create Jupiter
@@ -110,7 +110,7 @@ const create = async (resource) => {
 create({ name: 'Jupiter', position: 5 });
 ```
 
-## 5) Leverages the Fetch API and node-fetch
+## E) Leverages the Fetch API and node-fetch
 **fetch-json** calls the native
 **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**
 if in a web browser and calls
@@ -141,8 +141,8 @@ fetch('https://httpbin.org/post', options)
 The example _with_ **fetch-json** and the example _without_ **fetch-json** each produce the same
 output.
 
-## 6) API
-### API &mdash; HTTP Request
+## F) API
+### 1. API &mdash; HTTP Request
 The format for using **fetch-json** is:
 #### GET
 ```javascript
@@ -179,7 +179,7 @@ fetchJson.request(method, url, data, options).then(callback);
 Where `method` is `'GET'`, `'POST'`, `'PUT'`, `'PATCH'`, or `'DELETE'`, and `data` represents
 either `params` or `resource`.
 
-### API &mdash; Logging
+### 2. API &mdash; Logging
 Enable basic logging to the console with:
 ```javascript
 fetchJson.enableLogger();
@@ -195,7 +195,7 @@ The default console output looks like:<br>
 `2018-09-12T07:20:12.372Z – "request" - "GET" – "api.nasa.gov" – "https://api.nasa.gov/planetary/apod"`<br>
 `2018-09-12T07:20:13.009Z – "response" - "GET" – "api.nasa.gov" – "https://api.nasa.gov/planetary/apod" - true - 200 - "OK" - "application/json"`
 
-## 7) Response Text Converted to JSON
+## G) Response Text Converted to JSON
 The HTTP response body is considered to be JSON if the `Content-Type` is `"application/json"` or
 `"text/javascript"`.&nbsp; If the HTTP response body is not JSON, **fetch-json** passes back
 through the promise an object with a `bodyText` string field containing response body text.
@@ -217,7 +217,7 @@ similar to:
 With **fetch-json**, you know the response body will always be passed back to you as a simple
 object literal.
 
-## 8) Base Options
+## H) Base Options
 Use `fetchJson.setBaseOptions()` to configure options to be used on future **fetchJson** requests.
 
 The example below sets the `Authorization` HTTP header so it is sent on the subsequent GET and
@@ -238,7 +238,7 @@ fetchJsonA.get('https://dnajs.org/api/books/').then(display);  //from aaa@exampl
 fetchJsonB.delete('https://dnajs.org/api/books/3/');           //from bbb@example.com
 ```
 
-## 9) TypeScript Declarations
+## I) TypeScript Declarations
 The **TypeScript Declaration File** file is [fetch-json.d.ts](dist/fetch-json.d.ts) in the **dist**
 folder.
 
@@ -249,7 +249,7 @@ fetchJson.post(url: string, resource?: RequestData,
    options?: FetchOptions): Promise<FetchResponse>
 ```
 
-## 10) Legacy Web Browsers
+## J) Legacy Web Browsers
 To support really old browsers, include polyfills for
 [Promise](https://github.com/taylorhakes/promise-polyfill/) and
 [Fetch API](https://github.com/github/fetch):
@@ -261,7 +261,7 @@ To support really old browsers, include polyfills for
 JSDOM does not include `fetch`, so you need to add a polyfill.&nbsp;
 See usage of `whatwg-fetch` in [spec/jsdom.spec.js](spec/jsdom.spec.js) and [gulpfile.js](gulpfile.js).
 
-## 10) Contributor Notes
+## K) Contributor Notes
 To be a contributor, **fork** the project and run the commands `npm install` and `npm test` on your
 local clone.&nbsp; Make your edits and rerun the tests.&nbsp; Pull requests welcome.
 
