@@ -31,7 +31,7 @@ describe('Google Books API search result for "spacex" fetched by fetchJson.get()
          };
       const script = () => {
          const url = 'https://www.googleapis.com/books/v1/volumes?q=spacex';
-         return window.fetchJson.get(url);
+         return globalThis.fetchJson.get(url);
          };
       web.page.evaluate(script).then(handleData);
       });
@@ -51,7 +51,7 @@ describe('Star Wars API result for spaceships fetched by fetchJson.get()', () =>
       const script = () => {
          const url = 'https://swapi.py4e.com/api/starships/';
          const params = { format: 'json' };
-         return window.fetchJson.get(url, params);
+         return globalThis.fetchJson.get(url, params);
          };
       web.page.evaluate(script).then(handleData);
       });
