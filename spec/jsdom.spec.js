@@ -2,10 +2,10 @@
 // Run in jsdom (a headless web browser) with whatwg-fetch polyfill
 
 // Imports
-import assert from 'assert';
 import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
 import { JSDOM, VirtualConsole } from 'jsdom';
-import { readFileSync } from 'fs';
+import assert from 'assert';
+import fs from 'fs';
 
 // JSDOM Virtual Console
 const expectedErrors = [
@@ -23,7 +23,7 @@ const mode =       { type: 'Minified', file: 'dist/fetch-json.min.js' };
 const filename =   import.meta.url.replace(/.*\//, '');  //jshint ignore:line
 const dom =        new JSDOM('', { runScripts: 'outside-only', virtualConsole: virtualConsole });
 const scripts =    ['node_modules/whatwg-fetch/dist/fetch.umd.js', mode.file];
-const loadScript = (file) => dom.window.eval(readFileSync(file, 'utf-8'));
+const loadScript = (file) => dom.window.eval(fs.readFileSync(file, 'utf-8'));
 scripts.forEach(loadScript);
 const { fetchJson, FetchJson } = dom.window;
 

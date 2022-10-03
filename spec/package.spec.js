@@ -2,13 +2,13 @@
 
 // Imports
 import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
-import { readdirSync } from 'fs';
+import fs from 'fs';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 describe('The "dist" folder', () => {
 
    it('contains the correct files', () => {
-      const actual = readdirSync('dist').sort();
+      const actual = fs.readdirSync('dist').sort();
       const expected = [
          'fetch-json.d.ts',
          'fetch-json.dev.js',

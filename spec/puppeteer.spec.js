@@ -2,10 +2,10 @@
 // Run in Puppeteer (a headless web browser)
 
 // Imports
-import puppeteer from 'puppeteer';
 import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
 import { browserReady } from 'puppeteer-browser-ready';
 import { pathToFileURL } from 'url';
+import puppeteer from 'puppeteer';
 
 // Setup
 const mode =     { type: 'Minified', file: 'dist/fetch-json.min.js' };

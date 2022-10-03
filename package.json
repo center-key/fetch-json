@@ -89,8 +89,8 @@
    "devDependencies": {
       "@fortawesome/fontawesome-free": "~6.2",
       "@types/node": "~18.8",
-      "@typescript-eslint/eslint-plugin": "~5.38",
-      "@typescript-eslint/parser": "~5.38",
+      "@typescript-eslint/eslint-plugin": "~5.39",
+      "@typescript-eslint/parser": "~5.39",
       "add-dist-header": "~0.3",
       "assert-deep-strict-equal": "~1.0",
       "canvas": "~2.10",
@@ -109,7 +109,7 @@
       "puppeteer": "~18.0",
       "puppeteer-browser-ready": "~0.5",
       "typescript": "~4.8",
-      "uglify-js": "~3.17.2",
+      "uglify-js": "~3.17",
       "w3c-html-validator": "~1.1",
       "web-ignition": "~1.5",
       "whatwg-fetch": "~3.6"
