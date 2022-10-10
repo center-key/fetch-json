@@ -1,7 +1,7 @@
-//! fetch-json v2.6.6 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v2.7.0 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '2.6.6',
+    version: '2.7.0',
     baseOptions: {},
     getBaseOptions() {
         return this.baseOptions;
@@ -98,4 +98,5 @@ class FetchJson {
         this.fetchJson.setBaseOptions(options || {});
     }
 }
-if (typeof window === "object") { window.fetchJson = fetchJson; window.FetchJson = FetchJson; }
+globalThis.fetchJson = fetchJson;
+globalThis.FetchJson = FetchJson;

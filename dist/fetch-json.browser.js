@@ -1,6 +1,5 @@
 //! fetch-json v2.7.0 ~~ https://fetch-json.js.org ~~ MIT License
 
-import fetch from 'node-fetch';
 const fetchJson = {
     version: '2.7.0',
     baseOptions: {},
