@@ -37,7 +37,7 @@
       "typescript"
    ],
    "jshintConfig": {
-      "esversion": 9,
+      "esversion": 11,
       "strict": "implied",
       "eqeqeq": true,
       "nonbsp": false,
@@ -48,8 +48,7 @@
       "mocha": true,
       "node": true,
       "globals": {
-         "fetch": true,
-         "globalThis": true
+         "fetch": true
       }
    },
    "eslintConfig": {
@@ -112,7 +111,7 @@
       "puppeteer-browser-ready": "~0.5",
       "typescript": "~4.8",
       "uglify-js": "~3.17",
-      "w3c-html-validator": "~1.1",
+      "w3c-html-validator": "~1.2",
       "web-ignition": "~1.5",
       "whatwg-fetch": "~3.6"
    }
