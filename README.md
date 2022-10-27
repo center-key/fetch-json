@@ -259,7 +259,7 @@ To support really old browsers, include polyfills for
 ```
 **Note:**
 JSDOM does not include `fetch`, so you need to add a polyfill.&nbsp;
-See usage of `whatwg-fetch` in [spec/jsdom.spec.js](spec/jsdom.spec.js) and [gulpfile.js](gulpfile.js).
+See usage of `whatwg-fetch` in [spec/jsdom.spec.js](spec/jsdom.spec.js).
 
 ## K) Contributor Notes
 To be a contributor, **fork** the project and run the commands `npm install` and `npm test` on your
