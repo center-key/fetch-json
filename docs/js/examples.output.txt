@@ -2,32 +2,15 @@
 
 Examples
 ========
-fetch-json v2.6.3
+fetch-json v3.0.0
 
-2022-02-07T07:26:51.581Z request GET api.nasa.gov https://api.nasa.gov/planetary/apod
-2022-02-07T07:26:51.602Z request POST httpbin.org https://httpbin.org/post
-2022-02-07T07:26:51.606Z request GET httpbin.org https://httpbin.org/status/418
-2022-02-07T07:26:51.607Z request GET www.googleapis.com https://www.googleapis.com/books/v1/volumes
-2022-02-07T07:26:52.048Z response POST httpbin.org https://httpbin.org/post true 200 OK application/json
-New planet: {
-  args: {},
-  data: '{"name":"Jupiter","position":5}',
-  files: {},
-  form: {},
-  headers: {
-    Accept: 'application/json',
-    'Accept-Encoding': 'gzip,deflate,br',
-    'Content-Length': '31',
-    'Content-Type': 'application/json',
-    Host: 'httpbin.org',
-    'User-Agent': 'node-fetch',
-    'X-Amzn-Trace-Id': 'Root=1-6200c9bc-0b8b0e3a72441c005763e0f6'
-  },
-  json: { name: 'Jupiter', position: 5 },
-  origin: '107.199.205.61',
-  url: 'https://httpbin.org/post'
-}
-2022-02-07T07:26:52.054Z response GET httpbin.org https://httpbin.org/status/418 false 418 I'M A TEAPOT null
+2022-11-07T09:18:51.837Z request GET api.nasa.gov https://api.nasa.gov/planetary/apod
+2022-11-07T09:18:51.881Z request POST httpbin.org https://httpbin.org/post
+2022-11-07T09:18:51.884Z request GET httpbin.org https://httpbin.org/status/418
+2022-11-07T09:18:51.885Z request GET www.googleapis.com https://www.googleapis.com/books/v1/volumes
+(node:96851) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+2022-11-07T09:18:52.311Z response GET httpbin.org https://httpbin.org/status/418 false 418 I'M A TEAPOT null
 
     -=[ teapot ]=-
 
@@ -39,21 +22,42 @@ New planet: {
       \_     _/
         `"""`
 
-2022-02-07T07:26:52.111Z response GET api.nasa.gov https://api.nasa.gov/planetary/apod true 200 OK application/json
-The NASA APoD for today is at: https://apod.nasa.gov/apod/image/2202/NGC4651_CFHT_960.jpg
-2022-02-07T07:26:52.406Z response GET www.googleapis.com https://www.googleapis.com/books/v1/volumes true 200 OK application/json; charset=UTF-8
+2022-11-07T09:18:52.318Z response POST httpbin.org https://httpbin.org/post true 200 OK application/json
+New planet: {
+  args: {},
+  data: '{"name":"Jupiter","position":5}',
+  files: {},
+  form: {},
+  headers: {
+    Accept: 'application/json',
+    'Accept-Encoding': 'br, gzip, deflate',
+    'Accept-Language': '*',
+    'Content-Length': '31',
+    'Content-Type': 'application/json',
+    Host: 'httpbin.org',
+    'Sec-Fetch-Mode': 'cors',
+    'User-Agent': 'undici',
+    'X-Amzn-Trace-Id': 'Root=1-6368cd7c-6524dd044804c77b42daf832'
+  },
+  json: { name: 'Jupiter', position: 5 },
+  origin: '107.199.205.61',
+  url: 'https://httpbin.org/post'
+}
+2022-11-07T09:18:52.327Z response GET api.nasa.gov https://api.nasa.gov/planetary/apod true 200 OK application/json
+The NASA APoD for today is at: https://player.vimeo.com/video/25808333
+2022-11-07T09:18:52.611Z response GET www.googleapis.com https://www.googleapis.com/books/v1/volumes true 200 OK application/json; charset=UTF-8
 SpaceX books:
 [
   'SpaceX',
   'Liftoff',
-  'Cutting-Edge Spacex News',
-  'Elon Musk',
-  'Elon Musk',
+  'Cutting-Edge SpaceX News',
   "SpaceX's Dragon: America's Next Generation Spacecraft",
-  'SpaceX from the Ground Up',
+  'Elon Musk',
+  'SpaceX',
   'Elon Musk',
   'SpaceX and Tesla Motors Engineer Elon Musk',
-  'Elon Musk And The Birth of SpaceX'
+  'Elon Musk And The Birth of SpaceX',
+  'SpaceX from the Ground Up'
 ]
 
 Done.

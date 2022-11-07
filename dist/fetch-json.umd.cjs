@@ -1,23 +1,19 @@
-//! fetch-json v2.7.1 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.0.0 ~~ https://fetch-json.js.org ~~ MIT License
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 (function (factory) {
     if (typeof module === "object" && typeof module.exports === "object") {
         var v = factory(require, exports);
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "node-fetch"], factory);
+        define(["require", "exports"], factory);
     }
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.FetchJson = exports.fetchJson = void 0;
-    const node_fetch_1 = __importDefault(require("node-fetch"));
     const fetchJson = {
-        version: '2.7.1',
+        version: '3.0.0',
         baseOptions: {},
         getBaseOptions() {
             return this.baseOptions;
@@ -79,7 +75,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
             if (this.logger)
                 this.logger(now(), 'request', settings.method, logDomain, logUrl);
             const settingsRequestInit = JSON.parse(JSON.stringify(settings));
-            return (0, node_fetch_1.default)(url, settingsRequestInit).then(toJson);
+            return fetch(url, settingsRequestInit).then(toJson);
         },
         get(url, params, options) {
             return this.request('GET', url, params, options);

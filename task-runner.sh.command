@@ -92,3 +92,6 @@ setupTools
 releaseInstructions
 updateCdnVersion
 runSpecs
+echo "For examples, run:"
+echo "   node docs/js/examples.js"
+echo
