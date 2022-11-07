@@ -18,6 +18,9 @@
       },
       "./": "./dist/"
    },
+   "engines" : {
+      "node" : ">=18"
+   },
    "repository": "github:center-key/fetch-json",
    "homepage": "https://fetch-json.js.org",
    "bugs": "https://github.com/center-key/fetch-json/issues",
@@ -31,7 +34,6 @@
       "jamstack",
       "javascript",
       "json",
-      "node-fetch",
       "post",
       "rest",
       "typescript"
@@ -80,7 +82,6 @@
          "copy-file build/umd/fetch-json.js build/fetch-json.umd.cjs",
          "esm-to-plain-js --cd=build fetch-json.js fetch-json.dev.js",
          "uglifyjs build/fetch-json.dev.js --output build/fetch-json.min.js",
-         "replacer build/fetch-json.js build --rename=fetch-json.browser.js --regex=/^import.*$/m",
          "add-dist-header build dist",
          "html-validator"
       ]
@@ -106,7 +107,6 @@
       "jsdom": "~20.0",
       "jshint": "~2.13",
       "mocha": "~10.1",
-      "node-fetch": "~3.2",
       "promise-polyfill": "~8.2",
       "puppeteer": "~19.2",
       "puppeteer-browser-ready": "~0.5",

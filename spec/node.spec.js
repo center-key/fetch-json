@@ -516,7 +516,7 @@ describe('Correct error is thrown', () => {
       const specEnv = typeof JSDOM === 'function' ? 'jsdom' : 'node';
       const message = {
          jsdom: 'Network request failed',
-         node:  'node-fetch cannot load bogus://example.com. URL scheme \"bogus\" is not supported.',
+         node:  'fetch failed',
          };
       const handleError = (error) => {
          const actual = {
@@ -538,7 +538,7 @@ describe('Correct error is thrown', () => {
       const specEnv = typeof JSDOM === 'function' ? 'jsdom' : 'node';
       const message = {
          jsdom: 'Network request failed',
-         node:  'request to https://bogus.bogus/ failed, reason: getaddrinfo ENOTFOUND bogus.bogus',
+         node:  'fetch failed',
          };
       const handleError = (error) => {
          const actual =   { message: error.message };

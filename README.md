@@ -41,7 +41,7 @@ or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ### 2. Node.js server
 Install package for node:
 ```shell
-$ npm install node-fetch fetch-json
+$ npm install fetch-json
 ```
 and then import:
 ```javascript
@@ -110,12 +110,9 @@ const create = async (resource) => {
 create({ name: 'Jupiter', position: 5 });
 ```
 
-## E) Leverages the Fetch API and node-fetch
+## E) Leverages Fetch API
 **fetch-json** calls the native
-**[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**
-if in a web browser and calls
-**[node-fetch](https://www.npmjs.com/package/node-fetch)**
-if running on node.
+**[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**.
 
 For comparison, the POST example in section [3) Examples](#3-examples) to create a planet would be
 done calling the **Fetch API**
@@ -249,7 +246,12 @@ fetchJson.post(url: string, resource?: RequestData,
    options?: FetchOptions): Promise<FetchResponse>
 ```
 
-## J) Legacy Web Browsers
+## J) Legacy
+### 1. Old Node.js
+Native support for **Fetch API** was introduced in **node v18** which became the Active LTS version on 2022-10-25.&nbsp;
+If you're using an older version of **node,** stick with **fetch-json v2.7** and in your **package.json** file declare a dependency on the **node-fetch** polyfill package.
+
+### 2. Old Web Browsers
 To support really old browsers, include polyfills for
 [Promise](https://github.com/taylorhakes/promise-polyfill/) and
 [Fetch API](https://github.com/github/fetch):
@@ -260,10 +262,6 @@ To support really old browsers, include polyfills for
 **Note:**
 JSDOM does not include `fetch`, so you need to add a polyfill.&nbsp;
 See usage of `whatwg-fetch` in [spec/jsdom.spec.js](spec/jsdom.spec.js).
-
-## K) Contributor Notes
-To be a contributor, **fork** the project and run the commands `npm install` and `npm test` on your
-local clone.&nbsp; Make your edits and rerun the tests.&nbsp; Pull requests welcome.
 
 <br>
 

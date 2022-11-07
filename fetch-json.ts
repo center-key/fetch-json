@@ -1,7 +1,5 @@
 // fetch-json ~ MIT License
 
-import fetch from 'node-fetch';
-
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 export type Json = string | number | boolean | null | undefined | JsonObject | Json[];
 export type JsonObject = { [key: string]: Json };

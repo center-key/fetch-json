@@ -10,7 +10,6 @@ describe('The "dist" folder', () => {
    it('contains the correct files', () => {
       const actual = fs.readdirSync('dist').sort();
       const expected = [
-         'fetch-json.browser.js',
          'fetch-json.d.ts',
          'fetch-json.dev.js',
          'fetch-json.js',
