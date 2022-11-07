@@ -513,16 +513,21 @@ describe('Correct error is thrown', () => {
       });
 
    it('when the HTTP protocol is bogus', (done) => {
+      const specEnv = typeof JSDOM === 'function' ? 'jsdom' : 'node';
+      const message = {
+         jsdom: 'Network request failed',
+         node:  'node-fetch cannot load bogus://example.com. URL scheme \"bogus\" is not supported.',
+         };
       const handleError = (error) => {
          const actual = {
             object:  error.constructor.name,
             name:    error.name,
-            message: /Network request failed|cannot load/.test(error.message) || error.message,
+            message: error.message,
             };
          const expected = {
             object:  'TypeError',
             name:    'TypeError',
-            message: true,
+            message:  message[specEnv],
             };
          assertDeepStrictEqual(actual, expected, done);
          };
