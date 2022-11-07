@@ -35,7 +35,7 @@ export type FetchJsonLogger = (
    ) => void;
 
 const fetchJson = {
-   version: '~~~version~~~',
+   version: '{{pkg.version}}',
    baseOptions: <FetchJsonOptions>{},
    getBaseOptions(): FetchJsonOptions {
       return this.baseOptions;
