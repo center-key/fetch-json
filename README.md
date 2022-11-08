@@ -52,6 +52,15 @@ or for older CommonJS modules use:
 const { fetchJson } = require('fetch-json');  //deprecated -- use ES modules instead
 ```
 
+Requires minimum **node v18.**
+
+If you use GitHub Actions, ensure the version of node is set correclty:
+```yaml
+- uses: actions/setup-node@v3
+  with:
+    node-version: 18
+```
+
 ## C) Examples
 ### 1. HTTP GET
 Fetch the NASA Astronomy Picture of the Day:
