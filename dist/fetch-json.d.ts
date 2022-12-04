@@ -1,20 +1,20 @@
-//! fetch-json v3.0.0 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.0.1 ~~ https://fetch-json.js.org ~~ MIT License
 
-export declare type Json = string | number | boolean | null | undefined | JsonObject | Json[];
-export declare type JsonObject = {
+export type Json = string | number | boolean | null | undefined | JsonObject | Json[];
+export type JsonObject = {
     [key: string]: Json;
 };
-export declare type JsonData = JsonObject | Json[];
-export declare type FetchJsonInit = {
+export type JsonData = JsonObject | Json[];
+export type FetchJsonInit = {
     strictErrors: boolean;
 };
-export declare type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
-export declare type FetchJsonMethod = string;
-export declare type FetchJsonParams = {
+export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
+export type FetchJsonMethod = string;
+export type FetchJsonParams = {
     [field: string]: string | number | boolean | null | undefined;
 };
-export declare type FetchJsonParsedResponse = Json | any;
-export declare type FetchJsonTextResponse = {
+export type FetchJsonParsedResponse = Json | any;
+export type FetchJsonTextResponse = {
     ok: boolean;
     error: boolean;
     status: number;
@@ -22,8 +22,8 @@ export declare type FetchJsonTextResponse = {
     bodyText: string;
     response: Response;
 };
-export declare type FetchJsonResponse = FetchJsonParsedResponse | FetchJsonTextResponse;
-export declare type FetchJsonLogger = (dateIso: string, type?: 'response' | 'request', method?: FetchJsonMethod, logDomain?: string, logUrl?: string, ok?: boolean, status?: number, statusText?: string, contentType?: string | null) => void;
+export type FetchJsonResponse = FetchJsonParsedResponse | FetchJsonTextResponse;
+export type FetchJsonLogger = (dateIso: string, type?: 'response' | 'request', method?: FetchJsonMethod, logDomain?: string, logUrl?: string, ok?: boolean, status?: number, statusText?: string, contentType?: string | null) => void;
 declare const fetchJson: {
     version: string;
     baseOptions: FetchJsonOptions;

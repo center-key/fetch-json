@@ -1,4 +1,4 @@
-//! fetch-json v3.0.0 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.0.1 ~~ https://fetch-json.js.org ~~ MIT License
 
 (function (factory) {
     if (typeof module === "object" && typeof module.exports === "object") {
@@ -13,7 +13,7 @@
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.FetchJson = exports.fetchJson = void 0;
     const fetchJson = {
-        version: '3.0.0',
+        version: '3.0.1',
         baseOptions: {},
         getBaseOptions() {
             return this.baseOptions;
