@@ -185,7 +185,7 @@ fetchJson.request(method, url, data, options).then(callback);
 Where `method` is `'GET'`, `'POST'`, `'PUT'`, `'PATCH'`, or `'DELETE'`, and `data` represents
 either `params` or `resource`.
 
-### 2. API &mdash; Logging
+### 2. API &mdash; logging
 Enable basic logging to the console with:
 ```javascript
 fetchJson.enableLogger();
@@ -245,8 +245,7 @@ fetchJsonB.delete('https://dna-engine.org/api/books/3/');           //from bbb@e
 ```
 
 ## I) TypeScript Declarations
-The **TypeScript Declaration File** file is [fetch-json.d.ts](dist/fetch-json.d.ts) in the **dist**
-folder.
+See the TypeScript declarations at the top of the [fetch-json.ts](fetch-json.ts) file.
 
 The declarations provide type information about the API.  For example, the `fetchJson.post()`
 function returns a **Promise** for a `FetchResponse`:
@@ -260,7 +259,7 @@ fetchJson.post(url: string, resource?: RequestData,
 Native support for **Fetch API** was introduced in **node v18** which became the Active LTS version on 2022-10-25.&nbsp;
 If you're using an older version of **node,** stick with **fetch-json v2.7** and in your **package.json** file declare a dependency on the **node-fetch** polyfill package.
 
-### 2. Old Web Browsers
+### 2. Old web browsers
 To support really old browsers, include polyfills for
 [Promise](https://github.com/taylorhakes/promise-polyfill/) and
 [Fetch API](https://github.com/github/fetch):
