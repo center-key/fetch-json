@@ -1,23 +1,21 @@
 // fetch-json ~ MIT License
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-export type Json = string | number | boolean | null | undefined | JsonObject | Json[];
-export type JsonObject = { [key: string]: Json };
-export type JsonData = JsonObject | Json[];
-export type FetchJsonInit = {
-   strictErrors: boolean,
-   };
+export type Json =             string | number | boolean | null | undefined | JsonObject | Json[];
+export type JsonObject =       { [key: string]: Json };
+export type JsonData =         JsonObject | Json[];
+export type FetchJsonInit =    { strictErrors: boolean };
 export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
-export type FetchJsonMethod = string;
-export type FetchJsonParams = { [field: string]: string | number | boolean | null | undefined };
+export type FetchJsonMethod =  string;
+export type FetchJsonParams =  { [field: string]: string | number | boolean | null | undefined };
 export type FetchJsonParsedResponse = Json | any;
-export type FetchJsonTextResponse = {
-   ok:          boolean,
-   error:       boolean,
-   status:      number,
-   contentType: string | null,
-   bodyText:    string,
-   response:    Response,
+export type FetchJsonTextResponse = {  //for when the original HTTP response is not JSON
+   ok:          boolean,        //code for HTTP status in the range 200-299
+   error:       boolean,        //code for HTTP status not in the range 200-299 or exception thrown
+   status:      number,         //code for HTTP status
+   contentType: string | null,  //mime-type, such as 'text/html'
+   bodyText:    string,         //body of the HTTP response or error message
+   response:    Response,       //response object
    };
 export type FetchJsonResponse = FetchJsonParsedResponse | FetchJsonTextResponse;
 export type FetchJsonLogger = (
@@ -33,7 +31,7 @@ export type FetchJsonLogger = (
    ) => void;
 
 const fetchJson = {
-   version: '{{pkg.version}}',
+   version:     '{{pkg.version}}',
    baseOptions: <FetchJsonOptions>{},
    getBaseOptions(): FetchJsonOptions {
       return this.baseOptions;
