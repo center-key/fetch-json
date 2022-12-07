@@ -11,7 +11,7 @@ import puppeteer from 'puppeteer';
 const mode =     { type: 'Minified', file: 'dist/fetch-json.min.js' };
 const filename = import.meta.url.replace(/.*\//, '');  //jshint ignore:line
 const webPage =  pathToFileURL('spec/fixtures/script-src-fetch-json.html').href;
-let web;   //fields: browser, page, response, status, location, title, html, $
+let web;  //fields: browser, page, response, status, location, title, html, $
 const loadWebPage =  async () => web = await puppeteer.launch().then(browserReady.goto(webPage));
 const closeWebPage = async () => await browserReady.close(web);
 before(loadWebPage);

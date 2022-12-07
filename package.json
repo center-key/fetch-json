@@ -1,7 +1,7 @@
 {
    "name": "fetch-json",
    "description": "A wrapper around Fetch just for JSON (written in TypeScript)",
-   "version": "3.0.1",
+   "version": "3.0.2",
    "license": "MIT",
    "type": "module",
    "module": "dist/fetch-json.js",
@@ -108,7 +108,7 @@
       "jshint": "~2.13",
       "mocha": "~10.1",
       "promise-polyfill": "~8.2",
-      "puppeteer": "~19.3",
+      "puppeteer": "~19.4",
       "puppeteer-browser-ready": "~0.5",
       "replacer-util": "~0.3",
       "run-scripts-util": "~0.1",

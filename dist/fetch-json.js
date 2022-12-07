@@ -1,7 +1,7 @@
-//! fetch-json v3.0.1 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.0.2 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '3.0.1',
+    version: '3.0.2',
     baseOptions: {},
     getBaseOptions() {
         return this.baseOptions;
@@ -19,21 +19,23 @@ const fetchJson = {
         const settings = Object.assign(Object.assign(Object.assign({}, defaults), this.baseOptions), options);
         if (!settings.method || typeof settings.method !== 'string')
             throw Error('[fetch-json] HTTP method missing or invalid.');
-        settings.method = settings.method.trim().toUpperCase();
-        const isGetRequest = settings.method === 'GET';
+        const httpMethod = settings.method.trim().toUpperCase();
+        const isGetRequest = httpMethod === 'GET';
         const jsonHeaders = { Accept: 'application/json' };
         if (!isGetRequest && data)
             jsonHeaders['Content-Type'] = 'application/json';
         settings.headers = Object.assign(Object.assign({}, jsonHeaders), settings.headers);
         const paramKeys = isGetRequest && data ? Object.keys(data) : [];
-        const toPair = (key) => key + '=' +
-            encodeURIComponent(data ? data[key] : '');
-        if (paramKeys.length)
-            url = url + (url.includes('?') ? '&' : '?') + paramKeys.map(toPair).join('&');
+        const toPair = (key) => key + '=' + encodeURIComponent(data ? data[key] : '');
+        const params = () => paramKeys.map(toPair).join('&');
+        const requestUrl = !paramKeys.length ? url : url + (url.includes('?') ? '&' : '?') + params();
         settings.body = !isGetRequest && data ? JSON.stringify(data) : null;
-        const now = () => new Date().toISOString();
-        const logUrl = url.replace(/[?].*/, '');
-        const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');
+        const log = (type, ...items) => {
+            const logUrl = url.replace(/[?].*/, '');
+            const domain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');
+            if (this.logger)
+                this.logger(new Date().toISOString(), type, httpMethod, domain, logUrl, ...items);
+        };
         const toJson = (value) => {
             const response = value;
             const contentType = response.headers.get('content-type');
@@ -46,8 +48,7 @@ const fetchJson = {
                 bodyText: httpBody,
                 response: response,
             });
-            if (this.logger)
-                this.logger(now(), 'response', settings.method, logDomain, logUrl, response.ok, response.status, response.statusText, contentType);
+            log('response', response.ok, response.status, response.statusText, contentType);
             if (settings.strictErrors && !response.ok)
                 throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
             const errToObj = (error) => ({
@@ -60,10 +61,9 @@ const fetchJson = {
             });
             return isJson ? response.json().catch(errToObj) : response.text().then(textToObj);
         };
-        if (this.logger)
-            this.logger(now(), 'request', settings.method, logDomain, logUrl);
+        log('request');
         const settingsRequestInit = JSON.parse(JSON.stringify(settings));
-        return fetch(url, settingsRequestInit).then(toJson);
+        return fetch(requestUrl, settingsRequestInit).then(toJson);
     },
     get(url, params, options) {
         return this.request('GET', url, params, options);

@@ -254,12 +254,22 @@ fetchJson.post(url: string, resource?: RequestData,
    options?: FetchOptions): Promise<FetchResponse>
 ```
 
-## J) Legacy
-### 1. Old Node.js
+## J) Fetch polyfills
+### 1. Add Fetch to JSDOM
+JSDOM does not include `fetch`, so you need to add a polyfill.
+```shell
+$ npm install --save-dev whatwg-fetch
+```
+See usage of `whatwg-fetch` in [spec/jsdom.spec.js](spec/jsdom.spec.js).
+
+### 2. Legacy Node.js
 Native support for **Fetch API** was introduced in **node v18** which became the Active LTS version on 2022-10-25.&nbsp;
 If you're using an older version of **node,** stick with **fetch-json v2.7** and in your **package.json** file declare a dependency on the **node-fetch** polyfill package.
+```shell
+$ npm install node-fetch
+```
 
-### 2. Old web browsers
+### 3. Legacy web browsers
 To support really old browsers, include polyfills for
 [Promise](https://github.com/taylorhakes/promise-polyfill/) and
 [Fetch API](https://github.com/github/fetch):
@@ -267,9 +277,6 @@ To support really old browsers, include polyfills for
 <script src=https://cdn.jsdelivr.net/npm/promise-polyfill@8.2/dist/polyfill.min.js></script>
 <script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@3.6/dist/fetch.umd.min.js></script>
 ```
-**Note:**
-JSDOM does not include `fetch`, so you need to add a polyfill.&nbsp;
-See usage of `whatwg-fetch` in [spec/jsdom.spec.js](spec/jsdom.spec.js).
 
 <br>
 

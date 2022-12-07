@@ -2,13 +2,13 @@
 // Run on a node server
 
 // Imports
-import assert from 'assert';
 import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
+import assert from 'assert';
 
 // Setup
 import { fetchJson, FetchJson } from '../dist/fetch-json.js';
-const mode =       { type: 'ES Module', file: 'dist/fetch-json.js' };
-const filename =   import.meta.url.replace(/.*\//, '');  //jshint ignore:line
+const mode =     { type: 'ES Module', file: 'dist/fetch-json.js' };
+const filename = import.meta.url.replace(/.*\//, '');  //jshint ignore:line
 
 // Specification suite
 describe(`Specifications: ${filename} - ${mode.type} (${mode.file})`, () => {
