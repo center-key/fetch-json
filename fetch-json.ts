@@ -9,7 +9,7 @@ export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
 export type FetchJsonMethod =  string;
 export type FetchJsonParams =  { [field: string]: string | number | boolean | null | undefined };
 export type FetchJsonParsedResponse = Json | any;
-export type FetchJsonTextResponse = {  //for when the original HTTP response is not JSON
+export type FetchJsonTextResponse = {  //used when the HTTP response is unexpectedly not JSON
    ok:          boolean,        //code for HTTP status in the range 200-299
    error:       boolean,        //code for HTTP status not in the range 200-299 or exception thrown
    status:      number,         //code for HTTP status
@@ -19,15 +19,15 @@ export type FetchJsonTextResponse = {  //for when the original HTTP response is 
    };
 export type FetchJsonResponse = FetchJsonParsedResponse | FetchJsonTextResponse;
 export type FetchJsonLogger = (
-   dateIso:      string,
-   type?:        'response' | 'request',
-   method?:      FetchJsonMethod,
-   logDomain?:   string,
-   logUrl?:      string,
-   ok?:          boolean,
-   status?:      number,
-   statusText?:  string,
-   contentType?: string | null,
+   dateIso:      string,                  //timestamp, such as '2022-12-06T07:24:40.330Z'
+   type?:        'response' | 'request',  //message direction
+   method?:      FetchJsonMethod,         //action for HTTP request, such as 'POST'
+   domain?:      string,                  //hostname
+   url?:         string,                  //address of requested resource (without parameters)
+   ok?:          boolean,                 //code for HTTP status in the range 200-299
+   status?:      number,                  //code for HTTP status, typically 200
+   statusText?:  string,                  //message corresponding to the code, typically 'OK'
+   contentType?: string | null,           //mime-type, typically 'application/json'
    ) => void;
 
 const fetchJson = {
@@ -59,12 +59,12 @@ const fetchJson = {
       const paramKeys: string[] = isGetRequest && data ? Object.keys(data) : [];
       const toPair = (key: string) => key + '=' +
          encodeURIComponent(data ? data[key] : '');  //build query string field-value
-      if (paramKeys.length)
-         url = url + (url.includes('?') ? '&' : '?') + paramKeys.map(toPair).join('&');
-      settings.body = !isGetRequest && data ? JSON.stringify(data) : null;
+      const params =     () => paramKeys.map(toPair).join('&');
+      const requestUrl = !paramKeys.length ? url : url + (url.includes('?') ? '&' : '?') + params();
+      settings.body =    !isGetRequest && data ? JSON.stringify(data) : null;
       const now = () => new Date().toISOString();
       const logUrl = url.replace(/[?].*/, '');  //security: prevent logging url parameters
-      const logDomain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');  //extract hostname
+      const domain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');  //extract hostname
       const toJson = (value: unknown): Promise<FetchJsonResponse> => {
          const response = <Response>value;
          const contentType = response.headers.get('content-type');
@@ -78,7 +78,7 @@ const fetchJson = {
             response:    response,
             });
          if (this.logger)
-            this.logger(now(), 'response', httpMethod, logDomain, logUrl,
+            this.logger(now(), 'response', httpMethod, domain, logUrl,
                response.ok, response.status, response.statusText, contentType);
          if (settings.strictErrors && !response.ok)
             throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
@@ -93,9 +93,9 @@ const fetchJson = {
          return isJson ? response.json().catch(errToObj) : response.text().then(textToObj);
          };
       if (this.logger)
-         this.logger(now(), 'request', httpMethod, logDomain, logUrl);
+         this.logger(now(), 'request', httpMethod, domain, logUrl);
       const settingsRequestInit = JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
-      return fetch(url, settingsRequestInit).then(toJson);
+      return fetch(requestUrl, settingsRequestInit).then(toJson);
       },
    get(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
       return this.request('GET', url, params, options);
