@@ -50,8 +50,8 @@ const fetchJson = {
       const settings = { ...defaults, ...this.baseOptions, ...options };
       if (!settings.method || typeof settings.method !== 'string')
          throw Error('[fetch-json] HTTP method missing or invalid.');
-      settings.method = settings.method.trim().toUpperCase();
-      const isGetRequest = settings.method === 'GET';
+      const httpMethod = settings.method.trim().toUpperCase();
+      const isGetRequest = httpMethod === 'GET';
       const jsonHeaders = { Accept: 'application/json' };
       if (!isGetRequest && data)
          jsonHeaders['Content-Type'] = 'application/json';
@@ -78,7 +78,7 @@ const fetchJson = {
             response:    response,
             });
          if (this.logger)
-            this.logger(now(), 'response', settings.method, logDomain, logUrl,
+            this.logger(now(), 'response', httpMethod, logDomain, logUrl,
                response.ok, response.status, response.statusText, contentType);
          if (settings.strictErrors && !response.ok)
             throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
@@ -93,7 +93,7 @@ const fetchJson = {
          return isJson ? response.json().catch(errToObj) : response.text().then(textToObj);
          };
       if (this.logger)
-         this.logger(now(), 'request', settings.method, logDomain, logUrl);
+         this.logger(now(), 'request', httpMethod, logDomain, logUrl);
       const settingsRequestInit = JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
       return fetch(url, settingsRequestInit).then(toJson);
       },
