@@ -56,15 +56,17 @@ const fetchJson = {
       if (!isGetRequest && data)
          jsonHeaders['Content-Type'] = 'application/json';
       settings.headers = { ...jsonHeaders, ...settings.headers };
-      const paramKeys: string[] = isGetRequest && data ? Object.keys(data) : [];
-      const toPair = (key: string) => key + '=' +
-         encodeURIComponent(data ? data[key] : '');  //build query string field-value
+      const paramKeys =  isGetRequest && data ? Object.keys(data) : <string[]>[];
+      const toPair =     (key: string) => key + '=' + encodeURIComponent(data ? data[key] : '');  //build query string field-value
       const params =     () => paramKeys.map(toPair).join('&');
       const requestUrl = !paramKeys.length ? url : url + (url.includes('?') ? '&' : '?') + params();
       settings.body =    !isGetRequest && data ? JSON.stringify(data) : null;
-      const now = () => new Date().toISOString();
-      const logUrl = url.replace(/[?].*/, '');  //security: prevent logging url parameters
-      const domain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');  //extract hostname
+      const log = (type: 'response' | 'request', ...items: any[]) => {
+         const logUrl = url.replace(/[?].*/, '');  //security: prevent logging url parameters
+         const domain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');  //extract hostname
+         if (this.logger)
+            this.logger(new Date().toISOString(), type, httpMethod, domain, logUrl, ...items);
+         };
       const toJson = (value: unknown): Promise<FetchJsonResponse> => {
          const response = <Response>value;
          const contentType = response.headers.get('content-type');
@@ -77,9 +79,7 @@ const fetchJson = {
             bodyText:    httpBody,
             response:    response,
             });
-         if (this.logger)
-            this.logger(now(), 'response', httpMethod, domain, logUrl,
-               response.ok, response.status, response.statusText, contentType);
+         log('response', response.ok, response.status, response.statusText, contentType);
          if (settings.strictErrors && !response.ok)
             throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
          const errToObj = (error: Error): FetchJsonTextResponse => ({
@@ -92,8 +92,7 @@ const fetchJson = {
             });
          return isJson ? response.json().catch(errToObj) : response.text().then(textToObj);
          };
-      if (this.logger)
-         this.logger(now(), 'request', httpMethod, domain, logUrl);
+      log('request');
       const settingsRequestInit = JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
       return fetch(requestUrl, settingsRequestInit).then(toJson);
       },
