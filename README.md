@@ -238,6 +238,7 @@ To have multiple base options available at the same time, use the `FetchJson` cl
 multiple copies of `fetchJson`:
 ```javascript
 import { FetchJson } from 'fetch-json';
+
 const fetchJsonA = new FetchJson({ headers: { From: 'aaa@example.com' } }).fetchJson;
 const fetchJsonB = new FetchJson({ headers: { From: 'bbb@example.com' } }).fetchJson;
 fetchJsonA.get('https://dna-engine.org/api/books/').then(display);  //from aaa@example.com
