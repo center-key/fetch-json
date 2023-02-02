@@ -275,8 +275,8 @@ To support really old browsers, include polyfills for
 [Promise](https://github.com/taylorhakes/promise-polyfill/) and
 [Fetch API](https://github.com/github/fetch):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/promise-polyfill@8.2/dist/polyfill.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@3.6/dist/fetch.umd.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@3/dist/fetch.umd.min.js></script>
 ```
 
 <br>
