@@ -1,4 +1,4 @@
-//! fetch-json v3.0.2 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.0.3 ~~ https://fetch-json.js.org ~~ MIT License
 
 export type Json = string | number | boolean | null | undefined | JsonObject | Json[];
 export type JsonObject = {
