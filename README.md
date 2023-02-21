@@ -2,7 +2,7 @@
 <img src=https://raw.githubusercontent.com/center-key/fetch-json/main/docs/logos.png
    align=right width=180 alt=logos>
 
-_A wrapper around Fetch just for JSON (written in TypeScript)_
+_A wrapper around Fetch just for JSON_
 
 [![License:MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/fetch-json/blob/main/LICENSE.txt)
 [![npm](https://img.shields.io/npm/v/fetch-json.svg)](https://www.npmjs.com/package/fetch-json)
@@ -17,12 +17,12 @@ Why would you fetch anything but json? ;)
 HTTP calls to JSON endpoints.
 
 **fetch-json** automatically:
-1. Converts the HTTP response to JSON if it's not already JSON (especially convenient for HTTP errors)
-1. Serializes the body payload with `JSON.stringify()`
 1. Adds the `application/json` HTTP header to set the data type
-1. Appends the GET `params` object items to the URL
+1. Serializes the body payload with `JSON.stringify()`
 1. Runs `.json()` on the response
+1. Appends the GET `params` object items to the URL
 1. Sets `credentials` to `'same-origin'` (support user sessions in Grails, Rails, PHP, Django, Flask, etc.)
+1. Converts the HTTP response to JSON if it's not already JSON (especially convenient for HTTP errors)
 
 **fetch-json** is ideal for a [JAMstack](https://jamstack.org) architecture  where "dynamic
 programming during the request/response cycle is handled by JavaScript, running entirely on the
