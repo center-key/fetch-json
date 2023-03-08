@@ -23,6 +23,7 @@ HTTP calls to JSON endpoints.
 1. Appends the GET `params` object items to the URL
 1. Sets `credentials` to `'same-origin'` (support user sessions in Grails, Rails, PHP, Django, Flask, etc.)
 1. Converts the HTTP response to JSON if it's not already JSON (especially convenient for HTTP errors)
+1. Returns HTTP headers in `HEAD` response as a simple object.
 
 **fetch-json** is ideal for a [JAMstack](https://jamstack.org) architecture  where "dynamic
 programming during the request/response cycle is handled by JavaScript, running entirely on the
@@ -169,6 +170,10 @@ fetchJson.patch(url, resource, options).then(callback);
 #### DELETE
 ```javascript
 fetchJson.delete(url, resource, options).then(callback);
+```
+#### HEAD (HTTP headers)
+```javascript
+fetchJson.head(url, params, options).then(callback);  //headers returned as an object
 ```
 Notes:
 1. Only the `url` parameter is required.&nbsp; The other parameters are optional.

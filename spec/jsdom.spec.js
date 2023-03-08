@@ -208,6 +208,28 @@ describe('Response returned by httpbin.org for a planet (object literal)', () =>
    });
 
 ////////////////////////////////////////////////////////////////////////////////
+describe('HEAD response for a Figy Berry from the PokéAPI', () => {
+
+   it('contains the correct headers', (done) => {
+
+      const url = 'https://pokeapi.co/api/v2/berry/figy';
+      const handleData = (data) => {
+         const actual = {
+            'content-type':  data['content-type'],
+            'cache-control': data['cache-control'],
+            };
+         const expected = {
+            'content-type':  'application/json; charset=utf-8',
+            'cache-control': 'public, max-age=86400, s-maxage=86400',
+            };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      fetchJson.head(url).then(handleData);
+      });
+
+   });
+
+////////////////////////////////////////////////////////////////////////////////
 describe('The low-level fetchJson.request() function', () => {
 
    it('can successfully GET a planet', (done) => {

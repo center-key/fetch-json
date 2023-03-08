@@ -70,7 +70,9 @@ const fetchJson = {
       const toJson = (value: unknown): Promise<FetchJsonResponse> => {
          const response =    <Response>value;
          const contentType = response.headers.get('content-type');
+         const isHead =      httpMethod === 'HEAD';
          const isJson =      !!contentType && /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
+         const headersObj =  () => Object.fromEntries(response.headers.entries());
          const textToObj = (httpBody: string): FetchJsonTextResponse => ({
             ok:          response.ok,
             error:       !response.ok,
@@ -90,7 +92,8 @@ const fetchJson = {
             bodyText:    'Invalid JSON [' + error.toString() + ']',
             response:    response,
             });
-         return isJson ? response.json().catch(errToObj) : response.text().then(textToObj);
+         return isHead ? response.text().then(headersObj) :
+            isJson ? response.json().catch(errToObj) : response.text().then(textToObj);
          };
       log('request');
       const settingsRequestInit = JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
@@ -110,6 +113,9 @@ const fetchJson = {
       },
    delete<T>(url: string, resource?: Json | T, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
       return this.request('DELETE', url, resource, options);
+      },
+   head(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+      return this.request('HEAD', url, params, options);
       },
    logger: <FetchJsonLogger | null>null,
    getLogHeaders(): string[] {
