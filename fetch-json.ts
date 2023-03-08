@@ -50,6 +50,8 @@ const fetchJson = {
       const settings = { ...defaults, ...this.baseOptions, ...options };
       if (!settings.method || typeof settings.method !== 'string')
          throw Error('[fetch-json] HTTP method missing or invalid.');
+      if (typeof url !== 'string')
+         throw Error('[fetch-json] URL must be a string.');
       const httpMethod =   settings.method.trim().toUpperCase();
       const isGetRequest = httpMethod === 'GET';
       const jsonHeaders =  { Accept: 'application/json' };
@@ -81,9 +83,6 @@ const fetchJson = {
             bodyText:    httpBody,
             response:    response,
             });
-         log('response', response.ok, response.status, response.statusText, contentType);
-         if (settings.strictErrors && !response.ok)
-            throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
          const errToObj = (error: Error): FetchJsonTextResponse => ({
             ok:          false,
             error:       true,
@@ -92,6 +91,9 @@ const fetchJson = {
             bodyText:    'Invalid JSON [' + error.toString() + ']',
             response:    response,
             });
+         log('response', response.ok, response.status, response.statusText, contentType);
+         if (settings.strictErrors && !response.ok)
+            throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
          return isHead ? response.text().then(headersObj) :
             isJson ? response.json().catch(errToObj) : response.text().then(textToObj);
          };
