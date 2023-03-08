@@ -1,7 +1,7 @@
-//! fetch-json v3.0.3 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.1.0 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '3.0.3',
+    version: '3.1.0',
     baseOptions: {},
     getBaseOptions() {
         return this.baseOptions;
@@ -19,6 +19,8 @@ const fetchJson = {
         const settings = Object.assign(Object.assign(Object.assign({}, defaults), this.baseOptions), options);
         if (!settings.method || typeof settings.method !== 'string')
             throw Error('[fetch-json] HTTP method missing or invalid.');
+        if (typeof url !== 'string')
+            throw Error('[fetch-json] URL must be a string.');
         const httpMethod = settings.method.trim().toUpperCase();
         const isGetRequest = httpMethod === 'GET';
         const jsonHeaders = { Accept: 'application/json' };
@@ -39,7 +41,9 @@ const fetchJson = {
         const toJson = (value) => {
             const response = value;
             const contentType = response.headers.get('content-type');
+            const isHead = httpMethod === 'HEAD';
             const isJson = !!contentType && /json|javascript/.test(contentType);
+            const headersObj = () => Object.fromEntries(response.headers.entries());
             const textToObj = (httpBody) => ({
                 ok: response.ok,
                 error: !response.ok,
@@ -48,9 +52,6 @@ const fetchJson = {
                 bodyText: httpBody,
                 response: response,
             });
-            log('response', response.ok, response.status, response.statusText, contentType);
-            if (settings.strictErrors && !response.ok)
-                throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
             const errToObj = (error) => ({
                 ok: false,
                 error: true,
@@ -59,7 +60,11 @@ const fetchJson = {
                 bodyText: 'Invalid JSON [' + error.toString() + ']',
                 response: response,
             });
-            return isJson ? response.json().catch(errToObj) : response.text().then(textToObj);
+            log('response', response.ok, response.status, response.statusText, contentType);
+            if (settings.strictErrors && !response.ok)
+                throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
+            return isHead ? response.text().then(headersObj) :
+                isJson ? response.json().catch(errToObj) : response.text().then(textToObj);
         };
         log('request');
         const settingsRequestInit = JSON.parse(JSON.stringify(settings));
@@ -79,6 +84,9 @@ const fetchJson = {
     },
     delete(url, resource, options) {
         return this.request('DELETE', url, resource, options);
+    },
+    head(url, params, options) {
+        return this.request('HEAD', url, params, options);
     },
     logger: null,
     getLogHeaders() {

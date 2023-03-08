@@ -1,4 +1,4 @@
-//! fetch-json v3.0.3 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.1.0 ~~ https://fetch-json.js.org ~~ MIT License
 
 export type Json = string | number | boolean | null | undefined | JsonObject | Json[];
 export type JsonObject = {
@@ -35,6 +35,7 @@ declare const fetchJson: {
     put<T_2>(url: string, resource?: Json | T_2, options?: FetchJsonOptions): Promise<FetchJsonResponse>;
     patch<T_3>(url: string, resource?: Json | T_3, options?: FetchJsonOptions): Promise<FetchJsonResponse>;
     delete<T_4>(url: string, resource?: Json | T_4, options?: FetchJsonOptions): Promise<FetchJsonResponse>;
+    head(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<FetchJsonResponse>;
     logger: FetchJsonLogger | null;
     getLogHeaders(): string[];
     getLogHeaderIndex(): {
