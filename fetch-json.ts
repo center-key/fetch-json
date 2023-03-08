@@ -50,9 +50,9 @@ const fetchJson = {
       const settings = { ...defaults, ...this.baseOptions, ...options };
       if (!settings.method || typeof settings.method !== 'string')
          throw Error('[fetch-json] HTTP method missing or invalid.');
-      const httpMethod = settings.method.trim().toUpperCase();
+      const httpMethod =   settings.method.trim().toUpperCase();
       const isGetRequest = httpMethod === 'GET';
-      const jsonHeaders = { Accept: 'application/json' };
+      const jsonHeaders =  { Accept: 'application/json' };
       if (!isGetRequest && data)
          jsonHeaders['Content-Type'] = 'application/json';
       settings.headers = { ...jsonHeaders, ...settings.headers };
@@ -68,9 +68,9 @@ const fetchJson = {
             this.logger(new Date().toISOString(), type, httpMethod, domain, logUrl, ...items);
          };
       const toJson = (value: unknown): Promise<FetchJsonResponse> => {
-         const response = <Response>value;
+         const response =    <Response>value;
          const contentType = response.headers.get('content-type');
-         const isJson = !!contentType && /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
+         const isJson =      !!contentType && /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
          const textToObj = (httpBody: string): FetchJsonTextResponse => ({
             ok:          response.ok,
             error:       !response.ok,

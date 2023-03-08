@@ -74,7 +74,7 @@
    },
    "runScriptsConfig": {
       "build": [
-         "rimraf build dist **/.DS_Store",
+         "rimraf build dist",
          "jshint . --exclude-path .gitignore",
          "eslint --max-warnings 0 . --ext .ts",
          "tsc",
@@ -89,19 +89,20 @@
    "scripts": {
       "pretest": "run-scripts build",
       "test": "mocha spec/*.spec.js --timeout 5000 --retries 1",
-      "examples": "node docs/js/examples.js && tsc && node build/docs/ts/examples.js"
+      "examples": "node docs/js/examples.js",
+      "dev": "tsc && node docs/js/dev.js"
    },
    "devDependencies": {
       "@fortawesome/fontawesome-free": "~6.3",
       "@types/node": "~18.14",
-      "@typescript-eslint/eslint-plugin": "~5.53",
-      "@typescript-eslint/parser": "~5.53",
+      "@typescript-eslint/eslint-plugin": "~5.54",
+      "@typescript-eslint/parser": "~5.54",
       "add-dist-header": "~1.0",
       "assert-deep-strict-equal": "~1.0",
       "copy-file-util": "~1.0",
       "copy-folder-util": "~1.0",
       "dna-engine": "~2.3",
-      "eslint": "~8.34",
+      "eslint": "~8.35",
       "esm-to-plain-js": "~0.1",
       "jquery": "~3.6",
       "jsdom": "~21.1",
@@ -110,12 +111,12 @@
       "puppeteer": "19.7",
       "puppeteer-browser-ready": "~1.0",
       "replacer-util": "~1.0",
-      "rimraf": "3",
+      "rimraf": "~4.3",
       "run-scripts-util": "~1.0",
       "typescript": "~4.9",
       "uglify-js": "~3.17",
       "w3c-html-validator": "~1.3",
-      "web-ignition": "~1.6",
+      "web-ignition": "~1.7",
       "whatwg-fetch": "~3.6"
    }
 }

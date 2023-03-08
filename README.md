@@ -17,7 +17,7 @@ Why would you fetch anything but json? ;)
 HTTP calls to JSON endpoints.
 
 **fetch-json** automatically:
-1. Adds the `application/json` HTTP header to set the data type
+1. Adds the HTTP header `Content-Type: application/json` to ensure the correct data type
 1. Serializes the body payload with `JSON.stringify()`
 1. Runs `.json()` on the response
 1. Appends the GET `params` object items to the URL

@@ -27,8 +27,8 @@ const example = {
    nasa() {
 
       // NASA APoD
-      const url =    'https://api.nasa.gov/planetary/apod';
-      const params = { api_key: 'DEMO_KEY' };
+      const url =        'https://api.nasa.gov/planetary/apod';
+      const params =     { api_key: 'DEMO_KEY' };
       const handleData = (data) => console.log('The NASA APoD for today is at:', data.url);
       fetchJson.get(url, params).then(handleData);
 
@@ -37,7 +37,7 @@ const example = {
    jupiter() {
 
       // Create Jupiter
-      const resource = { name: 'Jupiter', position: 5 };
+      const resource =   { name: 'Jupiter', position: 5 };
       const handleData = (data) => console.log('New planet:', data);
       fetchJson.post('https://httpbin.org/post', resource)
          .then(handleData)
