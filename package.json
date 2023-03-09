@@ -111,7 +111,7 @@
       "puppeteer": "19.7",
       "puppeteer-browser-ready": "~1.0",
       "replacer-util": "~1.0",
-      "rimraf": "~4.3",
+      "rimraf": "~4.4",
       "run-scripts-util": "~1.0",
       "typescript": "~4.9",
       "uglify-js": "~3.17",

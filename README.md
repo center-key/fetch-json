@@ -23,7 +23,7 @@ HTTP calls to JSON endpoints.
 1. Appends the GET `params` object items to the URL
 1. Sets `credentials` to `'same-origin'` (support user sessions in Grails, Rails, PHP, Django, Flask, etc.)
 1. Converts the HTTP response to JSON if it's not already JSON (especially convenient for HTTP errors)
-1. Returns HTTP headers in `HEAD` response as a simple object.
+1. Maps HTTP response headers from a `HEAD` request into a simple object.
 
 **fetch-json** is ideal for a [JAMstack](https://jamstack.org) architecture  where "dynamic
 programming during the request/response cycle is handled by JavaScript, running entirely on the
@@ -37,7 +37,7 @@ In a web page:
 ```
 or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/fetch-json@3.0/dist/fetch-json.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/fetch-json@3.1/dist/fetch-json.min.js></script>
 ```
 ### 2. Node.js server
 Install package for node:
@@ -124,7 +124,7 @@ create({ name: 'Jupiter', position: 5 });
 **fetch-json** calls the native
 **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**.
 
-For comparison, the POST example in section [3) Examples](#3-examples) to create a planet would be
+For comparison, the POST example in section [C) Examples](#c-examples) to create a planet would be
 done calling the **Fetch API**
 directly with the code:
 ```javascript
