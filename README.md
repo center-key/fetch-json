@@ -16,14 +16,14 @@ Why would you fetch anything but json? ;)
 **fetch-json** is a lightweight JavaScript library to reduce the boilerplate code needed to make
 HTTP calls to JSON endpoints.
 
-**fetch-json** automatically:
+**fetch-json** automatically:  <!-- sync with docs/index.html -->
 1. Adds the HTTP header `Content-Type: application/json` to ensure the correct data type
 1. Serializes the body payload with `JSON.stringify()`
 1. Runs `.json()` on the response
-1. Appends the GET `params` object items to the URL
+1. Appends `params` to the URL of `GET` requests
 1. Sets `credentials` to `'same-origin'` (support user sessions in Grails, Rails, PHP, Django, Flask, etc.)
 1. Converts the HTTP response to JSON if it's not already JSON (especially convenient for HTTP errors)
-1. Maps HTTP response headers from a `HEAD` request into a simple object.
+1. Maps HTTP response headers from a `HEAD` request into a simple object
 
 **fetch-json** is ideal for a [JAMstack](https://jamstack.org) architecture  where "dynamic
 programming during the request/response cycle is handled by JavaScript, running entirely on the
@@ -171,7 +171,7 @@ fetchJson.patch(url, resource, options).then(callback);
 ```javascript
 fetchJson.delete(url, resource, options).then(callback);
 ```
-#### HEAD (HTTP headers)
+#### HEAD (HTTP response headers)
 ```javascript
 fetchJson.head(url, params, options).then(callback);  //headers returned as an object
 ```

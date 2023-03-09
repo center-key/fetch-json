@@ -30,8 +30,11 @@
       body >main >section:first-child h2 { text-transform: none; }
       body >main >section ol { display: inline-block; text-align: left; margin-bottom: 30px; }
       body >main >section ol li { font-size: 1.0rem; }
-      body >main >section figure code.language-javascript { color: deeppink; font-size: 1.1rem; }
-      body >main >section figure code.language-javascript .js-param { color: darkmagenta; }
+      body >main >section ol li code { font-family: monospace; font-weight: normal; color: black; background-color: darkgray; padding: 2px 5px; }
+      body >main >section figure code.language-shell { color: gainsboro; background-color: midnightblue; font-size: 1.1rem; padding: 5px 15px; }
+      body >main >section figure code.language-shell .shell-prompt { color: deepskyblue; }
+      body >main >section figure code.language-js { color: deeppink; font-size: 1.1rem; }
+      body >main >section figure code.language-js .js-param { color: darkmagenta; }
    </style>
    <script defer src=https://cdn.jsdelivr.net/npm/jquery@3.6/dist/jquery.min.js></script>
    <script defer src=https://cdn.jsdelivr.net/npm/dna-engine@2.3/dist/dna-engine.min.js></script>
@@ -71,16 +74,22 @@
          <p>
             <b>fetch-json</b> automatically:
          </p>
-         <ol>
-            <li>Converts the HTTP response to JSON if it's not already JSON</li>
+         <ol>  <!-- sync with README.md-->
+            <li>Adds the HTTP header <code>Content-Type: application/json</code> to ensure the correct data type</li>
             <li>Serializes the body payload with <code>JSON.stringify()</code></li>
-            <li>Adds the <code>'application/json'</code> HTTP header to set the data type</li>
-            <li>Appends the GET <code>params</code> object items to the URL</li>
             <li>Runs <code>.json()</code> on the response</li>
-            <li>Sets <code>credentials</code> to <code>'same-origin'</code></li>
+            <li>Appends <code>params</code> to the URL of <code>GET</code> requests</li>
+            <li>Sets <code>credentials</code> to <code>'same-origin'</code> (support user sessions in Grails, Rails, PHP, Django, Flask, etc.)</li>
+            <li>Converts the HTTP response to JSON if it's not already JSON (especially convenient for HTTP errors)</li>
+            <li>Maps HTTP response headers from a <code>HEAD</code> request into a simple object</li>
          </ol>
          <figure>
-            <code class=language-javascript>
+            <code class=language-shell>
+               <span class=shell-prompt>$</span> npm install fetch-json
+            </code>
+         </figure>
+         <figure>
+            <code class=language-js>
                fetchJson.get(<span class=js-param>url</span>, <span class=js-param>params</span>)<br>
                .then(<span class=js-param>handleData</span>);
             </code>
