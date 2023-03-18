@@ -1,4 +1,4 @@
-//! fetch-json v3.1.0 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.1.1 ~~ https://fetch-json.js.org ~~ MIT License
 
 (function (factory) {
     if (typeof module === "object" && typeof module.exports === "object") {
@@ -13,7 +13,7 @@
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.FetchJson = exports.fetchJson = void 0;
     const fetchJson = {
-        version: '3.1.0',
+        version: '3.1.1',
         baseOptions: {},
         getBaseOptions() {
             return this.baseOptions;
@@ -40,7 +40,8 @@
                 jsonHeaders['Content-Type'] = 'application/json';
             settings.headers = Object.assign(Object.assign({}, jsonHeaders), settings.headers);
             const paramKeys = isGetRequest && data ? Object.keys(data) : [];
-            const toPair = (key) => key + '=' + encodeURIComponent(data ? data[key] : '');
+            const getValue = (key) => data ? data[key] : '';
+            const toPair = (key) => key + '=' + encodeURIComponent(getValue(key));
             const params = () => paramKeys.map(toPair).join('&');
             const requestUrl = !paramKeys.length ? url : url + (url.includes('?') ? '&' : '?') + params();
             settings.body = !isGetRequest && data ? JSON.stringify(data) : null;
