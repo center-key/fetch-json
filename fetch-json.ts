@@ -54,12 +54,13 @@ const fetchJson = {
          throw Error('[fetch-json] URL must be a string.');
       const httpMethod =   settings.method.trim().toUpperCase();
       const isGetRequest = httpMethod === 'GET';
-      const jsonHeaders =  { Accept: 'application/json' };
+      const jsonHeaders: HeadersInit = { Accept: 'application/json' };
       if (!isGetRequest && data)
          jsonHeaders['Content-Type'] = 'application/json';
       settings.headers = { ...jsonHeaders, ...settings.headers };
       const paramKeys =  isGetRequest && data ? Object.keys(data) : <string[]>[];
-      const toPair =     (key: string) => key + '=' + encodeURIComponent(data ? data[key] : '');  //build query string field-value
+      const getValue =   (key: string) => data ? data[key as keyof typeof data] : '';
+      const toPair =     (key: string) => key + '=' + encodeURIComponent(getValue(key));  //build query string field-value
       const params =     () => paramKeys.map(toPair).join('&');
       const requestUrl = !paramKeys.length ? url : url + (url.includes('?') ? '&' : '?') + params();
       settings.body =    !isGetRequest && data ? JSON.stringify(data) : null;
