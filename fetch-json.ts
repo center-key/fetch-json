@@ -59,7 +59,7 @@ const fetchJson = {
          jsonHeaders['Content-Type'] = 'application/json';
       settings.headers = { ...jsonHeaders, ...settings.headers };
       const paramKeys =  isGetRequest && data ? Object.keys(data) : <string[]>[];
-      const getValue =   (key: string) => data ? data[key as keyof typeof data] : '';
+      const getValue =   (key: string) => data ? data[<keyof typeof data>key] : '';
       const toPair =     (key: string) => key + '=' + encodeURIComponent(getValue(key));  //build query string field-value
       const params =     () => paramKeys.map(toPair).join('&');
       const requestUrl = !paramKeys.length ? url : url + (url.includes('?') ? '&' : '?') + params();

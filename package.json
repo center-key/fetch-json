@@ -18,8 +18,8 @@
       },
       "./": "./dist/"
    },
-   "engines" : {
-      "node" : ">=18"
+   "engines": {
+      "node": ">=18"
    },
    "repository": "github:center-key/fetch-json",
    "homepage": "https://fetch-json.js.org",
@@ -73,8 +73,10 @@
       }
    },
    "runScriptsConfig": {
+      "clean": [
+         "rimraf build dist"
+      ],
       "build": [
-         "rimraf build dist",
          "jshint . --exclude-path .gitignore",
          "eslint --max-warnings 0 . --ext .ts",
          "tsc",
@@ -87,32 +89,34 @@
       ]
    },
    "scripts": {
-      "pretest": "run-scripts build",
+      "pretest": "run-scripts clean build",
       "test": "mocha spec/*.spec.js --timeout 5000 --retries 1",
       "examples": "node docs/js/examples.js",
-      "dev": "tsc && node docs/js/dev.js"
+      "dev": "tsc && node docs/js/dev.js",
+      "interactive": "http-server -o spec/fixtures/"
    },
    "devDependencies": {
-      "@fortawesome/fontawesome-free": "~6.3",
+      "@fortawesome/fontawesome-free": "~6.4",
       "@types/node": "~18.15",
-      "@typescript-eslint/eslint-plugin": "~5.55",
-      "@typescript-eslint/parser": "~5.55",
+      "@typescript-eslint/eslint-plugin": "~5.57",
+      "@typescript-eslint/parser": "~5.57",
       "add-dist-header": "~1.0",
       "assert-deep-strict-equal": "~1.0",
       "copy-file-util": "~1.0",
       "copy-folder-util": "~1.0",
       "dna-engine": "~2.3",
-      "eslint": "~8.36",
-      "esm-to-plain-js": "~0.1",
+      "eslint": "~8.37",
+      "esm-to-plain-js": "~1.0",
+      "http-server": "~14.1",
       "jquery": "~3.6",
       "jsdom": "~21.1",
       "jshint": "~2.13",
       "mocha": "~10.2",
-      "puppeteer": "19.7",
+      "puppeteer": "~19.8",
       "puppeteer-browser-ready": "~1.0",
       "replacer-util": "~1.0",
       "rimraf": "~4.4",
-      "run-scripts-util": "~1.0",
+      "run-scripts-util": "~1.1",
       "typescript": "~5.0",
       "uglify-js": "~3.17",
       "w3c-html-validator": "~1.3",
