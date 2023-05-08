@@ -18,11 +18,11 @@ HTTP calls to JSON endpoints.
 
 **fetch-json** automatically:  <!-- sync with docs/index.html -->
 1. Adds the HTTP header `Content-Type: application/json` to ensure the correct data type
-1. Serializes the body payload with `JSON.stringify()`
 1. Runs `.json()` on the response
+1. Serializes the body payload with `JSON.stringify()`
 1. Appends `params` to the URL of `GET` requests
-1. Sets `credentials` to `'same-origin'` (support user sessions in Grails, Rails, PHP, Django, Flask, etc.)
-1. Converts the HTTP response to JSON if it's not already JSON (especially convenient for HTTP errors)
+1. Sets `credentials` to `'same-origin'` (support user sessions in frameworks like Grails, Rails, PHP, Django, Flask, etc.)
+1. Converts the HTTP response to JSON if it's not already JSON (convenient for handling HTTP errors)
 1. Maps HTTP response headers from a `HEAD` request into a simple object
 
 **fetch-json** is ideal for a [JAMstack](https://jamstack.org) architecture  where "dynamic
