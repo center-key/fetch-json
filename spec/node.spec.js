@@ -95,6 +95,31 @@ describe('Awaiting a berry from the PokéAPI with fetchJson.get() [async/await]'
    });
 
 ////////////////////////////////////////////////////////////////////////////////
+describe('GET response returned by mockbin.org', () => {
+
+   it('contains empty params when none are supplied', (done) => {
+      const url = 'https://mockbin.org/request';
+      const handleData = (data) => {
+         const actual =   { method: data.method, params: data.queryString };
+         const expected = { method: 'GET',       params: {} };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      fetchJson.get(url).then(handleData);
+      });
+
+   it('contains the params from the URL query string', (done) => {
+      const url = 'https://mockbin.org/request?planet=Jupiter&position=5';
+      const handleData = (data) => {
+         const actual =   data.queryString;
+         const expected = { planet: 'Jupiter', position: '5' };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      fetchJson.get(url).then(handleData);
+      });
+
+   });
+
+////////////////////////////////////////////////////////////////////////////////
 describe('GET response returned by httpbin.org', () => {
 
    it('contains empty params when none are supplied', (done) => {
