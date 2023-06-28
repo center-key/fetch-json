@@ -9,15 +9,17 @@ export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
 export type FetchJsonMethod =  string;
 export type FetchJsonParams =  { [field: string]: string | number | boolean | null | undefined };
 export type FetchJsonParsedResponse = Json | any;
-export type FetchJsonTextResponse = {  //used when the HTTP response is unexpectedly not JSON
+export type FetchJsonTextResponse = FetchJsonAltResponse;  //deprecated
+export type FetchJsonAltResponse = {  //used when the HTTP response is an error or unexpectedly not JSON
    ok:          boolean,        //code for HTTP status in the range 200-299
    error:       boolean,        //code for HTTP status not in the range 200-299 or exception thrown
    status:      number,         //code for HTTP status
    contentType: string | null,  //mime-type, such as 'text/html'
    bodyText:    string,         //body of the HTTP response or error message
+   data:        Json | null,    //body of the HTTP responce if the content is JSON
    response:    Response,       //response object
    };
-export type FetchJsonResponse = FetchJsonParsedResponse | FetchJsonTextResponse;
+export type FetchJsonResponse = FetchJsonParsedResponse | FetchJsonAltResponse;
 export type FetchJsonLogger = (
    dateIso:      string,                  //timestamp, such as '2022-12-06T07:24:40.330Z'
    type?:        'response' | 'request',  //message direction
@@ -76,27 +78,31 @@ const fetchJson = {
          const isHead =      httpMethod === 'HEAD';
          const isJson =      !!contentType && /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
          const headersObj =  () => Object.fromEntries(response.headers.entries());
-         const textToObj = (httpBody: string): FetchJsonTextResponse => ({
+         const textToObj = (httpBody: string, data?: Json): FetchJsonAltResponse => ({
             ok:          response.ok,
             error:       !response.ok,
             status:      response.status,
             contentType: contentType,
             bodyText:    httpBody,
+            data:        data ?? null,
             response:    response,
             });
-         const errToObj = (error: Error): FetchJsonTextResponse => ({
+         const jsonToObj = (data: Json): FetchJsonResponse =>
+            response.ok ? data : textToObj(JSON.stringify(data), data);
+         const errToObj = (error: Error): FetchJsonAltResponse => ({
             ok:          false,
             error:       true,
             status:      500,
             contentType: contentType,
             bodyText:    'Invalid JSON [' + error.toString() + ']',
+            data:        null,
             response:    response,
             });
          log('response', response.ok, response.status, response.statusText, contentType);
          if (settings.strictErrors && !response.ok)
             throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
          return isHead ? response.text().then(headersObj) :
-            isJson ? response.json().catch(errToObj) : response.text().then(textToObj);
+            isJson ? response.json().then(jsonToObj).catch(errToObj) : response.text().then(textToObj);
          };
       log('request');
       const settingsRequestInit = JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
@@ -124,7 +130,11 @@ const fetchJson = {
    getLogHeaders(): string[] {
       return ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'];
       },
-   getLogHeaderIndex(): { [header: string]: number } {
+   getLogHeaderIndexMap(): { [header: string]: number } {
+      return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
+      },
+   getLogHeaderIndex(): { [header: string]: number } {  //DEPRECATED
+      // console.log('[fetch-json] getLogHeaderIndex() is deprecated -- use getLogHeaderIndexMap() instead');
       return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
       },
    enableLogger(booleanOrFn?: boolean | FetchJsonLogger): FetchJsonLogger | null {

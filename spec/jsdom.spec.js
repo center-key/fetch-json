@@ -265,7 +265,7 @@ describe('The low-level fetchJson.request() function', () => {
 ////////////////////////////////////////////////////////////////////////////////
 describe('HTTP error returned by the server', () => {
 
-   it.skip('for status 500 contains the message "Internal Server Error"', (done) => {
+   it('for status 500 contains the message "Internal Server Error"', (done) => {
       const url = 'https://mockbin.org/status/500/Internal Server Error';
       const handleData = (data) => {
          const actual = {
@@ -322,12 +322,14 @@ describe('HTTP error returned by the server', () => {
             error:       data.error,
             status:      [data.status, data.response.statusText],
             contentType: data.contentType,
+            data:        data.data,
             };
          const expected = {
             ok:          false,
             error:       true,
             status:      [418, "I'm a teapot"],
             contentType: 'text/plain',
+            data:        null,
             };
          assertDeepStrictEqual(actual, expected, done);
          console.log(data.bodyText);
@@ -353,12 +355,14 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             status:      [data.status, data.response.statusText],
             contentType: data.contentType,
             firstLine:   getFirstLine(data.bodyText),
+            data:        data.data,
             };
          const expected = {
             ok:          true,
             status:      [200, 'OK'],
             contentType: 'text/html; charset=utf-8',
             firstLine:   '<!doctype html>',
+            data:        null,
             };
          assertDeepStrictEqual(actual, expected, done);
          };
@@ -373,12 +377,14 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             status:      [data.status, data.response.statusText],
             contentType: data.contentType,
             firstLine:   getFirstLine(data.bodyText),
+            data:        data.data,
             };
          const expected = {
             ok:          true,
             status:      [200, 'OK'],
             contentType: 'application/xml; charset=utf-8',
             firstLine:   '<?xml version="1.0"?>',
+            data:        null,
             };
          assertDeepStrictEqual(actual, expected, done);
          };
@@ -394,12 +400,14 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             status:      [data.status, data.response.statusText],
             contentType: data.contentType,
             firstWord:   data.bodyText.split(' ', 1)[0],
+            data:        data.data,
             };
          const expected = {
             ok:          true,
             status:      [200, 'OK'],
             contentType: 'text/plain; charset=utf-8',
             firstWord:   'startedDateTime:',
+            data:        null,
             };
          assertDeepStrictEqual(actual, expected, done);
          };
@@ -429,7 +437,7 @@ describe('Function fetchJson.enableLogger()', () => {
 
    it('passes a timestamp, methed, and URL to a custom logger on GET', (done) => {
       const url =       'https://mockbin.org/request';
-      const headerMap = fetchJson.getLogHeaderIndex();
+      const headerMap = fetchJson.getLogHeaderIndexMap();
       const rawEvents = [];
       const toEvent = (rawEvent, index) => ({
          event:     index,
