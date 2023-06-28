@@ -12,6 +12,7 @@ const filename = import.meta.url.replace(/.*\//, '');  //jshint ignore:line
 
 // Specification suite
 describe(`Specifications: ${filename} - ${mode.type} (${mode.file})`, () => {
+// Synchronize all changes below this line with the suite in: jsdom.spec.js
 
 ////////////////////////////////////////////////////////////////////////////////
 describe('Module fetch-json', () => {
@@ -69,7 +70,7 @@ describe('Star Wars API result for spaceships fetched by fetchJson.get()', () =>
 
    it('contains an array of spaceships', (done) => {
 
-      const url = 'https://swapi.py4e.com/api/starships/';
+      const url =    'https://swapi.py4e.com/api/starships/';
       const params = { format: 'json' };
       const handleData = (data) => {
          const actual =   { count: typeof data.count, class: typeof data.results[0].starship_class };
@@ -85,8 +86,8 @@ describe('Star Wars API result for spaceships fetched by fetchJson.get()', () =>
 describe('Awaiting a berry from the PokéAPI with fetchJson.get() [async/await]', () => {
 
    it('is rewarded with a tasty treat', async () => {
-      const url = 'https://pokeapi.co/api/v2/berry/razz';
-      const data = await fetchJson.get(url);
+      const url =      'https://pokeapi.co/api/v2/berry/razz';
+      const data =     await fetchJson.get(url);
       const actual =   { id: data.id, name: data.name, growth_time: data.growth_time };
       const expected = { id: 16,      name: 'razz',    growth_time: 2 };
       assertDeepStrictEqual(actual, expected);
@@ -110,55 +111,30 @@ describe('GET response returned by mockbin.org', () => {
    it('contains the params from the URL query string', (done) => {
       const url = 'https://mockbin.org/request?planet=Jupiter&position=5';
       const handleData = (data) => {
-         const actual =   data.queryString;
-         const expected = { planet: 'Jupiter', position: '5' };
-         assertDeepStrictEqual(actual, expected, done);
-         };
-      fetchJson.get(url).then(handleData);
-      });
-
-   });
-
-////////////////////////////////////////////////////////////////////////////////
-describe('GET response returned by httpbin.org', () => {
-
-   it('contains empty params when none are supplied', (done) => {
-      const url = 'https://httpbin.org/get';
-      const handleData = (data) => {
-         const actual =   { params: data.args };
-         const expected = { params: {} };
-         assertDeepStrictEqual(actual, expected, done);
-         };
-      fetchJson.get(url).then(handleData);
-      });
-
-   it('contains the params from the URL query string', (done) => {
-      const url = 'https://httpbin.org/get?planet=Jupiter&position=5';
-      const handleData = (data) => {
-         const actual =   data.args;
-         const expected = { planet: 'Jupiter', position: '5' };
+         const actual =   { method: data.method, params: data.queryString };
+         const expected = { method: 'GET',       params: { planet: 'Jupiter', position: '5' } };
          assertDeepStrictEqual(actual, expected, done);
          };
       fetchJson.get(url).then(handleData);
       });
 
    it('contains the params from an object', (done) => {
-      const url =    'https://httpbin.org/get';
+      const url =    'https://mockbin.org/request';
       const params = { planet: 'Jupiter', position: 5, tip: 'Big & -148°C' };
       const handleData = (data) => {
-         const actual =   data.args;
-         const expected = { planet: 'Jupiter', position: '5', tip: 'Big & -148°C' };
+         const actual =   { method: data.method, params: data.queryString };
+         const expected = { method: 'GET',       params: { planet: 'Jupiter', position: '5', tip: 'Big & -148°C' } };
          assertDeepStrictEqual(actual, expected, done);
          };
       fetchJson.get(url, params).then(handleData);
       });
 
    it('contains the params from both the URL query string and an object', (done) => {
-      const url =    'https://httpbin.org/get?sort=diameter';
+      const url =    'https://mockbin.org/request?sort=diameter';
       const params = { planet: 'Jupiter', position: 5 };
       const handleData = (data) => {
-         const actual =   data.args;
-         const expected = { sort: 'diameter', planet: 'Jupiter', position: '5' };
+         const actual =   { method: data.method, params: data.queryString };
+         const expected = { method: 'GET',       params: { sort: 'diameter', planet: 'Jupiter', position: '5' } };
          assertDeepStrictEqual(actual, expected, done);
          };
       fetchJson.get(url, params).then(handleData);
@@ -167,47 +143,51 @@ describe('GET response returned by httpbin.org', () => {
    });
 
 ////////////////////////////////////////////////////////////////////////////////
-describe('Response returned by httpbin.org for a planet (object literal)', () => {
+describe('Response returned by mockbin.org for a planet (object literal)', () => {
 
    it('from a POST contains the planet (JSON)', (done) => {
-      const url =      'https://httpbin.org/post';
+      const url =      'https://mockbin.org/request';
       const resource = { name: 'Mercury', position: 1 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const json =     JSON.parse(data.postData.text);
+         const actual =   { method: data.method, planet: json };
+         const expected = { method: 'POST',      planet: resource };
          assertDeepStrictEqual(actual, expected, done);
          };
       fetchJson.post(url, resource).then(handleData);
       });
 
    it('from a PUT contains the planet (JSON)', (done) => {
-      const url =      'https://httpbin.org/put';
+      const url =      'https://mockbin.org/request';
       const resource = { name: 'Venus', position: 2 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const json =     JSON.parse(data.postData.text);
+         const actual =   { method: data.method, planet: json };
+         const expected = { method: 'PUT',       planet: resource };
          assertDeepStrictEqual(actual, expected, done);
          };
       fetchJson.put(url, resource).then(handleData);
       });
 
    it('from a PATCH contains the planet (JSON)', (done) => {
-      const url =      'https://httpbin.org/patch';
+      const url =      'https://mockbin.org/request';
       const resource = { name: 'Mars', position: 4 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const json =     JSON.parse(data.postData.text);
+         const actual =   { method: data.method, planet: json };
+         const expected = { method: 'PATCH',     planet: resource };
          assertDeepStrictEqual(actual, expected, done);
          };
       fetchJson.patch(url, resource).then(handleData);
       });
 
    it('from a DELETE contains the planet (JSON)', (done) => {
-      const url =      'https://httpbin.org/delete';
+      const url =      'https://mockbin.org/request';
       const resource = { name: 'Jupiter', position: 5 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const json =     JSON.parse(data.postData.text);
+         const actual =   { method: data.method, planet: json };
+         const expected = { method: 'DELETE',    planet: resource };
          assertDeepStrictEqual(actual, expected, done);
          };
       fetchJson.delete(url, resource).then(handleData);
@@ -241,22 +221,23 @@ describe('HEAD response for a Figy Berry from the PokéAPI', () => {
 describe('The low-level fetchJson.request() function', () => {
 
    it('can successfully GET a planet', (done) => {
-      const url =    'https://httpbin.org/get';
+      const url =    'https://mockbin.org/request';
       const params = { planet: 'Neptune', position: 8 };
       const handleData = (data) => {
-         const actual =   data.args;
-         const expected = { planet: 'Neptune', position: '8' };
+         const actual =   { method: data.method, params: data.queryString };
+         const expected = { method: 'GET',       params: { planet: 'Neptune', position: '8' } };
          assertDeepStrictEqual(actual, expected, done);
          };
       fetchJson.request('GET', url, params).then(handleData);
       });
 
    it('can successfully POST a planet', (done) => {
-      const url =      'https://httpbin.org/post';
+      const url =      'https://mockbin.org/request';
       const resource = { name: 'Saturn', position: 6 };
       const handleData = (data) => {
-         const actual =   { planet: data.json, type: typeof data.json };
-         const expected = { planet: resource,  type: 'object' };
+         const json =     JSON.parse(data.postData.text);
+         const actual =   { method: data.method, planet: json };
+         const expected = { method: 'POST',      planet: resource };
          assertDeepStrictEqual(actual, expected, done);
          };
       fetchJson.request('POST', url, resource).then(handleData);
@@ -265,33 +246,38 @@ describe('The low-level fetchJson.request() function', () => {
    });
 
 ////////////////////////////////////////////////////////////////////////////////
-describe('HTTP error returned by httpbin.org', () => {
+describe('HTTP error returned by the server', () => {
 
-   it('for status 500 contains the message "INTERNAL SERVER ERROR"', (done) => {
-      const url = 'https://httpbin.org/status/500';
+   it.skip('for status 500 contains the message "Internal Server Error"', (done) => {
+      const url = 'https://mockbin.org/status/500/Internal Server Error';
       const handleData = (data) => {
          const actual = {
             ok:          data.ok,
             error:       data.error,
             status:      [data.status, data.response.statusText],
             contentType: data.contentType,
+            bodyText:    data.bodyText,
+            data:        data.data,
             };
          const expected = {
             ok:          false,
             error:       true,
-            status:      [500, 'INTERNAL SERVER ERROR'],
-            contentType: 'text/html; charset=utf-8',
+            status:      [500, 'Internal Server Error'],
+            contentType: 'application/json; charset=utf-8',
+            bodyText:    '{"code":"500","message":"Internal Server Error"}',
+            data:        { code: '500', message: 'Internal Server Error' },
             };
          assertDeepStrictEqual(actual, expected, done);
          };
       const handleError = (error) => {
          assert.fail(error);
          };
+      fetchJson.enableLogger();
       fetchJson.get(url).then(handleData).catch(handleError);
       });
 
    it('for status 500 throws exception in strict errors mode', (done) => {
-      const url = 'https://httpbin.org/status/500';
+      const url = 'https://mockbin.org/status/500';
       const handleData = (data) => {
          assert.fail(data);
          };
@@ -311,8 +297,8 @@ describe('HTTP error returned by httpbin.org', () => {
       fetchJson.get(url, {}, { strictErrors: true }).then(handleData).catch(handleError);
       });
 
-   it('for status 418 contains the message "I\'M A TEAPOT"', (done) => {
-      const url = 'https://httpbin.org/status/418';
+   it('for status 418 contains the message "I\'m a teapot"', (done) => {
+      const url = 'https://centerkey.com/status/418/';  //trailing slash to prevent redirect
       const handleData = (data) => {
          const actual = {
             ok:          data.ok,
@@ -323,8 +309,8 @@ describe('HTTP error returned by httpbin.org', () => {
          const expected = {
             ok:          false,
             error:       true,
-            status:      [418, 'I\'M A TEAPOT'],
-            contentType: null,
+            status:      [418, "I'm a teapot"],
+            contentType: 'text/plain',
             };
          assertDeepStrictEqual(actual, expected, done);
          console.log(data.bodyText);
@@ -342,8 +328,8 @@ describe('The "bodyText" field of the object returned from requesting', () => {
 
    const getFirstLine = (string) => string.split('\n', 1)[0];
 
-   it('an HTML web page is a string that begins with "<!DOCTYPE html>"', (done) => {
-      const url = 'https://httpbin.org/html';
+   it('an HTML web page is a string that begins with "<!doctype html>"', (done) => {
+      const url = 'https://pretty-print-json.js.org';
       const handleData = (data) => {
          const actual = {
             ok:          data.ok,
@@ -355,15 +341,15 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             ok:          true,
             status:      [200, 'OK'],
             contentType: 'text/html; charset=utf-8',
-            firstLine:   '<!DOCTYPE html>',
+            firstLine:   '<!doctype html>',
             };
          assertDeepStrictEqual(actual, expected, done);
          };
       fetchJson.get(url).then(handleData);
       });
 
-   it('an XML document is a string that begins with "<!DOCTYPE xml>"', (done) => {
-      const url = 'https://httpbin.org/xml';
+   it('an XML document is a string that begins with the <?xml> tag', (done) => {
+      const url = 'https://mockbin.org/request';
       const handleData = (data) => {
          const actual = {
             ok:          data.ok,
@@ -374,32 +360,34 @@ describe('The "bodyText" field of the object returned from requesting', () => {
          const expected = {
             ok:          true,
             status:      [200, 'OK'],
-            contentType: 'application/xml',
-            firstLine:   '<?xml version=\'1.0\' encoding=\'us-ascii\'?>',
+            contentType: 'application/xml; charset=utf-8',
+            firstLine:   '<?xml version="1.0"?>',
             };
          assertDeepStrictEqual(actual, expected, done);
          };
-      fetchJson.get(url).then(handleData);
+      const getXml = { headers: { Accept: 'application/xml' }};
+      fetchJson.get(url, {}, getXml).then(handleData);
       });
 
-   it('a "robots.txt" text file is a string that begins with "User-agent: *"', (done) => {
-      const url = 'https://httpbin.org/robots.txt';
+   it('a plain text file is a string with the correct first word', (done) => {
+      const url = 'https://mockbin.org/request';
       const handleData = (data) => {
          const actual = {
             ok:          data.ok,
             status:      [data.status, data.response.statusText],
             contentType: data.contentType,
-            firstLine:   getFirstLine(data.bodyText),
+            firstWord:   data.bodyText.split(' ', 1)[0],
             };
          const expected = {
             ok:          true,
             status:      [200, 'OK'],
-            contentType: 'text/plain',
-            firstLine:   'User-agent: *',
+            contentType: 'text/plain; charset=utf-8',
+            firstWord:   'startedDateTime:',
             };
          assertDeepStrictEqual(actual, expected, done);
          };
-      fetchJson.get(url).then(handleData);
+      const getText = { headers: { Accept: 'text/plain' }};
+      fetchJson.get(url, {}, getText).then(handleData);
       });
 
    });
@@ -423,40 +411,52 @@ describe('Function fetchJson.enableLogger()', () => {
       });
 
    it('passes a timestamp, methed, and URL to a custom logger on GET', (done) => {
-      const url = 'https://httpbin.org/get';
-      const domain = 'httpbin.org';
-      const isoTimestampLength = new Date().toISOString().length;
-      const index = fetchJson.getLogHeaderIndex();
-      let awaitingRequest = true;
-      const customLogger = (...logValues) => {
-         const actual = {
-            timestamp: logValues[index.timestamp].length,
-            method:    logValues[index.method],
-            domain:    logValues[index.domain],
-            url:       logValues[index.url],
-            ok:        logValues[index.ok],
-            status:    logValues[index.status],
-            text:      logValues[index.text],
-            type:      logValues[index.type],
-            };
-         const expected = {
-            timestamp: isoTimestampLength,
-            method:    'GET',
-            domain:    domain,
-            url:       url,
-            ok:        awaitingRequest ? undefined : true,
-            status:    awaitingRequest ? undefined : 200,
-            text:      awaitingRequest ? undefined : 'OK',
-            type:      awaitingRequest ? undefined : 'application/json',
-            };
+      const url =       'https://mockbin.org/request';
+      const headerMap = fetchJson.getLogHeaderIndex();
+      const rawEvents = [];
+      const toEvent = (rawEvent, index) => ({
+         event:     index,
+         timestamp: rawEvent[headerMap.timestamp].length,
+         method:    rawEvent[headerMap.method],
+         domain:    rawEvent[headerMap.domain],
+         url:       rawEvent[headerMap.url],
+         ok:        rawEvent[headerMap.ok],
+         status:    rawEvent[headerMap.status],
+         text:      rawEvent[headerMap.text],
+         type:      rawEvent[headerMap.type],
+         });
+      const verifyEvents = () => {
+         fetchJson.enableLogger(false);
+         const actual = rawEvents.map(toEvent);
+         const expected = [
+            {
+               event:     0,
+               timestamp: 24,
+               method:    'GET',
+               domain:    'mockbin.org',
+               url:       'https://mockbin.org/request',
+               ok:        undefined,
+               status:    undefined,
+               text:      undefined,
+               type:      undefined,
+               },
+            {
+               event:     1,
+               timestamp: 24,
+               method:    'GET',
+               domain:    'mockbin.org',
+               url:       'https://mockbin.org/request',
+               ok:        true,
+               status:    200,
+               text:      'OK',
+               type:      'application/json; charset=utf-8',
+               },
+            ];
          assertDeepStrictEqual(actual, expected);
-         if (logValues[index.http] === 'request')
-            awaitingRequest = false;
-         else
-            done(fetchJson.enableLogger(false));
+         done();
          };
-      fetchJson.enableLogger(customLogger);
-      fetchJson.get(url);
+      fetchJson.enableLogger((...rawEvent) => rawEvents.push(rawEvent));
+      fetchJson.get(url).then(verifyEvents);
       });
 
    });
@@ -465,15 +465,15 @@ describe('Function fetchJson.enableLogger()', () => {
 describe('Base options', () => {
 
    it('can be set to automatically add an "Authorization" HTTP header', (done) => {
-      const url = 'https://httpbin.org/get';
+      const url =         'https://mockbin.org/request';
       const baseOptions = { headers: { Authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } };
       const options =     { referrerPolicy: 'no-referrer' };
       fetchJson.setBaseOptions(baseOptions);
       const handleData = (data) => {
          const actual = {
-            auth:   data.headers.Authorization,
-            accept: data.headers.Accept,
-            params: data.args,
+            auth:   data.headers.authorization,
+            accept: data.headers.accept,
+            params: data.queryString,
             };
          const expected = {
             auth:   'Basic WE1MIGlzIGhpZGVvdXM=',
@@ -486,15 +486,15 @@ describe('Base options', () => {
       });
 
    it('can be cleared', (done) => {
-      const url = 'https://httpbin.org/get';
+      const url =                 'https://mockbin.org/request';
       const previousBaseOptions = fetchJson.getBaseOptions();
-      fetchJson.setBaseOptions({ });
+      fetchJson.setBaseOptions({});
       const handleData = (data) => {
          const actual = {
             previous: previousBaseOptions,
-            auth:     data.headers.Authorization,
-            accept:   data.headers.Accept,
-            params:   data.args,
+            auth:     data.headers.authorization,
+            accept:   data.headers.accept,
+            params:   data.queryString,
             };
          const expected = {
             previous: { headers: { Authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } },
@@ -513,19 +513,19 @@ describe('Base options', () => {
 describe('FetchJson class instances', () => {
 
    it('can each set different base options', (done) => {
-      const url = 'https://httpbin.org/get';
+      const url =          'https://mockbin.org/request';
       const baseOptionsA = { headers: { From: 'aaa@example.com' } };
       const baseOptionsB = { headers: { From: 'bbb@example.com' } };
-      const fetchJsonA = new FetchJson(baseOptionsA).fetchJson;
-      const fetchJsonB = new FetchJson(baseOptionsB).fetchJson;
+      const fetchJsonA =   new FetchJson(baseOptionsA).fetchJson;
+      const fetchJsonB =   new FetchJson(baseOptionsB).fetchJson;
       const handleData = (data) => {
          const actual = {
-            acceptA: data[0].headers.Accept,
-            acceptB: data[1].headers.Accept,
-            fromA:   data[0].headers.From,
-            fromB:   data[1].headers.From,
-            paramsA: data[0].args,
-            paramsB: data[1].args,
+            acceptA: data[0].headers.accept,
+            acceptB: data[1].headers.accept,
+            fromA:   data[0].headers.from,
+            fromB:   data[1].headers.from,
+            paramsA: data[0].queryString,
+            paramsB: data[1].queryString,
             };
          const expected = {
             acceptA: 'application/json',

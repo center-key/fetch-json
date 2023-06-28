@@ -85,7 +85,7 @@ Create a resource for the planet Jupiter:
 const resource = { name: 'Jupiter', position: 5 };
 const handleData = (data) =>
    console.log('New planet:', data);  //http response body as an object literal
-fetchJson.post('https://httpbin.org/post', resource)
+fetchJson.post('https://mockbin.org/request', resource)
    .then(handleData)
    .catch(console.error);
 ```
@@ -114,7 +114,7 @@ Create a resource for the planet Jupiter:
 ```javascript
 // Create Jupiter
 const create = async (resource) => {
-   const data = await fetchJson.post('https://httpbin.org/post', resource);
+   const data = await fetchJson.post('https://mockbin.org/request', resource);
    console.log('New planet:', data);  //http response body as an object literal
    };
 create({ name: 'Jupiter', position: 5 });
@@ -140,7 +140,7 @@ const options = {
    };
 const handleData = (data) =>
    console.log(data);  //http response body as an object literal
-fetch('https://httpbin.org/post', options)
+fetch('https://mockbin.org/request', options)
    .then(response => response.json())
    .then(handleData)
    .catch(console.error);
