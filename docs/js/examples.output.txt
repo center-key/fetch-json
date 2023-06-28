@@ -2,62 +2,74 @@
 
 Examples
 ========
-fetch-json v3.0.0
+fetch-json v3.1.1
 
-2022-11-07T09:18:51.837Z request GET api.nasa.gov https://api.nasa.gov/planetary/apod
-2022-11-07T09:18:51.881Z request POST httpbin.org https://httpbin.org/post
-2022-11-07T09:18:51.884Z request GET httpbin.org https://httpbin.org/status/418
-2022-11-07T09:18:51.885Z request GET www.googleapis.com https://www.googleapis.com/books/v1/volumes
-(node:96851) ExperimentalWarning: The Fetch API is an experimental feature. This feature could change at any time
-(Use `node --trace-warnings ...` to show where the warning was created)
-2022-11-07T09:18:52.311Z response GET httpbin.org https://httpbin.org/status/418 false 418 I'M A TEAPOT null
-
-    -=[ teapot ]=-
-
-       _...._
-     .'  _ _ `.
-    | ."` ^ `". _,
-    \_;`"---"`|//
-      |       ;/
-      \_     _/
-        `"""`
-
-2022-11-07T09:18:52.318Z response POST httpbin.org https://httpbin.org/post true 200 OK application/json
+2023-06-28T08:59:53.211Z request GET api.nasa.gov https://api.nasa.gov/planetary/apod
+2023-06-28T08:59:53.255Z request POST mockbin.org https://mockbin.org/request
+2023-06-28T08:59:53.257Z request GET centerkey.com https://centerkey.com/status/418/
+2023-06-28T08:59:53.259Z request GET www.googleapis.com https://www.googleapis.com/books/v1/volumes
+2023-06-28T08:59:53.564Z response POST mockbin.org https://mockbin.org/request true 200 OK application/json; charset=utf-8
+2023-06-28T08:59:53.571Z response GET centerkey.com https://centerkey.com/status/418/ false 418 I'm a teapot text/plain
 New planet: {
-  args: {},
-  data: '{"name":"Jupiter","position":5}',
-  files: {},
-  form: {},
+  startedDateTime: '2023-06-28T08:59:53.533Z',
+  clientIPAddress: '2600:1700:dcd0:b270:95c7:f607:347:a7b1',
+  method: 'POST',
+  url: 'https://mockbin.org/request',
+  httpVersion: 'HTTP/1.1',
+  cookies: {},
   headers: {
-    Accept: 'application/json',
-    'Accept-Encoding': 'br, gzip, deflate',
-    'Accept-Language': '*',
-    'Content-Length': '31',
-    'Content-Type': 'application/json',
-    Host: 'httpbin.org',
-    'Sec-Fetch-Mode': 'cors',
-    'User-Agent': 'undici',
-    'X-Amzn-Trace-Id': 'Root=1-6368cd7c-6524dd044804c77b42daf832'
+    host: 'mockbin.org',
+    connection: 'close',
+    'accept-encoding': 'gzip',
+    'x-forwarded-for': '2600:1700:dcd0:b270:95c7:f607:347:a7b1, 172.71.159.7',
+    'cf-ray': '7de4bc7acd34cff9-SJC',
+    'x-forwarded-proto': 'http',
+    'cf-visitor': '{"scheme":"https"}',
+    accept: 'application/json',
+    'content-type': 'application/json',
+    'accept-language': '*',
+    'sec-fetch-mode': 'cors',
+    'user-agent': 'undici',
+    'cdn-loop': 'cloudflare',
+    'cf-connecting-ip': '2600:1700:dcd0:b270:95c7:f607:347:a7b1',
+    'x-request-id': '604767e3-f78d-47ba-9a24-ad4a7b716208',
+    'x-forwarded-port': '80',
+    via: '1.1 vegur',
+    'connect-time': '0',
+    'x-request-start': '1687942793534',
+    'total-route-time': '0',
+    'content-length': '31'
   },
-  json: { name: 'Jupiter', position: 5 },
-  origin: '107.199.205.61',
-  url: 'https://httpbin.org/post'
+  queryString: {},
+  postData: {
+    mimeType: 'application/json',
+    text: '{"name":"Jupiter","position":5}',
+    params: []
+  },
+  headersSize: 641,
+  bodySize: 31
 }
-2022-11-07T09:18:52.327Z response GET api.nasa.gov https://api.nasa.gov/planetary/apod true 200 OK application/json
-The NASA APoD for today is at: https://player.vimeo.com/video/25808333
-2022-11-07T09:18:52.611Z response GET www.googleapis.com https://www.googleapis.com/books/v1/volumes true 200 OK application/json; charset=UTF-8
+                     ;,'
+             _o_    ;:;'
+         ,-.'---`.__ ;
+        ((j`=====',-'
+         `-\     /
+            `-=-'     hjw
+2023-06-28T08:59:53.987Z response GET www.googleapis.com https://www.googleapis.com/books/v1/volumes true 200 OK application/json; charset=UTF-8
 SpaceX books:
 [
   'SpaceX',
+  'SpaceX',
+  "SpaceX's Dragon: America's Next Generation Spacecraft",
   'Liftoff',
   'Cutting-Edge SpaceX News',
-  "SpaceX's Dragon: America's Next Generation Spacecraft",
-  'Elon Musk',
-  'SpaceX',
-  'Elon Musk',
+  'Space Race 2.0',
   'SpaceX and Tesla Motors Engineer Elon Musk',
-  'Elon Musk And The Birth of SpaceX',
+  'Elon Musk',
+  'Summary and Analysis of Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future',
   'SpaceX from the Ground Up'
 ]
+2023-06-28T08:59:55.818Z response GET api.nasa.gov https://api.nasa.gov/planetary/apod true 200 OK application/json
+The NASA APoD for today is at: https://apod.nasa.gov/apod/image/2306/M24_2023grapod1024.jpg
 
 Done.

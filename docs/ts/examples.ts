@@ -11,7 +11,7 @@
 //    $ node build/docs/ts/examples.js
 
 // Setup
-import { fetchJson, FetchJsonTextResponse, JsonObject } from '../../fetch-json.js';
+import { fetchJson, FetchJsonAltResponse, JsonObject } from '../../fetch-json.js';
 
 // Type Declarations
 export type BookData = { items: Book[] };
@@ -24,7 +24,7 @@ console.log('Examples');
 console.log('========');
 console.log('fetch-json v' + fetchJson.version);
 console.log();
-fetchJson.enableLogger(true);
+fetchJson.enableLogger();
 
 // Examples
 const example = {
@@ -46,7 +46,7 @@ const example = {
       const resource = { name: 'Jupiter', position: 5 };
       const handleData = (data: JsonObject) =>
          console.log('New planet:', data);
-      fetchJson.post('https://httpbin.org/post', resource)
+      fetchJson.post('https://mockbin.org/request', resource)
          .then(handleData)
          .catch(console.error);
 
@@ -55,9 +55,9 @@ const example = {
    teapot(): void {
 
       // Fetch me some tea
-      const handleData = (data: FetchJsonTextResponse) =>
+      const handleData = (data: FetchJsonAltResponse) =>
          console.log(data.bodyText);
-      fetchJson.get('https://httpbin.org/status/418').then(handleData);
+      fetchJson.get('https://centerkey.com/status/418/').then(handleData);
 
       },
 

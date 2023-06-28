@@ -39,7 +39,7 @@ const example = {
       // Create Jupiter
       const resource =   { name: 'Jupiter', position: 5 };
       const handleData = (data) => console.log('New planet:', data);
-      fetchJson.post('https://httpbin.org/post', resource)
+      fetchJson.post('https://mockbin.org/request', resource)
          .then(handleData)
          .catch(console.error);
 
@@ -49,7 +49,7 @@ const example = {
 
       // Fetch me some tea
       const handleData = (data) => console.log(data.bodyText);
-      fetchJson.get('https://httpbin.org/status/418').then(handleData);
+      fetchJson.get('https://centerkey.com/status/418/').then(handleData);
 
       },
 

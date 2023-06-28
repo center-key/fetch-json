@@ -29,7 +29,7 @@ const example = {
       // NASA APoD
       const url =    'https://api.nasa.gov/planetary/apod';
       const params = { api_key: 'DEMO_KEY' };
-      const data = await fetchJson.get(url, params);
+      const data =   await fetchJson.get(url, params);
       console.log('The NASA APoD for today is at:', data.url);
 
       },
@@ -38,7 +38,7 @@ const example = {
 
       // Create Jupiter
       const resource = { name: 'Jupiter', position: 5 };
-      const data = await fetchJson.post('https://httpbin.org/post', resource)
+      const data = await fetchJson.post('https://mockbin.org/request', resource)
          .catch(console.error);
       console.log('New planet:', data);
 
@@ -47,7 +47,7 @@ const example = {
    teapot: async () => {
 
       // Fetch me some tea
-      const data = await fetchJson.get('https://httpbin.org/status/418');
+      const data = await fetchJson.get('https://centerkey.com/status/418/');
       console.log(data.bodyText);
 
       },
@@ -55,8 +55,8 @@ const example = {
    books: async () => {
 
       // Get books about SpaceX
-      const url = 'https://www.googleapis.com/books/v1/volumes?q=spacex';
-      const data = await fetchJson.get(url).catch(console.error);
+      const url =      'https://www.googleapis.com/books/v1/volumes?q=spacex';
+      const data =     await fetchJson.get(url).catch(console.error);
       const getTitle = (book) => book.volumeInfo.title;
       console.log('SpaceX books:');
       console.log(data.items.map(getTitle));

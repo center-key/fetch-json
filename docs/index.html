@@ -21,9 +21,9 @@
    <link rel=icon             href=https://centerkey.com/graphics/bookmark.png>
    <link rel=apple-touch-icon href=logos.png>
    <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4/css/all.min.css>
-   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/dna-engine@2.3/dist/dna-engine.css>
-   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/web-ignition@1.7/dist/reset.min.css>
-   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/web-ignition@1.7/dist/layouts/letterbox.css>
+   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/dna-engine@3.0/dist/dna-engine.css>
+   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/web-ignition@2.0/dist/reset.min.css>
+   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/web-ignition@2.0/dist/layouts/letterbox.css>
    <style>
       html { background-image: url(examples.png); }
       main >section h1 { color: steelblue; }
@@ -41,13 +41,12 @@
       main >section figure code.language-js { color: deeppink; font-size: 1.1rem; }
       main >section figure code.language-js .js-param { color: darkmagenta; }
    </style>
-   <script defer src=https://cdn.jsdelivr.net/npm/jquery@3.6/dist/jquery.min.js></script>
-   <script defer src=https://cdn.jsdelivr.net/npm/dna-engine@2.3/dist/dna-engine.min.js></script>
-   <script defer src=https://cdn.jsdelivr.net/npm/web-ignition@1.7/dist/lib-x.min.js></script>
+   <script defer src=https://cdn.jsdelivr.net/npm/dna-engine@3.0/dist/dna-engine.min.js></script>
+   <script defer src=https://cdn.jsdelivr.net/npm/web-ignition@2.0/dist/lib-x.min.js></script>
    <script defer src=https://cdn.jsdelivr.net/npm/fetch-json@3.1/dist/fetch-json.min.js></script>
    <script data-on-load=setup data-wait-for=fetchJson>
       const setup = () => {
-         $('.version-number').text(fetchJson.version);
+         globalThis.document.querySelector('.version-number').textContent = fetchJson.version;
          fetchJson.enableLogger();
          const style = 'font-family: monospace; font-weight: bold;';
          console.log('fetch-json v' + fetchJson.version);
