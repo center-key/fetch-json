@@ -191,20 +191,25 @@ Where `method` is `'GET'`, `'POST'`, `'PUT'`, `'PATCH'`, or `'DELETE'`, and `dat
 either `params` or `resource`.
 
 ### 2. API &mdash; logging
-Enable basic logging to the console with:
+Turn on basic logging to the console with:
 ```javascript
 fetchJson.enableLogger();
 ```
 To use a custom logger, pass in a function that accepts 9 parameters to log.
-To disable logging, pass in `false`.
 
 To get an array containing the names of the parameters:
 ```javascript
 fetchJson.getLogHeaders();
+// 'Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'
 ```
 The default console output looks like:<br>
 `2018-09-12T07:20:12.372Z – "request" - "GET" – "api.nasa.gov" – "https://api.nasa.gov/planetary/apod"`<br>
 `2018-09-12T07:20:13.009Z – "response" - "GET" – "api.nasa.gov" – "https://api.nasa.gov/planetary/apod" - true - 200 - "OK" - "application/json"`
+
+Turn off logging with:
+```javascript
+fetchJson.enableLogger();
+```
 
 ## G) Response Text Converted to JSON
 The HTTP response body is considered to be JSON if the `Content-Type` is `"application/json"` or

@@ -429,7 +429,7 @@ describe('Function fetchJson.enableLogger()', () => {
       });
 
    it('disables the logger when passed false', () => {
-      fetchJson.enableLogger(false);
+      fetchJson.disableLogger();
       const actual =   { logger: fetchJson.logger, disabled: !fetchJson.logger };
       const expected = { logger: null,             disabled: true };
       assertDeepStrictEqual(actual, expected);
@@ -451,7 +451,7 @@ describe('Function fetchJson.enableLogger()', () => {
          type:      rawEvent[headerMap.type],
          });
       const verifyEvents = () => {
-         fetchJson.enableLogger(false);
+         fetchJson.disableLogger();
          const actual = rawEvents.map(toEvent);
          const expected = [
             {
