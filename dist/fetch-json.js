@@ -1,7 +1,7 @@
-//! fetch-json v3.1.1 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.2.0 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '3.1.1',
+    version: '3.2.0',
     baseOptions: {},
     getBaseOptions() {
         return this.baseOptions;
@@ -45,27 +45,30 @@ const fetchJson = {
             const isHead = httpMethod === 'HEAD';
             const isJson = !!contentType && /json|javascript/.test(contentType);
             const headersObj = () => Object.fromEntries(response.headers.entries());
-            const textToObj = (httpBody) => ({
+            const textToObj = (httpBody, data) => ({
                 ok: response.ok,
                 error: !response.ok,
                 status: response.status,
                 contentType: contentType,
                 bodyText: httpBody,
+                data: data !== null && data !== void 0 ? data : null,
                 response: response,
             });
+            const jsonToObj = (data) => response.ok ? data : textToObj(JSON.stringify(data), data);
             const errToObj = (error) => ({
                 ok: false,
                 error: true,
                 status: 500,
                 contentType: contentType,
                 bodyText: 'Invalid JSON [' + error.toString() + ']',
+                data: null,
                 response: response,
             });
             log('response', response.ok, response.status, response.statusText, contentType);
             if (settings.strictErrors && !response.ok)
                 throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
             return isHead ? response.text().then(headersObj) :
-                isJson ? response.json().catch(errToObj) : response.text().then(textToObj);
+                isJson ? response.json().then(jsonToObj).catch(errToObj) : response.text().then(textToObj);
         };
         log('request');
         const settingsRequestInit = JSON.parse(JSON.stringify(settings));
@@ -93,12 +96,18 @@ const fetchJson = {
     getLogHeaders() {
         return ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'];
     },
+    getLogHeaderIndexMap() {
+        return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
+    },
     getLogHeaderIndex() {
         return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
     },
-    enableLogger(booleanOrFn) {
-        const logger = booleanOrFn === false ? null : console.log;
-        return this.logger = typeof booleanOrFn === 'function' ? booleanOrFn : logger;
+    enableLogger(customLogger) {
+        this.logger = customLogger !== null && customLogger !== void 0 ? customLogger : console.log;
+        return this.logger;
+    },
+    disableLogger() {
+        this.logger = null;
     },
 };
 class FetchJson {
