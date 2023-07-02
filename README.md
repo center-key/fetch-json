@@ -22,7 +22,7 @@ HTTP calls to JSON endpoints.
 1. Serializes the body payload with `JSON.stringify()`
 1. Appends `params` to the URL of `GET` requests
 1. Sets `credentials` to `'same-origin'` (support user sessions in frameworks like Grails, Rails, PHP, Django, Flask, etc.)
-1. Converts the HTTP response to JSON if it's not already JSON (convenient for handling HTTP errors)
+1. Converts the HTTP text response to JSON if it's not already JSON (convenient for handling HTTP errors)
 1. Maps HTTP response headers from a `HEAD` request into a simple object
 
 **fetch-json** is ideal for a [JAMstack](https://jamstack.org) architecture  where "dynamic
@@ -37,7 +37,7 @@ In a web page:
 ```
 or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/fetch-json@3.1/dist/fetch-json.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/fetch-json@3.2/dist/fetch-json.min.js></script>
 ```
 ### 2. Node.js server
 Install package for node:
@@ -211,13 +211,15 @@ Turn off logging with:
 fetchJson.enableLogger();
 ```
 
-## G) Response Text Converted to JSON
+## G) Response Text and Errors Converted to JSON
 The HTTP response body is considered to be JSON if the `Content-Type` is `"application/json"` or
-`"text/javascript"`.&nbsp; If the HTTP response body is not JSON, **fetch-json** passes back
+`"text/javascript"`.&nbsp;
+If the HTTP response body is not JSON, **fetch-json** passes back
 through the promise an object with a `bodyText` string field containing response body text.
 
 In addition to the `bodyText` field, the object will have the fields: `ok`, `status`, `statusText`,
-and `contentType`.
+`contentType`, and `data`.&nbsp;
+If an HTML error response is JSON, the `data` will contain the parsed JSON.
 
 For example, an HTTP response for an error status of 500 would be converted to an object
 similar to:
@@ -228,10 +230,12 @@ similar to:
    statusText:  'INTERNAL SERVER ERROR',
    contentType: 'text/html; charset=utf-8',
    bodyText:    '<!doctype html><html lang=en><body>Server Error</body></html>',
+   data:        null,
 }
 ```
-With **fetch-json**, you know the response body will always be passed back to you as a simple
-object literal.
+Every response that is not JSON or is an HTTP error will be consistently formatted like the object above.&nbsp;
+With **fetch-json** you know the response will always be passed back to you as a consistent,
+simple object literal.
 
 ## H) Base Options
 Use `fetchJson.setBaseOptions()` to configure options to be used on future **fetchJson** requests.
