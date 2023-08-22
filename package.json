@@ -76,20 +76,24 @@
       "clean": [
          "rimraf build dist"
       ],
-      "build": [
+      "lint": [
          "jshint . --exclude-path .gitignore",
-         "eslint --max-warnings 0 . --ext .ts",
+         "eslint --max-warnings 0 . --ext .ts"
+      ],
+      "build": [
          "tsc",
          "tsc --module UMD --outDir build/umd",
          "copy-file build/umd/fetch-json.js build/fetch-json.umd.cjs",
          "esm-to-plain-js --cd=build fetch-json.js fetch-json.dev.js",
-         "uglifyjs build/fetch-json.dev.js --output build/fetch-json.min.js",
+         "uglifyjs build/fetch-json.dev.js --output build/fetch-json.min.js"
+      ],
+      "dist": [
          "add-dist-header build dist",
          "html-validator"
       ]
    },
    "scripts": {
-      "pretest": "run-scripts clean build",
+      "pretest": "run-scripts clean lint build dist",
       "test": "mocha spec/*.spec.js --timeout 5000",
       "examples": "node docs/js/examples.js",
       "dev": "tsc && node docs/js/dev.js",
@@ -97,23 +101,23 @@
    },
    "devDependencies": {
       "@fortawesome/fontawesome-free": "~6.4",
-      "@types/node": "~20.4",
-      "@typescript-eslint/eslint-plugin": "~5.61",
-      "@typescript-eslint/parser": "~5.61",
-      "add-dist-header": "~1.1",
+      "@types/node": "~20.5",
+      "@typescript-eslint/eslint-plugin": "~6.4",
+      "@typescript-eslint/parser": "~6.4",
+      "add-dist-header": "~1.2",
       "assert-deep-strict-equal": "~1.1",
       "copy-file-util": "~1.1",
       "copy-folder-util": "~1.1",
       "dna-engine": "~3.0",
-      "eslint": "~8.44",
+      "eslint": "~8.47",
       "esm-to-plain-js": "~1.1",
       "http-server": "~14.1",
       "jsdom": "~22.1",
       "jshint": "~2.13",
       "mocha": "~10.2",
-      "puppeteer": "~20.8",
+      "puppeteer": "~21.1",
       "puppeteer-browser-ready": "~1.2",
-      "replacer-util": "~1.1",
+      "replacer-util": "~1.2",
       "rimraf": "~5.0",
       "run-scripts-util": "~1.2",
       "typescript": "~5.1",
