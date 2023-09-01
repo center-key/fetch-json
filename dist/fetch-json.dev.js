@@ -1,7 +1,7 @@
-//! fetch-json v3.2.0 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.2.1 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '3.2.0',
+    version: '3.2.1',
     baseOptions: {},
     getBaseOptions() {
         return this.baseOptions;
@@ -16,7 +16,7 @@ const fetchJson = {
             credentials: 'same-origin',
             strictErrors: false,
         };
-        const settings = Object.assign(Object.assign(Object.assign({}, defaults), this.baseOptions), options);
+        const settings = { ...defaults, ...this.baseOptions, ...options };
         if (!settings.method || typeof settings.method !== 'string')
             throw Error('[fetch-json] HTTP method missing or invalid.');
         if (typeof url !== 'string')
@@ -26,7 +26,7 @@ const fetchJson = {
         const jsonHeaders = { Accept: 'application/json' };
         if (!isGetRequest && data)
             jsonHeaders['Content-Type'] = 'application/json';
-        settings.headers = Object.assign(Object.assign({}, jsonHeaders), settings.headers);
+        settings.headers = { ...jsonHeaders, ...settings.headers };
         const paramKeys = isGetRequest && data ? Object.keys(data) : [];
         const getValue = (key) => data ? data[key] : '';
         const toPair = (key) => key + '=' + encodeURIComponent(getValue(key));
@@ -51,7 +51,7 @@ const fetchJson = {
                 status: response.status,
                 contentType: contentType,
                 bodyText: httpBody,
-                data: data !== null && data !== void 0 ? data : null,
+                data: data ?? null,
                 response: response,
             });
             const jsonToObj = (data) => response.ok ? data : textToObj(JSON.stringify(data), data);
@@ -103,7 +103,7 @@ const fetchJson = {
         return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
     },
     enableLogger(customLogger) {
-        this.logger = customLogger !== null && customLogger !== void 0 ? customLogger : console.log;
+        this.logger = customLogger ?? console.log;
         return this.logger;
     },
     disableLogger() {
@@ -112,7 +112,7 @@ const fetchJson = {
 };
 class FetchJson {
     constructor(options) {
-        this.fetchJson = Object.assign({}, fetchJson);
+        this.fetchJson = { ...fetchJson };
         this.fetchJson.setBaseOptions(options || {});
     }
 }
