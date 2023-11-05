@@ -38,7 +38,7 @@ const example = {
 
       // Create Jupiter
       const resource = { name: 'Jupiter', position: 5 };
-      const data = await fetchJson.post('https://mockbin.org/request', resource)
+      const data = await fetchJson.post('https://centerkey.com/rest/', resource)
          .catch(console.error);
       console.log('New planet:', data);
 
@@ -47,7 +47,7 @@ const example = {
    teapot: async () => {
 
       // Fetch me some tea
-      const data = await fetchJson.get('https://centerkey.com/status/418/');
+      const data = await fetchJson.get('https://centerkey.com/rest/status/418/');
       console.log(data.bodyText);
 
       },

@@ -2,74 +2,53 @@
 
 Examples
 ========
-fetch-json v3.1.1
+fetch-json v3.2.1
 
-2023-06-28T08:59:53.211Z request GET api.nasa.gov https://api.nasa.gov/planetary/apod
-2023-06-28T08:59:53.255Z request POST mockbin.org https://mockbin.org/request
-2023-06-28T08:59:53.257Z request GET centerkey.com https://centerkey.com/status/418/
-2023-06-28T08:59:53.259Z request GET www.googleapis.com https://www.googleapis.com/books/v1/volumes
-2023-06-28T08:59:53.564Z response POST mockbin.org https://mockbin.org/request true 200 OK application/json; charset=utf-8
-2023-06-28T08:59:53.571Z response GET centerkey.com https://centerkey.com/status/418/ false 418 I'm a teapot text/plain
-New planet: {
-  startedDateTime: '2023-06-28T08:59:53.533Z',
-  clientIPAddress: '2600:1700:dcd0:b270:95c7:f607:347:a7b1',
-  method: 'POST',
-  url: 'https://mockbin.org/request',
-  httpVersion: 'HTTP/1.1',
-  cookies: {},
-  headers: {
-    host: 'mockbin.org',
-    connection: 'close',
-    'accept-encoding': 'gzip',
-    'x-forwarded-for': '2600:1700:dcd0:b270:95c7:f607:347:a7b1, 172.71.159.7',
-    'cf-ray': '7de4bc7acd34cff9-SJC',
-    'x-forwarded-proto': 'http',
-    'cf-visitor': '{"scheme":"https"}',
-    accept: 'application/json',
-    'content-type': 'application/json',
-    'accept-language': '*',
-    'sec-fetch-mode': 'cors',
-    'user-agent': 'undici',
-    'cdn-loop': 'cloudflare',
-    'cf-connecting-ip': '2600:1700:dcd0:b270:95c7:f607:347:a7b1',
-    'x-request-id': '604767e3-f78d-47ba-9a24-ad4a7b716208',
-    'x-forwarded-port': '80',
-    via: '1.1 vegur',
-    'connect-time': '0',
-    'x-request-start': '1687942793534',
-    'total-route-time': '0',
-    'content-length': '31'
-  },
-  queryString: {},
-  postData: {
-    mimeType: 'application/json',
-    text: '{"name":"Jupiter","position":5}',
-    params: []
-  },
-  headersSize: 641,
-  bodySize: 31
-}
+2023-11-05T09:21:21.442Z request GET api.nasa.gov https://api.nasa.gov/planetary/apod
+2023-11-05T09:21:21.500Z request POST centerkey.com https://centerkey.com/rest/
+2023-11-05T09:21:21.505Z request GET centerkey.com https://centerkey.com/rest/status/418/
+2023-11-05T09:21:21.507Z request GET www.googleapis.com https://www.googleapis.com/books/v1/volumes
+2023-11-05T09:21:21.834Z response GET api.nasa.gov https://api.nasa.gov/planetary/apod true 200 OK application/json
+2023-11-05T09:21:21.843Z response GET centerkey.com https://centerkey.com/rest/status/418/ false 418 I'm a teapot text/plain;charset=UTF-8
+The NASA APoD for today is at: https://apod.nasa.gov/apod/image/2311/CreatureAurora_Salomonsen_960.jpg
                      ;,'
              _o_    ;:;'
          ,-.'---`.__ ;
         ((j`=====',-'
          `-\     /
             `-=-'     hjw
-2023-06-28T08:59:53.987Z response GET www.googleapis.com https://www.googleapis.com/books/v1/volumes true 200 OK application/json; charset=UTF-8
+
+2023-11-05T09:21:21.858Z response POST centerkey.com https://centerkey.com/rest/ true 200 OK application/json
+New planet: {
+  headers: {
+    'Content-Length': '31',
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+    'Accept-Encoding': 'br, gzip, deflate',
+    'Accept-Language': '*',
+    Connection: 'keep-alive',
+    Host: 'centerkey.com',
+    'Sec-Fetch-Mode': 'cors',
+    'User-Agent': 'node'
+  },
+  method: 'POST',
+  query: '',
+  params: {},
+  body: { name: 'Jupiter', position: 5 }
+}
+2023-11-05T09:21:22.096Z response GET www.googleapis.com https://www.googleapis.com/books/v1/volumes true 200 OK application/json; charset=UTF-8
 SpaceX books:
 [
   'SpaceX',
-  'SpaceX',
-  "SpaceX's Dragon: America's Next Generation Spacecraft",
   'Liftoff',
+  "SpaceX's Dragon: America's Next Generation Spacecraft",
   'Cutting-Edge SpaceX News',
+  'SpaceX',
   'Space Race 2.0',
-  'SpaceX and Tesla Motors Engineer Elon Musk',
   'Elon Musk',
   'Summary and Analysis of Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future',
-  'SpaceX from the Ground Up'
+  'SpaceX and Tesla Motors Engineer Elon Musk',
+  'Elon Musk'
 ]
-2023-06-28T08:59:55.818Z response GET api.nasa.gov https://api.nasa.gov/planetary/apod true 200 OK application/json
-The NASA APoD for today is at: https://apod.nasa.gov/apod/image/2306/M24_2023grapod1024.jpg
 
 Done.

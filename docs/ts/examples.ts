@@ -46,7 +46,7 @@ const example = {
       const resource = { name: 'Jupiter', position: 5 };
       const handleData = (data: JsonObject) =>
          console.log('New planet:', data);
-      fetchJson.post('https://mockbin.org/request', resource)
+      fetchJson.post('https://centerkey.com/rest/', resource)
          .then(handleData)
          .catch(console.error);
 
@@ -57,7 +57,7 @@ const example = {
       // Fetch me some tea
       const handleData = (data: FetchJsonAltResponse) =>
          console.log(data.bodyText);
-      fetchJson.get('https://centerkey.com/status/418/').then(handleData);
+      fetchJson.get('https://centerkey.com/rest/status/418/').then(handleData);
 
       },
 
