@@ -14,7 +14,6 @@ describe('The "dist" folder', () => {
          'fetch-json.dev.js',
          'fetch-json.js',
          'fetch-json.min.js',
-         'fetch-json.umd.cjs',
          ];
       assertDeepStrictEqual(actual, expected);
       });

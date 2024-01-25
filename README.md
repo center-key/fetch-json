@@ -279,15 +279,6 @@ If you're using an older version of **node,** stick with **fetch-json v2.7** and
 $ npm install node-fetch
 ```
 
-### 3. Legacy web browsers
-To support really old browsers, include polyfills for
-[Promise](https://github.com/taylorhakes/promise-polyfill/) and
-[Fetch API](https://github.com/github/fetch):
-```html
-<script src=https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/whatwg-fetch@3/dist/fetch.umd.min.js></script>
-```
-
 ## K) Build Environment
 Check out the `runScriptsConfig` section in [package.json](package.json) for an
 interesting approach to organizing build tasks.
@@ -299,7 +290,7 @@ interesting approach to organizing build tasks.
    - 🪺 [recursive-exec](https://github.com/center-key/recursive-exec):&nbsp; _Run a command on each file in a folder and its subfolders_
    - 🔍 [replacer-util](https://github.com/center-key/replacer-util):&nbsp; _Find and replace strings or template outputs in text files_
    - 🔢 [rev-web-assets](https://github.com/center-key/rev-web-assets):&nbsp; _Revision web asset filenames with cache busting content hash fingerprints_
-   - 🚆 [run-scripts-util](https://github.com/center-key/run-scripts-util):&nbsp; _Organize npm scripts into named groups of easy to manage commands_
+   - 🚆 [run-scripts-util](https://github.com/center-key/run-scripts-util):&nbsp; _Organize npm package.json scripts into named groups of easy to manage commands_
    - 🚦 [w3c-html-validator](https://github.com/center-key/w3c-html-validator):&nbsp; _Check the markup validity of HTML files using the W3C validator_
 
 <br>
