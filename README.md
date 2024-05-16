@@ -7,7 +7,7 @@ _A wrapper around Fetch just for JSON_
 [![License:MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/center-key/fetch-json/blob/main/LICENSE.txt)
 [![npm](https://img.shields.io/npm/v/fetch-json.svg)](https://www.npmjs.com/package/fetch-json)
 [![Size](https://badgen.net/bundlephobia/minzip/fetch-json)](https://bundlephobia.com/package/fetch-json)
-[![Build](https://github.com/center-key/fetch-json/workflows/build/badge.svg)](https://github.com/center-key/fetch-json/actions/workflows/run-spec-on-push.yaml)
+[![Build](https://github.com/center-key/fetch-json/actions/workflows/run-spec-on-push.yaml/badge.svg)](https://github.com/center-key/fetch-json/actions/workflows/run-spec-on-push.yaml)
 
 Why would you fetch anything but json? ;)
 
