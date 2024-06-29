@@ -1,7 +1,7 @@
-//! fetch-json v3.3.0 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.3.1 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '3.3.0',
+    version: '3.3.1',
     baseOptions: {},
     getBaseOptions() {
         return this.baseOptions;
@@ -97,9 +97,6 @@ const fetchJson = {
         return ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'];
     },
     getLogHeaderIndexMap() {
-        return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
-    },
-    getLogHeaderIndex() {
         return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
     },
     enableLogger(customLogger) {

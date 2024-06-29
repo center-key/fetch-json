@@ -9,7 +9,6 @@ export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
 export type FetchJsonMethod =  string;
 export type FetchJsonParams =  { [field: string]: string | number | boolean | null | undefined };
 export type FetchJsonParsedResponse = Json | any;
-export type FetchJsonTextResponse = FetchJsonAltResponse;  //deprecated
 export type FetchJsonAltResponse = {  //used when the HTTP response is an error or unexpectedly not JSON
    ok:          boolean,        //code for HTTP status in the range 200-299
    error:       boolean,        //code for HTTP status not in the range 200-299 or exception thrown
@@ -131,10 +130,6 @@ const fetchJson = {
       return ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'];
       },
    getLogHeaderIndexMap(): { [header: string]: number } {
-      return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
-      },
-   getLogHeaderIndex(): { [header: string]: number } {  //DEPRECATED
-      // console.log('[fetch-json] getLogHeaderIndex() is deprecated -- use getLogHeaderIndexMap() instead');
       return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
       },
    enableLogger(customLogger?: FetchJsonLogger): FetchJsonLogger {
