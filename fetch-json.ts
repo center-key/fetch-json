@@ -8,7 +8,7 @@ export type FetchJsonInit =    { strictErrors: boolean };
 export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
 export type FetchJsonMethod =  string;
 export type FetchJsonParams =  { [field: string]: string | number | boolean | null | undefined };
-export type FetchJsonParsedResponse = Json | any;
+//export type FetchJsonParsedResponse = Json | any;
 export type FetchJsonAltResponse = {  //used when the HTTP response is an error or unexpectedly not JSON
    ok:          boolean,        //code for HTTP status in the range 200-299
    error:       boolean,        //code for HTTP status not in the range 200-299 or exception thrown
@@ -18,7 +18,7 @@ export type FetchJsonAltResponse = {  //used when the HTTP response is an error 
    data:        Json | null,    //body of the HTTP responce if the content is JSON
    response:    Response,       //response object
    };
-export type FetchJsonResponse = FetchJsonParsedResponse | FetchJsonAltResponse;
+//export type FetchJsonResponse = FetchJsonParsedResponse | FetchJsonAltResponse;
 export type FetchJsonLogger = (
    dateIso:      string,                  //timestamp, such as '2022-12-06T07:24:40.330Z'
    type?:        'response' | 'request',  //message direction
@@ -41,8 +41,8 @@ const fetchJson = {
       this.baseOptions = options;
       return this.baseOptions;
       },
-   request<T>(method: FetchJsonMethod, url: string, data?: FetchJsonParams | Json | T,
-         options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   request(method: FetchJsonMethod, url: string, data?: unknown,
+         options?: FetchJsonOptions): Promise<any> {
       const defaults: FetchJsonOptions = {
          method:       method,
          credentials:  'same-origin',
@@ -50,9 +50,9 @@ const fetchJson = {
          };
       const settings = { ...defaults, ...this.baseOptions, ...options };
       if (!settings.method || typeof settings.method !== 'string')
-         throw Error('[fetch-json] HTTP method missing or invalid.');
+         throw new Error('[fetch-json] HTTP method missing or invalid.');
       if (typeof url !== 'string')
-         throw Error('[fetch-json] URL must be a string.');
+         throw new Error('[fetch-json] URL must be a string.');
       const httpMethod =   settings.method.trim().toUpperCase();
       const isGetRequest = httpMethod === 'GET';
       const jsonHeaders: HeadersInit = { Accept: 'application/json' };
@@ -65,13 +65,13 @@ const fetchJson = {
       const params =     () => paramKeys.map(toPair).join('&');
       const requestUrl = !paramKeys.length ? url : url + (url.includes('?') ? '&' : '?') + params();
       settings.body =    !isGetRequest && data ? JSON.stringify(data) : null;
-      const log = (type: 'response' | 'request', ...items: any[]) => {
+      const log = (type: 'response' | 'request', ...items: (string | number | boolean | null)[]) => {
          const logUrl = url.replace(/[?].*/, '');  //security: prevent logging url parameters
          const domain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');  //extract hostname
          if (this.logger)
-            this.logger(new Date().toISOString(), type, httpMethod, domain, logUrl, ...items);
+            this.logger(new Date().toISOString(), type, httpMethod, domain, logUrl, ...<boolean[]>items);
          };
-      const toJson = (value: unknown): Promise<FetchJsonResponse> => {
+      const toJson = (value: unknown): Promise<any> => {
          const response =    <Response>value;
          const contentType = response.headers.get('content-type');
          const isHead =      httpMethod === 'HEAD';
@@ -86,7 +86,7 @@ const fetchJson = {
             data:        data ?? null,
             response:    response,
             });
-         const jsonToObj = (data: Json): FetchJsonResponse =>
+         const jsonToObj = (data: Json): any =>
             response.ok ? data : textToObj(JSON.stringify(data), data);
          const errToObj = (error: Error): FetchJsonAltResponse => ({
             ok:          false,
@@ -99,30 +99,30 @@ const fetchJson = {
             });
          log('response', response.ok, response.status, response.statusText, contentType);
          if (settings.strictErrors && !response.ok)
-            throw Error('[fetch-json] HTTP response status ("strictErrors" mode enabled): ' + response.status);
+            throw new Error(`[fetch-json] HTTP response status ("strictErrors" mode enabled): ${response.status}`);
          return isHead ? response.text().then(headersObj) :
             isJson ? response.json().then(jsonToObj).catch(errToObj) : response.text().then(textToObj);
          };
       log('request');
-      const settingsRequestInit = JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
+      const settingsRequestInit = <RequestInit>JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
       return fetch(requestUrl, settingsRequestInit).then(toJson);
       },
-   get(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   get(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<any> {
       return this.request('GET', url, params, options);
       },
-   post<T>(url: string, resource?: Json | T, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   post(url: string, resource?: unknown, options?: FetchJsonOptions): Promise<any> {
       return this.request('POST', url, resource, options);
       },
-   put<T>(url: string, resource?: Json | T, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   put(url: string, resource?: unknown, options?: FetchJsonOptions): Promise<any> {
       return this.request('PUT', url, resource, options);
       },
-   patch<T>(url: string, resource?: Json | T, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   patch(url: string, resource?: unknown, options?: FetchJsonOptions): Promise<any> {
       return this.request('PATCH', url, resource, options);
       },
-   delete<T>(url: string, resource?: Json | T, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   delete(url: string, resource?: unknown, options?: FetchJsonOptions): Promise<any> {
       return this.request('DELETE', url, resource, options);
       },
-   head(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<FetchJsonResponse> {
+   head(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<any> {
       return this.request('HEAD', url, params, options);
       },
    logger: <FetchJsonLogger | null>null,
