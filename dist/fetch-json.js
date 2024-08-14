@@ -1,7 +1,7 @@
-//! fetch-json v3.3.2 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.3.3 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '3.3.2',
+    version: '3.3.3',
     baseOptions: {},
     getBaseOptions() {
         return this.baseOptions;

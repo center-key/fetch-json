@@ -1,7 +1,7 @@
 {
    "name": "fetch-json",
    "description": "A wrapper around Fetch just for JSON",
-   "version": "3.3.2",
+   "version": "3.3.3",
    "license": "MIT",
    "type": "module",
    "module": "dist/fetch-json.js",
@@ -93,7 +93,7 @@
       "rimraf": "~6.0",
       "run-scripts-util": "~1.3",
       "typescript": "~5.5",
-      "typescript-eslint": "~8.0",
+      "typescript-eslint": "~8.1",
       "uglify-js": "~3.19",
       "w3c-html-validator": "~1.8",
       "web-ignition": "~2.2",
