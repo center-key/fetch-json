@@ -8,7 +8,6 @@ export type FetchJsonInit =    { strictErrors: boolean };
 export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
 export type FetchJsonMethod =  string;
 export type FetchJsonParams =  { [field: string]: string | number | boolean | null | undefined };
-//export type FetchJsonParsedResponse = Json | any;
 export type FetchJsonAltResponse = {  //used when the HTTP response is an error or unexpectedly not JSON
    ok:          boolean,        //code for HTTP status in the range 200-299
    error:       boolean,        //code for HTTP status not in the range 200-299 or exception thrown
@@ -18,7 +17,7 @@ export type FetchJsonAltResponse = {  //used when the HTTP response is an error 
    data:        Json | null,    //body of the HTTP responce if the content is JSON
    response:    Response,       //response object
    };
-//export type FetchJsonResponse = FetchJsonParsedResponse | FetchJsonAltResponse;
+export type FetchJsonResponse = Json | FetchJsonAltResponse;
 export type FetchJsonLogger = (
    dateIso:      string,                  //timestamp, such as '2022-12-06T07:24:40.330Z'
    type?:        'response' | 'request',  //message direction
