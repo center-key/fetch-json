@@ -1,7 +1,7 @@
 {
    "name": "fetch-json",
    "description": "A wrapper around Fetch just for JSON",
-   "version": "3.3.3",
+   "version": "3.3.4",
    "license": "MIT",
    "type": "module",
    "module": "dist/fetch-json.js",
@@ -74,7 +74,7 @@
    "devDependencies": {
       "@eslint/js": "~9.11",
       "@fortawesome/fontawesome-free": "~6.6",
-      "@types/node": "~22.5",
+      "@types/node": "~22.7",
       "add-dist-header": "~1.4",
       "assert-deep-strict-equal": "~1.2",
       "copy-file-util": "~1.2",
@@ -92,7 +92,7 @@
       "rimraf": "~6.0",
       "run-scripts-util": "~1.3",
       "typescript": "~5.6",
-      "typescript-eslint": "~8.6",
+      "typescript-eslint": "~8.7",
       "uglify-js": "~3.19",
       "w3c-html-validator": "~1.8",
       "web-ignition": "~2.2",
