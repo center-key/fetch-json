@@ -1,6 +1,6 @@
 // fetch-json ~ MIT License
 
-/* eslint-disable  @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type Json =             string | number | boolean | null | undefined | JsonObject | Json[];
 export type JsonObject =       { [key: string]: Json };
 export type JsonData =         JsonObject | Json[];
@@ -57,7 +57,7 @@ const fetchJson = {
       const jsonHeaders: HeadersInit = { Accept: 'application/json' };
       if (!isGetRequest && data)
          jsonHeaders['Content-Type'] = 'application/json';
-      settings.headers = { ...jsonHeaders, ...settings.headers };
+      settings.headers = { ...jsonHeaders, ...settings.headers };  //eslint-disable-line @typescript-eslint/no-misused-spread
       const paramKeys =  isGetRequest && data ? Object.keys(data) : <string[]>[];
       const getValue =   (key: string) => data ? data[<keyof typeof data>key] : '';
       const toPair =     (key: string) => key + '=' + encodeURIComponent(getValue(key));  //build query string field-value
