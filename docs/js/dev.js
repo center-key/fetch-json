@@ -9,7 +9,7 @@
 //    $ npm install
 //    $ npm run dev
 
-import { fetchJson } from '../../build/fetch-json.js';  //create build version with "tsc" command
+import { fetchJson } from '../../build/src/fetch-json.js';  //create build version with "tsc" command
 
 console.log();
 console.log('One');

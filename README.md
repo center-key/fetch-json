@@ -255,7 +255,7 @@ fetchJsonB.delete('https://dna-engine.org/api/books/3/');           //from bbb@e
 ```
 
 ## I) TypeScript Declarations
-See the TypeScript declarations at the top of the [fetch-json.ts](fetch-json.ts) file.
+See the TypeScript declarations at the top of the [fetch-json.ts](src/fetch-json.ts) file.
 
 The declarations provide type information about the API.  For example, the `fetchJson.post()`
 function returns a **Promise** for a `FetchResponse`:
