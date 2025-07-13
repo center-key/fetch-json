@@ -65,7 +65,7 @@ Fetch the NASA Astronomy Picture of the Day:
 const url =    'https://api.nasa.gov/planetary/apod';
 const params = { api_key: 'DEMO_KEY' };
 const handleData = (data) =>
-   console.log('The NASA APoD for today is at:', data.url);
+   console.info('The NASA APoD for today is at:', data.url);
 fetchJson.get(url, params).then(handleData);
 ```
 Example output:
@@ -79,7 +79,7 @@ Create a resource for the planet Jupiter:
 // Create Jupiter
 const resource = { name: 'Jupiter', position: 5 };
 const handleData = (data) =>
-   console.log('New planet:', data);  //http response body as an object literal
+   console.info('New planet:', data);  //http response body as an object literal
 fetchJson.post('https://centerkey.com/rest/', resource)
    .then(handleData)
    .catch(console.error);
@@ -100,7 +100,7 @@ const show = async () => {
    const url =    'https://api.nasa.gov/planetary/apod';
    const params = { api_key: 'DEMO_KEY' };
    const data =   await fetchJson.get(url, params);
-   console.log('The NASA APoD for today is at: ' + data.url);
+   console.info('The NASA APoD for today is at: ' + data.url);
    };
 show();
 ```
@@ -110,7 +110,7 @@ Create a resource for the planet Jupiter:
 // Create Jupiter
 const create = async (resource) => {
    const data = await fetchJson.post('https://centerkey.com/rest/', resource);
-   console.log('New planet:', data);  //http response body as an object literal
+   console.info('New planet:', data);  //http response body as an object literal
    };
 create({ name: 'Jupiter', position: 5 });
 ```
@@ -134,7 +134,7 @@ const options = {
    body: JSON.stringify(resource),
    };
 const handleData = (data) =>
-   console.log(data);  //http response body as an object literal
+   console.info(data);  //http response body as an object literal
 fetch('https://centerkey.com/rest/', options)
    .then(response => response.json())
    .then(handleData)

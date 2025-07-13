@@ -338,7 +338,7 @@ describe('HTTP error returned by the server', () => {
    it('for status 418 contains the message "I\'m a teapot"', (done) => {
       const url = 'https://centerkey.com/rest/status/418/';  //trailing slash to prevent redirect
       const handleData = (actual) => {
-         console.log(actual.bodyText);
+         console.info(actual.bodyText);
          delete actual.bodyText;
          delete actual.response;
          const expected = {
