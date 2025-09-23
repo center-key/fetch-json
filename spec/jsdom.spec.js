@@ -16,7 +16,7 @@ const logMessage = (error) => '      Verified message -- ' + error.message;
 const virtualConsole = new VirtualConsole();
 virtualConsole.on('jsdomError', (error) =>
    console.info(expectedErrors.includes(error.message) ? logMessage(error) : error.stack));
-virtualConsole.sendTo(console, { omitJSDOMErrors: true });
+virtualConsole.forwardTo(console);
 
 // Setup
 const mode =       { type: 'Minified', file: 'dist/fetch-json.min.js' };
