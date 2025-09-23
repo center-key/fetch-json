@@ -11,9 +11,9 @@
 
 import { fetchJson } from '../../build/src/fetch-json.js';  //create build version with "tsc" command
 
-console.log();
-console.log('One');
-console.log('===');
+console.info();
+console.info('One');
+console.info('===');
 fetchJson.enableLogger();
 
 const url = 'https://official-joke-api.appspot.com/random_joke';

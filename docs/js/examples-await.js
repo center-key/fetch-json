@@ -15,11 +15,11 @@ import { fetchJson } from '../../dist/fetch-json.js';
 fetchJson.enableLogger();
 
 // Intro
-console.log();
-console.log('Examples');
-console.log('========');
-console.log('fetch-json v' + fetchJson.version);
-console.log();
+console.info();
+console.info('Examples');
+console.info('========');
+console.info('fetch-json v' + fetchJson.version);
+console.info();
 
 // Examples
 const example = {
@@ -30,7 +30,7 @@ const example = {
       const url =    'https://api.nasa.gov/planetary/apod';
       const params = { api_key: 'DEMO_KEY' };
       const data =   await fetchJson.get(url, params);
-      console.log('The NASA APoD for today is at:', data.url);
+      console.info('The NASA APoD for today is at:', data.url);
 
       },
 
@@ -40,7 +40,7 @@ const example = {
       const resource = { name: 'Jupiter', position: 5 };
       const data = await fetchJson.post('https://centerkey.com/rest/', resource)
          .catch(console.error);
-      console.log('New planet:', data);
+      console.info('New planet:', data);
 
       },
 
@@ -48,7 +48,7 @@ const example = {
 
       // Fetch me some tea
       const data = await fetchJson.get('https://centerkey.com/rest/status/418/');
-      console.log(data.bodyText);
+      console.info(data.bodyText);
 
       },
 
@@ -58,8 +58,8 @@ const example = {
       const url =      'https://www.googleapis.com/books/v1/volumes?q=spacex';
       const data =     await fetchJson.get(url).catch(console.error);
       const getTitle = (book) => book.volumeInfo.title;
-      console.log('SpaceX books:');
-      console.log(data.items.map(getTitle));
+      console.info('SpaceX books:');
+      console.info(data.items.map(getTitle));
 
       },
 
@@ -72,5 +72,5 @@ example.teapot();
 example.books();
 
 // Wait for HTTP requests to complete
-const done = () => console.log('\nDone.');
+const done = () => console.info('\nDone.');
 setTimeout(done, 3000);

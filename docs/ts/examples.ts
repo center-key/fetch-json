@@ -19,11 +19,11 @@ export type Book =     { volumeInfo: { title: string } };
 export type NasaApod = { url: string };
 
 // Intro
-console.log();
-console.log('Examples');
-console.log('========');
-console.log('fetch-json v' + fetchJson.version);
-console.log();
+console.info();
+console.info('Examples');
+console.info('========');
+console.info('fetch-json v' + fetchJson.version);
+console.info();
 fetchJson.enableLogger();
 
 // Examples
@@ -35,7 +35,7 @@ const example = {
       const url =    'https://api.nasa.gov/planetary/apod';
       const params = { api_key: 'DEMO_KEY' };
       const handleData = (data: NasaApod) =>
-         console.log('The NASA APoD for today is at:', (data).url);
+         console.info('The NASA APoD for today is at:', (data).url);
       fetchJson.get(url, params).then(handleData);
 
       },
@@ -45,7 +45,7 @@ const example = {
       // Create Jupiter
       const resource = { name: 'Jupiter', position: 5 };
       const handleData = (data: JsonObject) =>
-         console.log('New planet:', data);
+         console.info('New planet:', data);
       fetchJson.post('https://centerkey.com/rest/', resource)
          .then(handleData)
          .catch(console.error);
@@ -56,7 +56,7 @@ const example = {
 
       // Fetch me some tea
       const handleData = (data: FetchJsonAltResponse) =>
-         console.log(data.bodyText);
+         console.info(data.bodyText);
       fetchJson.get('https://centerkey.com/rest/status/418/').then(handleData);
 
       },
@@ -66,8 +66,8 @@ const example = {
       // Get books about SpaceX
       const handleData = (data: BookData) => {
          const getTitle = (book: Book) => book.volumeInfo.title;
-         console.log('SpaceX books:');
-         console.log(data.items.map(getTitle));
+         console.info('SpaceX books:');
+         console.info(data.items.map(getTitle));
          };
       const url = 'https://www.googleapis.com/books/v1/volumes?q=spacex';
       fetchJson.get(url).then(handleData).catch(console.error);
@@ -83,7 +83,7 @@ example.teapot();
 example.books();
 
 // Wait for HTTP requests to complete
-const done = () => console.log('\nDone.');
+const done = () => console.info('\nDone.');
 setTimeout(done, 3000);
 
 export { example };
