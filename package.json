@@ -60,39 +60,39 @@
          "uglifyjs build/src/fetch-json.dev.js --output build/src/fetch-json.min.js"
       ],
       "dist": [
-         "add-dist-header build/src dist",
-         "html-validator spec docs"
+         "add-dist-header build/src dist"
       ]
    },
    "scripts": {
       "pretest": "run-scripts clean lint build dist",
       "test": "mocha spec --timeout 7000",
+      "posttest": "html-validator spec docs",
       "examples": "node docs/js/examples.js",
       "dev": "tsc && node docs/js/dev.js",
       "interactive": "http-server -o spec/fixtures/"
    },
    "devDependencies": {
-      "@eslint/js": "~9.36",
-      "@fortawesome/fontawesome-free": "~7.0",
-      "@types/node": "~24.5",
+      "@eslint/js": "~9.38",
+      "@fortawesome/fontawesome-free": "~7.1",
+      "@types/node": "~24.9",
       "add-dist-header": "~1.5",
       "assert-deep-strict-equal": "~1.2",
       "copy-file-util": "~1.3",
       "copy-folder-util": "~1.1",
       "dna-engine": "~3.3",
-      "eslint": "~9.36",
+      "eslint": "~9.38",
       "esm-to-plain-js": "~1.1",
       "http-server": "~14.1",
       "jsdom": "~27.0",
       "jshint": "~2.13",
       "mocha": "~11.7",
-      "puppeteer": "~24.22",
+      "puppeteer": "~24.26",
       "puppeteer-browser-ready": "~1.3",
       "replacer-util": "~1.4",
       "rimraf": "~6.0",
       "run-scripts-util": "~1.3",
       "typescript": "~5.9",
-      "typescript-eslint": "~8.44",
+      "typescript-eslint": "~8.46",
       "uglify-js": "~3.19",
       "w3c-html-validator": "~1.9",
       "web-ignition": "~2.4",
