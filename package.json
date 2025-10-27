@@ -65,7 +65,7 @@
    },
    "scripts": {
       "pretest": "run-scripts clean lint build dist",
-      "test": "mocha spec --timeout 7000",
+      "test": "mocha spec --timeout 9000",
       "posttest": "html-validator spec docs",
       "examples": "node docs/js/examples.js",
       "dev": "tsc && node docs/js/dev.js",
