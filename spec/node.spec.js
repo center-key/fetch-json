@@ -66,15 +66,16 @@ describe('Google Books API search result for "spacex" fetched by fetchJson.get()
    });
 
 ////////////////////////////////////////////////////////////////////////////////
-describe('Star Wars API result for spaceships fetched by fetchJson.get()', () => {
+describe('Nobel Prize API result for laureate #26 fetched by fetchJson.get()', () => {
 
-   it('contains an array of spaceships', (done) => {
+   it('is Albert Einstein', (done) => {
 
-      const url =    'https://swapi.py4e.com/api/starships/';
-      const params = { format: 'json' };
+      const url =    'https://api.nobelprize.org/2.0/laureates';
+      const params = { ID: 26 };
       const handleData = (data) => {
-         const actual =   { count: typeof data.count, class: typeof data.results[0].starship_class };
-         const expected = { count: 'number',          class: 'string' };
+         const laureate = data.laureates[0];
+         const actual =   { id: laureate.id, name: laureate.fullName.en, birth: laureate.birth.date };
+         const expected = { id: '26',        name: 'Albert Einstein',    birth: '1879-03-14' };
          assertDeepStrictEqual(actual, expected, done);
          };
       fetchJson.get(url, params).then(handleData);
