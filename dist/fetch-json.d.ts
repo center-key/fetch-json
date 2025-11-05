@@ -1,4 +1,4 @@
-//! fetch-json v3.3.6 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.3.7 ~~ https://fetch-json.js.org ~~ MIT License
 
 export type Json = string | number | boolean | null | undefined | JsonObject | Json[];
 export type JsonObject = {
@@ -27,6 +27,7 @@ export type FetchJsonLogger = (dateIso: string, type?: 'response' | 'request', m
 declare const fetchJson: {
     version: string;
     baseOptions: FetchJsonOptions;
+    assert(ok: unknown, message: string | null): void;
     getBaseOptions(): FetchJsonOptions;
     setBaseOptions(options: FetchJsonOptions): FetchJsonOptions;
     request(method: FetchJsonMethod, url: string, data?: unknown, options?: FetchJsonOptions): Promise<any>;

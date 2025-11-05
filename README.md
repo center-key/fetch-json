@@ -255,13 +255,15 @@ fetchJson.post(url: string, resource?: RequestData,
    options?: FetchOptions): Promise<FetchResponse>
 ```
 
-## J) Fetch polyfills
-### 1. Add Fetch to JSDOM
-JSDOM does not include `fetch`, so you need to add a polyfill.
+## J) Add Fetch to JSDOM
+JSDOM does not include `fetch` by default, so you need to add a polyfill.
 ```shell
 $ npm install --save-dev whatwg-fetch
 ```
-See usage of `whatwg-fetch` in [spec/jsdom.spec.js](spec/jsdom.spec.js).
+Tell JSDOM to load and run the polyfill file:<br>
+`node_modules/whatwg-fetch/dist/fetch.umd.js`
+
+For a full example, see the usage of `whatwg-fetch` in [spec/jsdom.spec.js](spec/jsdom.spec.js).
 
 ### 2. Legacy Node.js
 Native support for **Fetch API** was introduced in **node v18** which became the Active LTS version on 2022-10-25.&nbsp;
