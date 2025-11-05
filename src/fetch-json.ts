@@ -31,15 +31,25 @@ export type FetchJsonLogger = (
    ) => void;
 
 const fetchJson = {
+
    version:     '{{package.version}}',
+
    baseOptions: <FetchJsonOptions>{},
+
+   assert(ok: unknown, message: string | null) {
+      if (!ok)
+         throw new Error(`[fetch-json] ${message}`);
+      },
+
    getBaseOptions(): FetchJsonOptions {
       return this.baseOptions;
       },
+
    setBaseOptions(options: FetchJsonOptions): FetchJsonOptions {
       this.baseOptions = options;
       return this.baseOptions;
       },
+
    request(method: FetchJsonMethod, url: string, data?: unknown,
          options?: FetchJsonOptions): Promise<any> {
       const defaults: FetchJsonOptions = {
@@ -48,11 +58,10 @@ const fetchJson = {
          strictErrors: false,
          };
       const settings = { ...defaults, ...this.baseOptions, ...options };
-      if (!settings.method || typeof settings.method !== 'string')
-         throw new Error('[fetch-json] HTTP method missing or invalid.');
-      if (typeof url !== 'string')
-         throw new Error('[fetch-json] URL must be a string.');
-      const httpMethod =   settings.method.trim().toUpperCase();
+      const badMethod = !settings.method || typeof settings.method !== 'string';
+      fetchJson.assert(!badMethod, 'HTTP method missing or invalid.');
+      fetchJson.assert(typeof url === 'string', 'URL must be a string.');
+      const httpMethod =   settings.method!.trim().toUpperCase();
       const isGetRequest = httpMethod === 'GET';
       const jsonHeaders: HeadersInit = { Accept: 'application/json' };
       if (!isGetRequest && data)
@@ -97,8 +106,8 @@ const fetchJson = {
             response:    response,
             });
          log('response', response.ok, response.status, response.statusText, contentType);
-         if (settings.strictErrors && !response.ok)
-            throw new Error(`[fetch-json] HTTP response status ("strictErrors" mode enabled): ${response.status}`);
+         const badStatus = settings.strictErrors && !response.ok;
+         fetchJson.assert(!badStatus, `HTTP response status: ${response.status}`);
          return isHead ? response.text().then(headersObj) :
             isJson ? response.json().then(jsonToObj).catch(errToObj) : response.text().then(textToObj);
          };
@@ -106,38 +115,50 @@ const fetchJson = {
       const settingsRequestInit = <RequestInit>JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
       return fetch(requestUrl, settingsRequestInit).then(toJson);
       },
+
    get(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<any> {
       return this.request('GET', url, params, options);
       },
+
    post(url: string, resource?: unknown, options?: FetchJsonOptions): Promise<any> {
       return this.request('POST', url, resource, options);
       },
+
    put(url: string, resource?: unknown, options?: FetchJsonOptions): Promise<any> {
       return this.request('PUT', url, resource, options);
       },
+
    patch(url: string, resource?: unknown, options?: FetchJsonOptions): Promise<any> {
       return this.request('PATCH', url, resource, options);
       },
+
    delete(url: string, resource?: unknown, options?: FetchJsonOptions): Promise<any> {
       return this.request('DELETE', url, resource, options);
       },
+
    head(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<any> {
       return this.request('HEAD', url, params, options);
       },
+
    logger: <FetchJsonLogger | null>null,
+
    getLogHeaders(): string[] {
       return ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'];
       },
+
    getLogHeaderIndexMap(): { [header: string]: number } {
       return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
       },
+
    enableLogger(customLogger?: FetchJsonLogger): FetchJsonLogger {
       this.logger = customLogger ?? console.log;
       return this.logger;
       },
+
    disableLogger(): void {
       this.logger = null;
       },
+
    };
 
 class FetchJson {

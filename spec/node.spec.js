@@ -329,7 +329,7 @@ describe('HTTP error returned by the server', () => {
          const expected = {
             object:  'Error',
             name:    'Error',
-            message: '[fetch-json] HTTP response status ("strictErrors" mode enabled): 500',
+            message: '[fetch-json] HTTP response status: 500',
             };
          assertDeepStrictEqual(actual, expected, done);
          };
