@@ -14,7 +14,7 @@ export type FetchJsonAltResponse = {  //used when the HTTP response is an error 
    status:      number,         //code for HTTP status
    contentType: string | null,  //mime-type, such as 'text/html'
    bodyText:    string,         //body of the HTTP response or error message
-   data:        Json | null,    //body of the HTTP responce if the content is JSON
+   data:        Json,           //body of the HTTP responce if the content is JSON
    response:    Response,       //response object
    };
 export type FetchJsonResponse = Json | FetchJsonAltResponse;
