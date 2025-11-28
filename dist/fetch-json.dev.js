@@ -1,7 +1,7 @@
-//! fetch-json v3.3.7 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.3.8 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '3.3.7',
+    version: '3.3.8',
     baseOptions: {},
     assert(ok, message) {
         if (!ok)
