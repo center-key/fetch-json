@@ -86,7 +86,6 @@ describe('Google Books API search result for "spacex" fetched by fetchJson.get()
 describe('Nobel Prize API result for laureate #26 fetched by fetchJson.get()', () => {
 
    it('is Albert Einstein', (done) => {
-
       const url =    'https://api.nobelprize.org/2.0/laureates';
       const params = { ID: 26 };
       const handleData = (data) => {

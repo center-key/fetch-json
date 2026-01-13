@@ -12,8 +12,10 @@ const mode =     { type: 'Minified', file: 'dist/fetch-json.min.js' };
 const filename = import.meta.url.replace(/.*\//, '');  //jshint ignore:line
 const webPage =  pathToFileURL('spec/fixtures/script-src-fetch-json.html').href;
 let web;  //fields: browser, page, response, status, location, title, html, root
-const loadWebPage =  async () => web = await puppeteer.launch().then(browserReady.goto(webPage));
-const closeWebPage = async () => await browserReady.close(web);
+const loadWebPage = () => puppeteer.launch()
+   .then(browserReady.goto(webPage))
+   .then(info => web = info);
+const closeWebPage = () => browserReady.close(web);
 before(loadWebPage);
 after(closeWebPage);
 
@@ -42,7 +44,6 @@ describe('Google Books API search result for "spacex" fetched by fetchJson.get()
 describe('Nobel Prize API result for laureate #26 fetched by fetchJson.get()', () => {
 
    it('is Albert Einstein', (done) => {
-
       const handleData = (data) => {
          const laureate = data.laureates[0];
          const actual =   { id: laureate.id, name: laureate.fullName.en, birth: laureate.birth.date };
