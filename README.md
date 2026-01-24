@@ -92,7 +92,7 @@ const show = async () => {
    const url =    'https://api.nasa.gov/planetary/apod';
    const params = { api_key: 'DEMO_KEY' };
    const data =   await fetchJson.get(url, params);
-   console.info('The NASA APoD for today is at: ' + data.url);
+   console.info('The NASA APoD for today is at:', data.url);
    };
 show();
 ```

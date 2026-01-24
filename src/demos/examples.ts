@@ -35,7 +35,7 @@ const example = {
       const url =    'https://api.nasa.gov/planetary/apod';
       const params = { api_key: 'DEMO_KEY' };
       const handleData = (data: NasaApod) =>
-         console.info('The NASA APoD for today is at:', (data).url);
+         console.info('The NASA APoD for today is at:', data.url);
       fetchJson.get(url, params).then(handleData);
 
       },
