@@ -20,10 +20,10 @@
    <title>fetch-json &bull; A wrapper around Fetch just for JSON</title>
    <link rel=icon             href=https://centerkey.com/graphics/bookmark-icon.png>
    <link rel=apple-touch-icon href=logos.png>
-   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1/css/all.min.css>
-   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/dna-engine@3.3/dist/dna-engine.css>
-   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/web-ignition@2.4/dist/reset.min.css>
-   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/web-ignition@2.4/dist/layouts/letterbox.css>
+   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@{{package.devDependencies.-fortawesome-fontawesome-free|version}}/css/all.min.css>
+   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/web-ignition@{{package.devDependencies.web-ignition|version}}/dist/reset.min.css>
+   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/web-ignition@{{package.devDependencies.web-ignition|version}}/dist/layouts/letterbox.css>
+   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/dna-engine@{{package.devDependencies.dna-engine|version}}/dist/dna-engine.css>
    <style>
       html { background-image: url(examples.png); }
       main >section h1 { color: steelblue; }
@@ -41,9 +41,9 @@
       main >section figure code.language-js { color: deeppink; font-size: 1.1rem; }
       main >section figure code.language-js .js-param { color: darkmagenta; }
    </style>
-   <script defer src=https://cdn.jsdelivr.net/npm/dna-engine@3.3/dist/dna-engine.min.js></script>
-   <script defer src=https://cdn.jsdelivr.net/npm/web-ignition@2.4/dist/lib-x.min.js></script>
-   <script defer src=https://cdn.jsdelivr.net/npm/fetch-json@3.3/dist/fetch-json.min.js></script>
+   <script defer src=https://cdn.jsdelivr.net/npm/web-ignition@{{package.devDependencies.web-ignition|version}}/dist/lib-x.min.js></script>
+   <script defer src=https://cdn.jsdelivr.net/npm/dna-engine@{{package.devDependencies.dna-engine|version}}/dist/dna-engine.min.js></script>
+   <script defer src=https://cdn.jsdelivr.net/npm/fetch-json@{{package.version|minor-version}}/dist/fetch-json.min.js></script>
    <script data-on-load=setup data-wait-for=fetchJson>
       const setup = () => {
          globalThis.document.querySelector('.version-number').textContent = fetchJson.version;
@@ -51,7 +51,7 @@
          const style = 'font-family: monospace; font-weight: bold;';
          console.info('fetch-json v' + fetchJson.version);
          console.info('Try entering this command:');
-         console.info("%cfetchJson.get('https://dna-engine.org/api/books/1/').then(console.log);", style);
+         console.info("%cfetchJson.get('https://dna-engine.org/api/books/').then(console.log);", style);
          };
    </script>
 </head>
@@ -62,8 +62,10 @@
       <h1>fetch-json v<span class=version-number></span></h1>
       <h2>A wrapper around Fetch just for JSON</h2>
       <nav>
-         <a href=https://github.com/center-key/fetch-json/blob/main/LICENSE.txt><img src=https://img.shields.io/badge/License-MIT-blue.svg alt=license></a>
-         <a href=https://www.npmjs.com/package/fetch-json><img src=https://img.shields.io/npm/v/fetch-json.svg alt=npm></a>
+         <a href=https://github.com/center-key/fetch-json/blob/main/LICENSE.txt>
+            <img src=https://img.shields.io/badge/License-MIT-blue.svg alt=license></a>
+         <a href=https://www.npmjs.com/package/fetch-json>
+            <img src=https://img.shields.io/npm/v/fetch-json.svg alt=npm></a>
       </nav>
       <div>
          <p>
@@ -94,7 +96,7 @@
          <figure>
             <code class=language-js>
                fetchJson.get(<span class=js-param>url</span>, <span class=js-param>params</span>)<br>
-               .then(<span class=js-param>handleData</span>);
+               .then(<span class=js-param>data =&gt; console.log(data)</span>);
             </code>
          </figure>
          <p>

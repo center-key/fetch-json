@@ -81,7 +81,6 @@ updateCdnVersion() {
    cd $projectHome
    updateVersion="s|fetch-json@[.0-9]*|fetch-json@$minorVersion|"
    sed -i "" $updateVersion README.md
-   sed -i "" $updateVersion docs/index.html
    }
 
 runSpecs() {
@@ -96,5 +95,5 @@ releaseInstructions
 updateCdnVersion
 runSpecs
 echo "For examples, run:"
-echo "   node docs/js/examples.js"
+echo "   node src/demos/examples.js"
 echo

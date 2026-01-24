@@ -8,7 +8,7 @@
 //    $ git clone https://github.com/center-key/fetch-json.git
 //    $ cd fetch-json
 //    $ npm install
-//    $ node docs/js/examples-await.js
+//    $ node src/demos/examples-await.js
 
 // Setup
 import { fetchJson } from '../../dist/fetch-json.js';

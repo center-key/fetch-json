@@ -1,0 +1,54 @@
+$ node src/demos/examples.js
+
+Examples
+========
+fetch-json v3.3.8
+
+2026-01-24T11:52:20.598Z request GET api.nasa.gov https://api.nasa.gov/planetary/apod
+2026-01-24T11:52:20.637Z request POST centerkey.com https://centerkey.com/rest/
+2026-01-24T11:52:20.638Z request GET centerkey.com https://centerkey.com/rest/status/418/
+2026-01-24T11:52:20.639Z request GET www.googleapis.com https://www.googleapis.com/books/v1/volumes
+2026-01-24T11:52:21.036Z response GET api.nasa.gov https://api.nasa.gov/planetary/apod true 200 OK application/json
+The NASA APoD for today is at: https://apod.nasa.gov/apod/image/2601/earthset-snap01.png
+2026-01-24T11:52:21.083Z response GET centerkey.com https://centerkey.com/rest/status/418/ false 418 reauthentication required text/plain;charset=UTF-8
+                     ;,'
+             _o_    ;:;'
+         ,-.'---`.__ ;
+        ((j`=====',-'
+         `-\     /
+            `-=-'     hjw
+
+2026-01-24T11:52:21.083Z response POST centerkey.com https://centerkey.com/rest/ true 200 OK application/json
+New planet: {
+  headers: {
+    Host: 'centerkey.com',
+    Connection: 'keep-alive',
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    'Accept-Language': '*',
+    'sec-fetch-mode': 'cors',
+    'User-Agent': 'node',
+    'Accept-Encoding': 'br, gzip, deflate',
+    'Content-Length': '31'
+  },
+  method: 'POST',
+  query: '',
+  params: {},
+  body: { name: 'Jupiter', position: 5 }
+}
+2026-01-24T11:52:21.554Z response GET www.googleapis.com https://www.googleapis.com/books/v1/volumes true 200 OK application/json; charset=UTF-8
+SpaceX books:
+[
+  'SpaceX',
+  'Liftoff',
+  'SpaceX',
+  'Reentry',
+  'Cutting-Edge SpaceX News',
+  'Elon Musk',
+  'SpaceX',
+  "SpaceX's Dragon: America's Next Generation Spacecraft",
+  'SpaceX from the Ground Up',
+  "Explore SpaceX's groundbreaking journey, from its humble beginnings to Mars colonization aspirations"
+]
+
+Done.

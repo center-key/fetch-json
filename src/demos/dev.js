@@ -7,14 +7,15 @@
 //    $ git clone https://github.com/center-key/fetch-json.git
 //    $ cd fetch-json
 //    $ npm install
-//    $ npm run dev
+//    $ npx tsc
+//    $ node src/demos/dev.js
 
-import { fetchJson } from '../../build/src/fetch-json.js';  //create build version with "tsc" command
+import { fetchJson } from '../../build/fetch-json.js';
 
 console.info();
-console.info('One');
-console.info('===');
+console.info('Single GET fetch');
+console.info('================');
 fetchJson.enableLogger();
 
 const url = 'https://official-joke-api.appspot.com/random_joke';
-fetchJson.get(url).then(console.log);
+fetchJson.get(url).then(data => console.log(data));

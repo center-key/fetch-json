@@ -48,7 +48,7 @@
    },
    "runScriptsConfig": {
       "clean": [
-         "rimraf build dist"
+         "rimraf build dist docs"
       ],
       "lint": [
          "jshint . --exclude-path .gitignore",
@@ -56,19 +56,25 @@
       ],
       "build": [
          "tsc",
-         "esm-to-plain-js --cd=build/src fetch-json.js fetch-json.dev.js",
-         "uglifyjs build/src/fetch-json.dev.js --output build/src/fetch-json.min.js"
+         "esm-to-plain-js build/fetch-json.js              build/fetch-json.dev.js",
+         "uglifyjs        build/fetch-json.dev.js --output build/fetch-json.min.js"
       ],
       "dist": [
-         "add-dist-header build/src dist"
+         "add-dist-header build dist"
+      ],
+      "publish": [
+         "copy-folder src/website --ext=.png             docs",
+         "replacer    src/website                        docs",
+         "replacer --virtual-input . --rename=robots.txt docs --content=#{{space}}Allow{{space}}bots",
+         "replacer --virtual-input . --rename=CNAME      docs --content=fetch-json.js.org"
       ]
    },
    "scripts": {
-      "pretest": "run-scripts clean lint build dist",
+      "pretest": "run-scripts clean lint build dist publish",
       "test": "mocha spec --timeout 7000",
       "posttest": "html-validator spec docs",
-      "examples": "node docs/js/examples.js",
-      "dev": "tsc && node docs/js/dev.js",
+      "examples": "node src/demos/examples.js",
+      "dev": "tsc && node src/demos/dev.js",
       "interactive": "http-server -o spec/fixtures/"
    },
    "devDependencies": {
@@ -86,7 +92,7 @@
       "jsdom": "~27.4",
       "jshint": "~2.13",
       "mocha": "~11.7",
-      "puppeteer": "~24.35",
+      "puppeteer": "~24.36",
       "puppeteer-browser-ready": "~1.4",
       "replacer-util": "~1.5",
       "rimraf": "~6.1",
@@ -94,8 +100,8 @@
       "typescript": "~5.9",
       "typescript-eslint": "~8.53",
       "uglify-js": "~3.19",
-      "w3c-html-validator": "~2.1",
-      "web-ignition": "~2.4",
+      "w3c-html-validator": "~2.2",
+      "web-ignition": "~2.5",
       "whatwg-fetch": "~3.6"
    }
 }

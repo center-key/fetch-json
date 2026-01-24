@@ -1,22 +1,17 @@
+#!/usr/bin/env node
 //////////////////////////////////
 // fetch-json                   //
-// Simple examples (TypeScript) //
+// Simple examples (JavaScript) //
 //////////////////////////////////
 
 // To run:
+//    $ git clone https://github.com/center-key/fetch-json.git
 //    $ cd fetch-json
 //    $ npm install
-//    $ grep out tsconfig.json
-//    $ npx tsc
-//    $ node build/docs/ts/examples.js
+//    $ node src/demos/examples.js
 
 // Setup
-import { fetchJson, FetchJsonAltResponse, JsonObject } from '../../src/fetch-json.js';
-
-// Type Declarations
-export type BookData = { items: Book[] };
-export type Book =     { volumeInfo: { title: string } };
-export type NasaApod = { url: string };
+import { fetchJson } from '../../dist/fetch-json.js';
 
 // Intro
 console.info();
@@ -29,43 +24,40 @@ fetchJson.enableLogger();
 // Examples
 const example = {
 
-   nasa(): void {
+   nasa() {
 
       // NASA APoD
-      const url =    'https://api.nasa.gov/planetary/apod';
-      const params = { api_key: 'DEMO_KEY' };
-      const handleData = (data: NasaApod) =>
-         console.info('The NASA APoD for today is at:', (data).url);
+      const url =        'https://api.nasa.gov/planetary/apod';
+      const params =     { api_key: 'DEMO_KEY' };
+      const handleData = (data) => console.info('The NASA APoD for today is at:', data.url);
       fetchJson.get(url, params).then(handleData);
 
       },
 
-   jupiter(): void {
+   jupiter() {
 
       // Create Jupiter
-      const resource = { name: 'Jupiter', position: 5 };
-      const handleData = (data: JsonObject) =>
-         console.info('New planet:', data);
+      const resource =   { name: 'Jupiter', position: 5 };
+      const handleData = (data) => console.info('New planet:', data);
       fetchJson.post('https://centerkey.com/rest/', resource)
          .then(handleData)
          .catch(console.error);
 
       },
 
-   teapot(): void {
+   teapot() {
 
       // Fetch me some tea
-      const handleData = (data: FetchJsonAltResponse) =>
-         console.info(data.bodyText);
+      const handleData = (data) => console.info(data.bodyText);
       fetchJson.get('https://centerkey.com/rest/status/418/').then(handleData);
 
       },
 
-   books(): void {
+   books() {
 
       // Get books about SpaceX
-      const handleData = (data: BookData) => {
-         const getTitle = (book: Book) => book.volumeInfo.title;
+      const handleData = (data) => {
+         const getTitle = (book) => book.volumeInfo.title;
          console.info('SpaceX books:');
          console.info(data.items.map(getTitle));
          };
@@ -85,5 +77,3 @@ example.books();
 // Wait for HTTP requests to complete
 const done = () => console.info('\nDone.');
 setTimeout(done, 3000);
-
-export { example };
