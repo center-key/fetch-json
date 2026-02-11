@@ -117,7 +117,7 @@ describe('GET response returned by HTTP echo service', () => {
       });
 
    it('contains the params from the URL query string', (done) => {
-      const url = 'https://centerkey.com/rest/?planet=Jupiter&position=5';
+      const url = 'https://centerkey.com/rest/echo/?planet=Jupiter&position=5';
       const handleData = (actual) => {
          delete actual.headers;
          const expected = {
@@ -148,7 +148,7 @@ describe('GET response returned by HTTP echo service', () => {
       });
 
    it('contains the params from both the URL query string and an object', (done) => {
-      const url =    'https://centerkey.com/rest/?sort=diameter';
+      const url =    'https://centerkey.com/rest/echo/?sort=diameter';
       const params = { planet: 'Jupiter', position: 5 };
       const handleData = (actual) => {
          delete actual.headers;

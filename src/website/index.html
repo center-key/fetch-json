@@ -51,7 +51,7 @@
          const style = 'font-family: monospace; font-weight: bold;';
          console.info('fetch-json v' + fetchJson.version);
          console.info('Try entering this command:');
-         console.info("%cfetchJson.get('https://dna-engine.org/api/books/').then(console.log);", style);
+         console.info("%cfetchJson.get('https://dna-engine.org/api/books/').then(console.info);", style);
          };
    </script>
 </head>
@@ -96,7 +96,7 @@
          <figure>
             <code class=language-js>
                fetchJson.get(<span class=js-param>url</span>, <span class=js-param>params</span>)<br>
-               .then(<span class=js-param>data =&gt; console.log(data)</span>);
+               .then(<span class=js-param>data =&gt; console.info(data)</span>);
             </code>
          </figure>
          <p>

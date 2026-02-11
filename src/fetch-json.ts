@@ -108,8 +108,11 @@ const fetchJson = {
          log('response', response.ok, response.status, response.statusText, contentType);
          const badStatus = settings.strictErrors && !response.ok;
          fetchJson.assert(!badStatus, `HTTP response status: ${response.status}`);
-         return isHead ? response.text().then(headersObj) :
-            isJson ? response.json().then(jsonToObj).catch(errToObj) : response.text().then(textToObj);
+         const alt =
+            isHead ? response.text().then(headersObj) :
+            isJson ? response.json().then(jsonToObj).catch(errToObj) :
+            response.text().then(textToObj);
+         return alt;
          };
       log('request');
       const settingsRequestInit = <RequestInit>JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>

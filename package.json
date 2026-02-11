@@ -89,7 +89,7 @@
       "eslint": "~9.39",
       "esm-to-plain-js": "~1.2",
       "http-server": "~14.1",
-      "jsdom": "~27.4",
+      "jsdom": "~28.0",
       "jshint": "~2.13",
       "mocha": "~11.7",
       "puppeteer": "~24.37",

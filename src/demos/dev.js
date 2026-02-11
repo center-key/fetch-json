@@ -18,4 +18,4 @@ console.info('================');
 fetchJson.enableLogger();
 
 const url = 'https://official-joke-api.appspot.com/random_joke';
-fetchJson.get(url).then(data => console.log(data));
+fetchJson.get(url).then(data => console.info(data));
