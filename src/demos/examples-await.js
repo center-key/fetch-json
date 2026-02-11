@@ -38,7 +38,7 @@ const example = {
 
       // Create Jupiter
       const resource = { name: 'Jupiter', position: 5 };
-      const data = await fetchJson.post('https://centerkey.com/rest/', resource)
+      const data = await fetchJson.post('https://centerkey.com/rest/echo/', resource)
          .catch(console.error);
       console.info('New planet:', data);
 

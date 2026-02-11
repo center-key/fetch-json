@@ -18,7 +18,7 @@ The NASA APoD for today is at: https://apod.nasa.gov/apod/image/2601/earthset-sn
          `-\     /
             `-=-'     hjw
 
-2026-01-24T11:52:21.083Z response POST centerkey.com https://centerkey.com/rest/ true 200 OK application/json
+2026-01-24T11:52:21.083Z response POST centerkey.com https://centerkey.com/rest/echo/ true 200 OK application/json
 New planet: {
   headers: {
     Host: 'centerkey.com',

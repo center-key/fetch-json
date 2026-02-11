@@ -46,7 +46,7 @@ const example = {
       const resource = { name: 'Jupiter', position: 5 };
       const handleData = (data: JsonObject) =>
          console.info('New planet:', data);
-      fetchJson.post('https://centerkey.com/rest/', resource)
+      fetchJson.post('https://centerkey.com/rest/echo/', resource)
          .then(handleData)
          .catch(console.error);
 
