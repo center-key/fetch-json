@@ -70,9 +70,7 @@ describe('Module fetch-json', () => {
 ////////////////////////////////////////////////////////////////////////////////
 describe('Google Books API search result for "spacex" fetched by fetchJson.get()', () => {
 
-   it.skip('contains the correct "kind" value and "totalItems" as a number', (done) => {
-      // TODO: Breaks with jsdom v28.0 if code is 429 as response.json() now returns a rejected Promise.
-      // See: https://github.com/jsdom/jsdom/pull/4033
+   it('contains the correct "kind" value and "totalItems" as a number', (done) => {
       const url = 'https://www.googleapis.com/books/v1/volumes?q=spacex';
       const handleData = (data) => {
          const skip = !data.ok && data.status === 429;
@@ -258,7 +256,7 @@ describe('HEAD response for a Figy Berry from the PokéAPI', () => {
 
    it.skip('contains the correct headers', (done) => {
       // TODO: Breaks with jsdom v28.0 as response.text() returns Promise<string> with garbled string.
-      // See: https://github.com/jsdom/jsdom/pull/4033
+      // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
       const url = 'https://pokeapi.co/api/v2/berry/figy';
       const handleData = (data) => {
          const actual = {
@@ -318,7 +316,7 @@ describe('HTTP error returned by the server', () => {
 
    it.skip('for status 500 contains the message "Internal Server Error"', (done) => {
       // TODO: Breaks with jsdom v28.0 as response.text() returns Promise<string> with garbled string.
-      // See: https://github.com/jsdom/jsdom/pull/4033
+      // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
       const url = 'https://centerkey.com/rest/status/500/';
       const handleData = (actual) => {
          delete actual.response;
@@ -365,7 +363,7 @@ describe('HTTP error returned by the server', () => {
       const handleData = (actual) => {
          console.info(actual.bodyText);
          // TODO: actual.bodyText is garbled with jsdom v28.0 as response.text() returns Promise<string> with garbled string.
-         // See: https://github.com/jsdom/jsdom/pull/4033
+         // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
          delete actual.bodyText;
          delete actual.response;
          const expected = {

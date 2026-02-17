@@ -238,7 +238,6 @@ describe('Response returned by HTTP echo service for a planet (object literal)',
 describe('HEAD response for a Figy Berry from the PokéAPI', () => {
 
    it('contains the correct headers', (done) => {
-
       const url = 'https://pokeapi.co/api/v2/berry/figy';
       const handleData = (data) => {
          const actual = {
