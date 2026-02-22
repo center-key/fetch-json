@@ -73,7 +73,7 @@ describe('Google Books API search result for "spacex" fetched by fetchJson.get()
    it('contains the correct "kind" value and "totalItems" as a number', (done) => {
       const url = 'https://www.googleapis.com/books/v1/volumes?q=spacex';
       const handleData = (data) => {
-         const skip = !data.ok && data.status === 429;
+         const skip = data.status === 429 || data.status === 500;  //http: Too Many Requests
          if (skip)
             console.warn('[Assertion Skipped]', url, data.data?.error?.message);
          const actual =   { total: typeof data.totalItems, kind: data.kind };
