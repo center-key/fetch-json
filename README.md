@@ -231,8 +231,8 @@ The example below sets the `Authorization` HTTP header so it is sent on the subs
 DELETE requests:
 ```javascript
 fetchJson.setBaseOptions({ headers: { Authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } });
-fetchJson.get('https://dna-engine.org/api/books/').then(display);  //with auth header
-fetchJson.delete('https://dna-engine.org/api/books/3/');           //with auth header
+fetchJson.get('https://dna-dom.org/api/books/').then(display);  //with auth header
+fetchJson.delete('https://dna-dom.org/api/books/3/');           //with auth header
 ```
 
 To have multiple base options available at the same time, use the `FetchJson` class to instantiate
@@ -242,8 +242,8 @@ import { FetchJson } from 'fetch-json';
 
 const fetchJsonA = new FetchJson({ headers: { From: 'aaa@example.com' } }).fetchJson;
 const fetchJsonB = new FetchJson({ headers: { From: 'bbb@example.com' } }).fetchJson;
-fetchJsonA.get('https://dna-engine.org/api/books/').then(display);  //from aaa@example.com
-fetchJsonB.delete('https://dna-engine.org/api/books/3/');           //from bbb@example.com
+fetchJsonA.get('https://dna-dom.org/api/books/').then(display);  //from aaa@example.com
+fetchJsonB.delete('https://dna-dom.org/api/books/3/');           //from bbb@example.com
 ```
 
 ## I) TypeScript Declarations
@@ -290,7 +290,7 @@ interesting approach to organizing build tasks.
 <br>
 
 ---
-_"Stop trying to make fetch happen without [#fetchJson](https://twitter.com/hashtag/fetchJson)!"_
+_"Stop trying to make fetch happen without [#fetchJson](https://x.com/hashtag/fetchJson)!"_
 
 Feel free to submit questions at:<br>
 [github.com/center-key/fetch-json/issues](https://github.com/center-key/fetch-json/issues)

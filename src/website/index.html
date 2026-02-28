@@ -23,7 +23,7 @@
    <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@{{package.devDependencies.-fortawesome-fontawesome-free|version}}/css/all.min.css>
    <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/web-ignition@{{package.devDependencies.web-ignition|version}}/dist/reset.min.css>
    <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/web-ignition@{{package.devDependencies.web-ignition|version}}/dist/layouts/letterbox.css>
-   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/dna-engine@{{package.devDependencies.dna-engine|version}}/dist/dna-engine.css>
+   <link rel=stylesheet       href=https://cdn.jsdelivr.net/npm/dna-dom@{{package.devDependencies.dna-dom|version}}/dist/dna-dom.css>
    <style>
       html { background-image: url(examples.png); }
       main >section h1 { color: steelblue; }
@@ -42,7 +42,7 @@
       main >section figure code.language-js .js-param { color: darkmagenta; }
    </style>
    <script defer src=https://cdn.jsdelivr.net/npm/web-ignition@{{package.devDependencies.web-ignition|version}}/dist/lib-x.min.js></script>
-   <script defer src=https://cdn.jsdelivr.net/npm/dna-engine@{{package.devDependencies.dna-engine|version}}/dist/dna-engine.min.js></script>
+   <script defer src=https://cdn.jsdelivr.net/npm/dna-dom@{{package.devDependencies.dna-dom|version}}/dist/dna-dom.min.js></script>
    <script defer src=https://cdn.jsdelivr.net/npm/fetch-json@{{package.version|minor-version}}/dist/fetch-json.min.js></script>
    <script data-on-load=setup data-wait-for=fetchJson>
       const setup = () => {
@@ -51,7 +51,7 @@
          const style = 'font-family: monospace; font-weight: bold;';
          console.info('fetch-json v' + fetchJson.version);
          console.info('Try entering this command:');
-         console.info("%cfetchJson.get('https://dna-engine.org/api/books/').then(console.info);", style);
+         console.info("%cfetchJson.get('https://dna-dom.org/api/books/').then(console.info);", style);
          };
    </script>
 </head>
