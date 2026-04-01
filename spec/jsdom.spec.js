@@ -4,8 +4,8 @@
 // Imports
 import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
 import { JSDOM, VirtualConsole } from 'jsdom';
-import assert from 'assert';
-import fs     from 'fs';
+import assert from 'node:assert';
+import fs     from 'node:fs';
 
 // JSDOM Virtual Console
 const expectedErrors = [

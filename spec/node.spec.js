@@ -3,7 +3,7 @@
 
 // Imports
 import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
-import assert from 'assert';
+import assert from 'node:assert';
 
 // Setup
 import { fetchJson, FetchJson } from '../dist/fetch-json.js';

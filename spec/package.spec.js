@@ -2,7 +2,7 @@
 
 // Imports
 import { assertDeepStrictEqual } from 'assert-deep-strict-equal';
-import fs from 'fs';
+import fs from 'node:fs';
 
 ////////////////////////////////////////////////////////////////////////////////
 describe('The "dist" folder', () => {
