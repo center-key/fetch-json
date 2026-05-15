@@ -26,7 +26,7 @@ export type FetchJsonLogger = (
    url?:         string,                  //address of requested resource (without parameters)
    ok?:          boolean,                 //code for HTTP status in the range 200-299
    status?:      number,                  //code for HTTP status, typically 200
-   statusText?:  string,                  //message corresponding to the code, typically 'OK'
+   statusText?:  string,                  //message corresponding to the code, typically 'OK' [DEPRECATED for HTTP/2]
    contentType?: string | null,           //mime-type, typically 'application/json'
    ) => void;
 
@@ -57,7 +57,7 @@ const fetchJson = {
          credentials:  'same-origin',
          strictErrors: false,
          };
-      const settings = { ...defaults, ...this.baseOptions, ...options };
+      const settings =  { ...defaults, ...this.baseOptions, ...options };
       const badMethod = !settings.method || typeof settings.method !== 'string';
       fetchJson.assert(!badMethod, 'HTTP method missing or invalid.');
       fetchJson.assert(typeof url === 'string', 'URL must be a string.');
@@ -96,7 +96,7 @@ const fetchJson = {
             });
          const jsonToObj = (data: Json): any =>
             response.ok ? data : textToObj(JSON.stringify(data), data);
-         const errToObj = (error: Error): FetchJsonAltResponse => ({
+         const httpErrToObj = (error: Error): FetchJsonAltResponse => ({
             ok:          false,
             error:       true,
             status:      500,
@@ -105,12 +105,12 @@ const fetchJson = {
             data:        null,
             response:    response,
             });
-         log('response', response.ok, response.status, response.statusText, contentType);
+         log('response', response.ok, response.status, contentType);
          const badStatus = settings.strictErrors && !response.ok;
          fetchJson.assert(!badStatus, `HTTP response status: ${response.status}`);
          const alt =
             isHead ? response.text().then(headersObj) :
-            isJson ? response.json().then(jsonToObj).catch(errToObj) :
+            isJson ? response.json().then(jsonToObj).catch(httpErrToObj) :
             response.text().then(textToObj);
          return alt;
          };
@@ -146,11 +146,11 @@ const fetchJson = {
    logger: <FetchJsonLogger | null>null,
 
    getLogHeaders(): string[] {
-      return ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'];
+      return ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Type'];
       },
 
    getLogHeaderIndexMap(): { [header: string]: number } {
-      return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
+      return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, type: 7 };
       },
 
    enableLogger(customLogger?: FetchJsonLogger): FetchJsonLogger {

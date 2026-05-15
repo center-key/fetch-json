@@ -187,11 +187,11 @@ To use a custom logger, pass in a function that accepts 9 parameters to log.
 To get an array containing the names of the parameters:
 ```javascript
 fetchJson.getLogHeaders();
-// 'Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'
+// 'Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Type'
 ```
 The default console output looks like:<br>
 `2018-09-12T07:20:12.372Z – "request" - "GET" – "api.nasa.gov" – "https://api.nasa.gov/planetary/apod"`<br>
-`2018-09-12T07:20:13.009Z – "response" - "GET" – "api.nasa.gov" – "https://api.nasa.gov/planetary/apod" - true - 200 - "OK" - "application/json"`
+`2018-09-12T07:20:13.009Z – "response" - "GET" – "api.nasa.gov" – "https://api.nasa.gov/planetary/apod" - true - 200 - "application/json"`
 
 Turn off logging with:
 ```javascript
@@ -204,7 +204,7 @@ The HTTP response body is considered to be JSON if the `Content-Type` is `"appli
 If the HTTP response body is not JSON, **fetch-json** passes back
 through the promise an object with a `bodyText` string field containing response body text.
 
-In addition to the `bodyText` field, the object will have the fields: `ok`, `status`, `statusText`,
+In addition to the `bodyText` field, the object will have the fields: `ok`, `status`,
 `contentType`, and `data`.&nbsp;
 If an HTML error response is JSON, the `data` will contain the parsed JSON.
 
@@ -213,8 +213,7 @@ similar to:
 ```javascript
 {
    ok:          false,
-   status:      500,
-   statusText:  'INTERNAL SERVER ERROR',
+   status:      500,  //INTERNAL SERVER ERROR
    contentType: 'text/html; charset=utf-8',
    bodyText:    '<!doctype html><html lang=en><body>Server Error</body></html>',
    data:        null,

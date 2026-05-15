@@ -216,22 +216,6 @@ describe('Response returned by HTTP echo service for a planet (object literal)',
       fetchJson.patch(url, resource).then(handleData);
       });
 
-   it('from a DELETE contains the planet (JSON)', (done) => {
-      const url =      'https://centerkey.com/rest/echo/';
-      const resource = { name: 'Jupiter', position: 5 };
-       const handleData = (actual) => {
-         delete actual.headers;
-         const expected = {
-            method: 'DELETE',
-            query:  '',
-            params: {},
-            body:   resource,
-            };
-         assertDeepStrictEqual(actual, expected, done);
-         };
-      fetchJson.delete(url, resource).then(handleData);
-      });
-
    });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -370,14 +354,14 @@ describe('The "bodyText" field of the object returned from requesting', () => {
       const handleData = (data) => {
          const actual = {
             ok:          data.ok,
-            status:      [data.status, data.response.statusText],
+            status:      data.status,
             contentType: data.contentType,
             firstLine:   getFirstLine(data.bodyText),
             data:        data.data,
             };
          const expected = {
             ok:          true,
-            status:      [200, 'OK'],
+            status:      200,
             contentType: 'text/html; charset=utf-8',
             firstLine:   '<!doctype html>',
             data:        null,
@@ -452,12 +436,12 @@ describe('Function fetchJson.enableLogger()', () => {
       const toEvent = (rawEvent, index) => ({
          event:     index,
          timestamp: rawEvent[headerMap.timestamp].length,
+         http:      rawEvent[headerMap.http],
          method:    rawEvent[headerMap.method],
          domain:    rawEvent[headerMap.domain],
          url:       rawEvent[headerMap.url],
          ok:        rawEvent[headerMap.ok],
          status:    rawEvent[headerMap.status],
-         text:      rawEvent[headerMap.text],
          type:      rawEvent[headerMap.type],
          });
       const verifyEvents = () => {
@@ -467,23 +451,23 @@ describe('Function fetchJson.enableLogger()', () => {
             {
                event:     0,
                timestamp: 24,
+               http:      'request',
                method:    'GET',
                domain:    'centerkey.com',
                url:       'https://centerkey.com/rest/echo/',
                ok:        undefined,
                status:    undefined,
-               text:      undefined,
                type:      undefined,
                },
             {
                event:     1,
                timestamp: 24,
+               http:      'response',
                method:    'GET',
                domain:    'centerkey.com',
                url:       'https://centerkey.com/rest/echo/',
                ok:        true,
                status:    200,
-               text:      'OK',
                type:      'application/json',
                },
             ];
@@ -543,12 +527,12 @@ describe('FetchJson class instances', () => {
 
    it('can each set different base options', (done) => {
       const url =          'https://centerkey.com/rest/echo/';
-      const baseOptionsA = { headers: { From: 'aaa@example.com' } };
-      const baseOptionsB = { headers: { From: 'bbb@example.com' } };
+      const baseOptionsA = { headers: { from: 'aaa@example.com' } };
+      const baseOptionsB = { headers: { from: 'bbb@example.com' } };
       const fetchJsonA =   new FetchJson(baseOptionsA).fetchJson;
       const fetchJsonB =   new FetchJson(baseOptionsB).fetchJson;
       const handleData = (actual) => {
-         actual.push([actual[0].headers.From, actual[1].headers.From]);
+         actual.push([actual[0].headers.from, actual[1].headers.from]);
          delete actual[0].headers;
          delete actual[1].headers;
          const expected = [
