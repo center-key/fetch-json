@@ -1,7 +1,7 @@
-//! fetch-json v3.4.0 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.5.0 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '3.4.0',
+    version: '3.5.0',
     baseOptions: {},
     assert(ok, message) {
         if (!ok)
@@ -18,7 +18,6 @@ const fetchJson = {
         const defaults = {
             method: method,
             credentials: 'same-origin',
-            strictErrors: false,
         };
         const settings = { ...defaults, ...this.baseOptions, ...options };
         const badMethod = !settings.method || typeof settings.method !== 'string';
@@ -26,7 +25,7 @@ const fetchJson = {
         fetchJson.assert(typeof url === 'string', 'URL must be a string.');
         const httpMethod = settings.method.trim().toUpperCase();
         const isGetRequest = httpMethod === 'GET';
-        const jsonHeaders = { Accept: 'application/json' };
+        const jsonHeaders = { accept: 'application/json' };
         if (!isGetRequest && data)
             jsonHeaders['content-type'] = 'application/json';
         settings.headers = { ...jsonHeaders, ...settings.headers };
@@ -73,16 +72,25 @@ const fetchJson = {
                 response: response,
             });
             log('response', response.ok, response.status, contentType);
-            const badStatus = settings.strictErrors && !response.ok;
-            fetchJson.assert(!badStatus, `HTTP response status: ${response.status}`);
-            const responseObj = isHead ? response.text().then(headersObj) :
+            const returnObj = isHead ? response.text().then(headersObj) :
                 isJson ? response.json().then(jsonToObj).catch(httpErrToObj) :
                     response.text().then(textToObj);
-            return responseObj;
+            return returnObj;
         };
         log('request');
         const settingsRequestInit = JSON.parse(JSON.stringify(settings));
-        return fetch(requestUrl, settingsRequestInit).then(toJson);
+        const exceptionToObj = (error) => ({
+            http: httpLine,
+            ok: false,
+            error: true,
+            status: 499,
+            message: 'Fetch API exception [' + error.constructor.name + ']',
+            contentType: null,
+            bodyText: String(error) + ', Cause: ' + String(error.cause),
+            data: null,
+            response: null,
+        });
+        return fetch(requestUrl, settingsRequestInit).then(toJson).catch(exceptionToObj);
     },
     get(url, params, options) {
         return this.request('GET', url, params, options);

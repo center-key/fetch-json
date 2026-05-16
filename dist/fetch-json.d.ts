@@ -1,14 +1,11 @@
-//! fetch-json v3.4.0 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.5.0 ~~ https://fetch-json.js.org ~~ MIT License
 
 export type Json = string | number | boolean | null | undefined | JsonObject | Json[];
 export type JsonObject = {
     [key: string]: Json;
 };
 export type JsonData = JsonObject | Json[];
-export type FetchJsonInit = {
-    strictErrors: boolean;
-};
-export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
+export type FetchJsonOptions = RequestInit;
 export type FetchJsonMethod = string;
 export type FetchJsonParams = {
     [field: string]: string | number | boolean | null | undefined;
