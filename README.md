@@ -17,7 +17,7 @@ HTTP calls to JSON endpoints.
 The minified JS file is under 4 KB.
 
 **fetch-json** automatically:  <!-- sync with src/website/index.html -->
-1. Adds the HTTP header `Content-Type: application/json` to ensure the correct data type
+1. Adds the HTTP header `content-type: application/json` to ensure the correct data type
 1. Runs `.json()` on the response
 1. Serializes the body payload with `JSON.stringify()`
 1. Appends `params` to the URL of `GET` requests
@@ -37,7 +37,7 @@ In a web page:
 ```
 or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/fetch-json@3.3/dist/fetch-json.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/fetch-json@3.4/dist/fetch-json.min.js></script>
 ```
 ### 2. Node.js server
 Install package for node:
@@ -120,8 +120,8 @@ const resource = { name: 'Jupiter', position: 5 };
 const options = {
    method: 'POST',
    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      'content-type': 'application/json',
+      'accept': 'application/json',
       },
    body: JSON.stringify(resource),
    };
@@ -167,7 +167,6 @@ Notes:
 1. The `params` object for `fetchJson.get()` is converted into a query string and appended to the `url`.
 1. The `resource` object is turned into the body of the HTTP request.
 1. The `options` parameter is passed through to the **Fetch API** (see the `init` [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters)).
-1. `options` is enhanced with a boolean setting for `strictErrors` mode (default `false`) that throws an error to `.catch()` whenever the HTTP response status is 400 or higher.
 
 #### Dynamic HTTP method
 If you need to programmatically set the method, use the format:
@@ -199,7 +198,7 @@ fetchJson.enableLogger();
 ```
 
 ## G) Response Text and Errors Converted to JSON
-The HTTP response body is considered to be JSON if the `Content-Type` is `"application/json"` or
+The HTTP response body is considered to be JSON if the `content-type` is `"application/json"` or
 `"text/javascript"`.&nbsp;
 If the HTTP response body is not JSON, **fetch-json** passes back
 through the promise an object with a `bodyText` string field containing response body text.

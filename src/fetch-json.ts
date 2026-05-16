@@ -4,8 +4,7 @@
 export type Json =             string | number | boolean | null | undefined | JsonObject | Json[];
 export type JsonObject =       { [key: string]: Json };
 export type JsonData =         JsonObject | Json[];
-export type FetchJsonInit =    { strictErrors: boolean };
-export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
+export type FetchJsonOptions = RequestInit;
 export type FetchJsonMethod =  string;
 export type FetchJsonParams =  { [field: string]: string | number | boolean | null | undefined };
 export type FetchJsonAltResponse = {  //used for exceptions, HTTP errors, and text responses
@@ -55,9 +54,8 @@ const fetchJson = {
    request(method: FetchJsonMethod, url: string, data?: unknown,
          options?: FetchJsonOptions): Promise<any> {
       const defaults: FetchJsonOptions = {
-         method:       method,
-         credentials:  'same-origin',
-         strictErrors: false,
+         method:      method,
+         credentials: 'same-origin',
          };
       const settings =  { ...defaults, ...this.baseOptions, ...options };
       const badMethod = !settings.method || typeof settings.method !== 'string';
@@ -65,7 +63,7 @@ const fetchJson = {
       fetchJson.assert(typeof url === 'string', 'URL must be a string.');
       const httpMethod =   settings.method!.trim().toUpperCase();
       const isGetRequest = httpMethod === 'GET';
-      const jsonHeaders: HeadersInit = { Accept: 'application/json' };
+      const jsonHeaders: HeadersInit = { accept: 'application/json' };
       if (!isGetRequest && data)
          jsonHeaders['content-type'] = 'application/json';
       settings.headers = { ...jsonHeaders, ...settings.headers };  //eslint-disable-line @typescript-eslint/no-misused-spread
@@ -113,17 +111,26 @@ const fetchJson = {
             response:    response,
             });
          log('response', response.ok, response.status, contentType);
-         const badStatus = settings.strictErrors && !response.ok;
-         fetchJson.assert(!badStatus, `HTTP response status: ${response.status}`);
-         const responseObj =
+         const returnObj =
             isHead ? response.text().then(headersObj) :
             isJson ? response.json().then(jsonToObj).catch(httpErrToObj) :
             response.text().then(textToObj);
-         return responseObj;
+         return returnObj;
          };
       log('request');
       const settingsRequestInit = <RequestInit>JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
-      return fetch(requestUrl, settingsRequestInit).then(toJson);
+      const exceptionToObj = (error: Error): FetchJsonAltResponse => ({
+         http:        httpLine,
+         ok:          false,
+         error:       true,
+         status:      499,
+         message:     'Fetch API exception [' + error.constructor.name + ']',
+         contentType: null,
+         bodyText:    String(error) + ', Cause: ' + String(error.cause),
+         data:        null,
+         response:    null,
+         });
+      return fetch(requestUrl, settingsRequestInit).then(toJson).catch(exceptionToObj);
       },
 
    get(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<any> {

@@ -302,27 +302,6 @@ describe('HTTP error returned by the server', () => {
       fetchJson.get(url).then(handleData).catch(handleError);
       });
 
-   it('for status 500 throws exception in strict errors mode', (done) => {
-      const url = 'https://centerkey.com/rest/status/500/';
-      const handleData = (data) => {
-         assert.fail(data);
-         };
-      const handleError = (error) => {
-         const actual = {
-            object:  error.constructor.name,
-            name:    error.name,
-            message: error.message,
-            };
-         const expected = {
-            object:  'Error',
-            name:    'Error',
-            message: '[fetch-json] HTTP response status: 500',
-            };
-         assertDeepStrictEqual(actual, expected, done);
-         };
-      fetchJson.get(url, {}, { strictErrors: true }).then(handleData).catch(handleError);
-      });
-
    it('for status 418 contains the message "I\'m a teapot"', (done) => {
       const url = 'https://centerkey.com/rest/status/418/';  //trailing slash to prevent redirect
       const handleData = (actual) => {
@@ -392,7 +371,7 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             };
          assertDeepStrictEqual(actual, expected, done);
          };
-      const getXml = { headers: { Accept: 'application/xml' }};
+      const getXml = { headers: { accept: 'application/xml' }};
       fetchJson.get(url, {}, getXml).then(handleData);
       });
 
@@ -413,7 +392,7 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             };
          assertDeepStrictEqual(actual, expected, done);
          };
-      const getText = { headers: { Accept: 'text/plain' }};
+      const getText = { headers: { accept: 'text/plain' }};
       fetchJson.get(url, {}, getText).then(handleData);
       });
 
@@ -568,54 +547,42 @@ describe('FetchJson class instances', () => {
    });
 
 ////////////////////////////////////////////////////////////////////////////////
-describe('Correct error is thrown', () => {
+describe('Correct error is thrown or returned', () => {
 
    it('when the HTTP method is missing', () => {
-      const makeBogusRequest = () => fetchJson.request(null, 'http://example.com');
+      const makeBogusRequest = () =>
+         fetchJson.request(null, 'http://example.com');
       const exception = { message: '[fetch-json] HTTP method missing or invalid.' };
       assert.throws(makeBogusRequest, exception);
       });
 
    it('when the HTTP method is invalid', () => {
-      const makeBogusRequest = () => fetchJson.request(Infinity, 'http://example.com');
+      const makeBogusRequest = () =>
+         fetchJson.request(Infinity, 'http://example.com');
       const exception = { message: '[fetch-json] HTTP method missing or invalid.' };
       assert.throws(makeBogusRequest, exception);
       });
 
-   it('when the HTTP protocol is bogus', (done) => {
-      const specEnv = typeof JSDOM === 'function' ? 'jsdom' : 'node';
-      const message = {
-         jsdom: 'Network request failed',
-         node:  'fetch failed',
-         };
-      const handleError = (error) => {
-         const actual = {
-            object:  error.constructor.name,
-            name:    error.name,
-            message: error.message,
-            };
-         const expected = {
-            object:  'TypeError',
-            name:    'TypeError',
-            message:  message[specEnv],
-            };
-         assertDeepStrictEqual(actual, expected, done);
-         };
-      fetchJson.get('bogus://example.com').catch(handleError);
-      });
-
    it('when the HTTP domain is bogus', (done) => {
-      const specEnv = typeof JSDOM === 'function' ? 'jsdom' : 'node';
-      const message = {
-         jsdom: 'Network request failed',
-         node:  'fetch failed',
-         };
-      const handleError = (error) => {
-         const actual =   { message: error.message };
-         const expected = { message: message[specEnv] };
+      const url = 'https://bogus-domain.invalid/api/';
+      const getDetails = (isNode) => isNode ?
+         'TypeError: fetch failed, Cause: Error: getaddrinfo ENOTFOUND bogus-domain.invalid' :
+         'TypeError: Network request failed, Cause: undefined';
+      const handleData = (actual) => {
+         const expected = {
+            http:        'GET https://bogus-domain.invalid/api/',
+            ok:          false,
+            error:       true,
+            status:      499,
+            message:     'Fetch API exception [TypeError]',
+            contentType: null,
+            bodyText:    getDetails(mode.type === 'ES Module'),
+            data:        null,
+            response:    null,
+            };
          assertDeepStrictEqual(actual, expected, done);
          };
-      fetchJson.get('https://bogus.bogus').catch(handleError);
+      fetchJson.get(url).then(handleData);
       });
 
    });
