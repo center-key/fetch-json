@@ -8,12 +8,14 @@ export type FetchJsonInit =    { strictErrors: boolean };
 export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
 export type FetchJsonMethod =  string;
 export type FetchJsonParams =  { [field: string]: string | number | boolean | null | undefined };
-export type FetchJsonAltResponse = {  //used when the HTTP response is an error or unexpectedly not JSON
+export type FetchJsonAltResponse = {  //used for exceptions, HTTP errors, and text responses
+   http:        string,         //request HTTP method and endpoint
    ok:          boolean,        //code for HTTP status in the range 200-299
    error:       boolean,        //code for HTTP status not in the range 200-299 or exception thrown
    status:      number,         //code for HTTP status
+   message:     string,         //error information
    contentType: string | null,  //mime-type, such as 'text/html'
-   bodyText:    string,         //body of the HTTP response or error message
+   bodyText:    string,         //body of the HTTP response or error details
    data:        Json,           //body of the HTTP responce if the content is JSON
    response:    Response,       //response object
    };
@@ -65,13 +67,14 @@ const fetchJson = {
       const isGetRequest = httpMethod === 'GET';
       const jsonHeaders: HeadersInit = { Accept: 'application/json' };
       if (!isGetRequest && data)
-         jsonHeaders['Content-Type'] = 'application/json';
+         jsonHeaders['content-type'] = 'application/json';
       settings.headers = { ...jsonHeaders, ...settings.headers };  //eslint-disable-line @typescript-eslint/no-misused-spread
       const paramKeys =  isGetRequest && data ? Object.keys(data) : <string[]>[];
       const getValue =   (key: string) => data ? data[<keyof typeof data>key] : '';
       const toPair =     (key: string) => key + '=' + encodeURIComponent(getValue(key));  //build query string field-value
       const params =     () => paramKeys.map(toPair).join('&');
       const requestUrl = !paramKeys.length ? url : url + (url.includes('?') ? '&' : '?') + params();
+      const httpLine =   `${httpMethod} ${requestUrl}`;
       settings.body =    !isGetRequest && data ? JSON.stringify(data) : null;
       const log = (type: 'response' | 'request', ...items: (string | number | boolean | null)[]) => {
          const logUrl = url.replace(/[?].*/, '');  //security: prevent logging url parameters
@@ -86,9 +89,11 @@ const fetchJson = {
          const isJson =      !!contentType && /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
          const headersObj =  () => Object.fromEntries(response.headers.entries());
          const textToObj = (httpBody: string, data?: Json): FetchJsonAltResponse => ({
+            http:        httpLine,
             ok:          response.ok,
             error:       !response.ok,
             status:      response.status,
+            message:     'Response not JSON',
             contentType: contentType,
             bodyText:    httpBody,
             data:        data ?? null,
@@ -97,22 +102,24 @@ const fetchJson = {
          const jsonToObj = (data: Json): any =>
             response.ok ? data : textToObj(JSON.stringify(data), data);
          const httpErrToObj = (error: Error): FetchJsonAltResponse => ({
+            http:        httpLine,
             ok:          false,
             error:       true,
             status:      500,
+            message:     'Invalid JSON',
             contentType: contentType,
-            bodyText:    'Invalid JSON [' + error.toString() + ']',
+            bodyText:    error.toString(),
             data:        null,
             response:    response,
             });
          log('response', response.ok, response.status, contentType);
          const badStatus = settings.strictErrors && !response.ok;
          fetchJson.assert(!badStatus, `HTTP response status: ${response.status}`);
-         const alt =
+         const responseObj =
             isHead ? response.text().then(headersObj) :
             isJson ? response.json().then(jsonToObj).catch(httpErrToObj) :
             response.text().then(textToObj);
-         return alt;
+         return responseObj;
          };
       log('request');
       const settingsRequestInit = <RequestInit>JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>

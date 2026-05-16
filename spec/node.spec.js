@@ -284,9 +284,11 @@ describe('HTTP error returned by the server', () => {
       const handleData = (actual) => {
          delete actual.response;
          const expected = {
+            http:        'GET https://centerkey.com/rest/status/500/',
             ok:          false,
             error:       true,
             status:      500,
+            message:     'Response not JSON',
             contentType: 'text/plain;charset=UTF-8',
             bodyText:    'Whoa. Deja vu.\n',
             data:        null,
@@ -328,9 +330,11 @@ describe('HTTP error returned by the server', () => {
          delete actual.bodyText;
          delete actual.response;
          const expected = {
+            http:        'GET https://centerkey.com/rest/status/418/',
             ok:          false,
             error:       true,
             status:      418,
+            message:     'Response not JSON',
             contentType: 'text/plain;charset=UTF-8',
             data:        null,
             };
@@ -377,9 +381,11 @@ describe('The "bodyText" field of the object returned from requesting', () => {
          actual.bodyText = getFirstLine(actual.bodyText);  //just verify first line
          delete actual.response;
          const expected = {
+            http:        'GET https://centerkey.com/rest/echo/',
             ok:          true,
             error:       false,
             status:      200,
+            message:     'Response not JSON',
             contentType: 'application/xml',
             bodyText:    '<?xml version="1.0" encoding="utf-8"?>',
             data:        null,
@@ -396,9 +402,11 @@ describe('The "bodyText" field of the object returned from requesting', () => {
          actual.bodyText = getFirstLine(actual.bodyText);  //just verify first line
          delete actual.response;
          const expected = {
+            http:        'GET https://centerkey.com/rest/echo/',
             ok:          true,
             error:       false,
             status:      200,
+            message:     'Response not JSON',
             contentType: 'text/plain;charset=UTF-8',
             bodyText:    '{',
             data:        null,
