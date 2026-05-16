@@ -1,7 +1,7 @@
-//! fetch-json v3.3.9 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.4.0 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '3.3.9',
+    version: '3.4.0',
     baseOptions: {},
     assert(ok, message) {
         if (!ok)
@@ -28,13 +28,14 @@ const fetchJson = {
         const isGetRequest = httpMethod === 'GET';
         const jsonHeaders = { Accept: 'application/json' };
         if (!isGetRequest && data)
-            jsonHeaders['Content-Type'] = 'application/json';
+            jsonHeaders['content-type'] = 'application/json';
         settings.headers = { ...jsonHeaders, ...settings.headers };
         const paramKeys = isGetRequest && data ? Object.keys(data) : [];
         const getValue = (key) => data ? data[key] : '';
         const toPair = (key) => key + '=' + encodeURIComponent(getValue(key));
         const params = () => paramKeys.map(toPair).join('&');
         const requestUrl = !paramKeys.length ? url : url + (url.includes('?') ? '&' : '?') + params();
+        const httpLine = `${httpMethod} ${requestUrl}`;
         settings.body = !isGetRequest && data ? JSON.stringify(data) : null;
         const log = (type, ...items) => {
             const logUrl = url.replace(/[?].*/, '');
@@ -49,29 +50,35 @@ const fetchJson = {
             const isJson = !!contentType && /json|javascript/.test(contentType);
             const headersObj = () => Object.fromEntries(response.headers.entries());
             const textToObj = (httpBody, data) => ({
+                http: httpLine,
                 ok: response.ok,
                 error: !response.ok,
                 status: response.status,
+                message: 'Response not JSON',
                 contentType: contentType,
                 bodyText: httpBody,
                 data: data ?? null,
                 response: response,
             });
             const jsonToObj = (data) => response.ok ? data : textToObj(JSON.stringify(data), data);
-            const errToObj = (error) => ({
+            const httpErrToObj = (error) => ({
+                http: httpLine,
                 ok: false,
                 error: true,
                 status: 500,
+                message: 'Invalid JSON',
                 contentType: contentType,
-                bodyText: 'Invalid JSON [' + error.toString() + ']',
+                bodyText: error.toString(),
                 data: null,
                 response: response,
             });
-            log('response', response.ok, response.status, response.statusText, contentType);
+            log('response', response.ok, response.status, contentType);
             const badStatus = settings.strictErrors && !response.ok;
             fetchJson.assert(!badStatus, `HTTP response status: ${response.status}`);
-            return isHead ? response.text().then(headersObj) :
-                isJson ? response.json().then(jsonToObj).catch(errToObj) : response.text().then(textToObj);
+            const responseObj = isHead ? response.text().then(headersObj) :
+                isJson ? response.json().then(jsonToObj).catch(httpErrToObj) :
+                    response.text().then(textToObj);
+            return responseObj;
         };
         log('request');
         const settingsRequestInit = JSON.parse(JSON.stringify(settings));
@@ -97,10 +104,10 @@ const fetchJson = {
     },
     logger: null,
     getLogHeaders() {
-        return ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Text', 'Type'];
+        return ['Timestamp', 'HTTP', 'Method', 'Domain', 'URL', 'Ok', 'Status', 'Type'];
     },
     getLogHeaderIndexMap() {
-        return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, text: 7, type: 8 };
+        return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, type: 7 };
     },
     enableLogger(customLogger) {
         this.logger = customLogger ?? console.log;

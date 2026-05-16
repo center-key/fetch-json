@@ -9,15 +9,15 @@ export type FetchJsonOptions = RequestInit & Partial<FetchJsonInit>;
 export type FetchJsonMethod =  string;
 export type FetchJsonParams =  { [field: string]: string | number | boolean | null | undefined };
 export type FetchJsonAltResponse = {  //used for exceptions, HTTP errors, and text responses
-   http:        string,         //request HTTP method and endpoint
-   ok:          boolean,        //code for HTTP status in the range 200-299
-   error:       boolean,        //code for HTTP status not in the range 200-299 or exception thrown
-   status:      number,         //code for HTTP status
-   message:     string,         //error information
-   contentType: string | null,  //mime-type, such as 'text/html'
-   bodyText:    string,         //body of the HTTP response or error details
-   data:        Json,           //body of the HTTP responce if the content is JSON
-   response:    Response,       //response object
+   http:        string,           //request HTTP method and endpoint
+   ok:          boolean,          //code for HTTP status in the range 200-299
+   error:       boolean,          //code for HTTP status not in the range 200-299 or exception thrown
+   status:      number,           //code for HTTP status
+   message:     string,           //error information
+   contentType: string | null,    //mime-type, such as 'text/html'
+   bodyText:    string,           //body of the HTTP response or error details
+   data:        Json,             //body of the HTTP responce if the content is JSON
+   response:    Response | null,  //response object
    };
 export type FetchJsonResponse = Json | FetchJsonAltResponse;
 export type FetchJsonLogger = (

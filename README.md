@@ -241,8 +241,8 @@ import { FetchJson } from 'fetch-json';
 
 const fetchJsonA = new FetchJson({ headers: { from: 'aaa@example.com' } }).fetchJson;
 const fetchJsonB = new FetchJson({ headers: { from: 'bbb@example.com' } }).fetchJson;
-fetchJsonA.get('https://dna-dom.org/api/books/').then(display);  //from: aaa@example.com
-fetchJsonB.delete('https://dna-dom.org/api/books/3/');           //from: bbb@example.com
+fetchJsonA.get('https://dna-dom.org/api/books/').then(display);  //"from: aaa@example.com"
+fetchJsonB.delete('https://dna-dom.org/api/books/3/');           //"from: bbb@example.com"
 ```
 
 ## I) TypeScript Declarations

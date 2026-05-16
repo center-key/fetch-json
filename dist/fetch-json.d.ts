@@ -1,4 +1,4 @@
-//! fetch-json v3.3.9 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.4.0 ~~ https://fetch-json.js.org ~~ MIT License
 
 export type Json = string | number | boolean | null | undefined | JsonObject | Json[];
 export type JsonObject = {
@@ -14,13 +14,15 @@ export type FetchJsonParams = {
     [field: string]: string | number | boolean | null | undefined;
 };
 export type FetchJsonAltResponse = {
+    http: string;
     ok: boolean;
     error: boolean;
     status: number;
+    message: string;
     contentType: string | null;
     bodyText: string;
     data: Json;
-    response: Response;
+    response: Response | null;
 };
 export type FetchJsonResponse = Json | FetchJsonAltResponse;
 export type FetchJsonLogger = (dateIso: string, type?: 'response' | 'request', method?: FetchJsonMethod, domain?: string, url?: string, ok?: boolean, status?: number, statusText?: string, contentType?: string | null) => void;
