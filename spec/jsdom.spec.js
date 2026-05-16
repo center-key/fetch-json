@@ -19,7 +19,7 @@ virtualConsole.on('jsdomError', (error) =>
 virtualConsole.forwardTo(console);
 
 // Setup
-const mode =       { type: 'Minified', file: 'dist/fetch-json.min.js' };
+const mode =       { spec: 'jsdom', type: 'Minified', file: 'dist/fetch-json.min.js' };
 const filename =   import.meta.url.replace(/.*\//, '');  //jshint ignore:line
 const dom =        new JSDOM('', { runScripts: 'outside-only', virtualConsole: virtualConsole });
 const scripts =    ['node_modules/whatwg-fetch/dist/fetch.umd.js', mode.file];
@@ -238,9 +238,11 @@ describe('Response returned by HTTP echo service for a planet (object literal)',
 ////////////////////////////////////////////////////////////////////////////////
 describe('HEAD response for a Figy Berry from the PokéAPI', () => {
 
-   it.skip('contains the correct headers', (done) => {
-      // TODO: Breaks with jsdom v28.0 as response.text() returns Promise<string> with garbled string.
-      // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
+   const conditionalIt = mode.spec === 'jsdom' ? it.skip : it;
+   // TODO: Breaks with jsdom v28.0 as response.text() returns Promise<string> with garbled string.
+   // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
+
+   conditionalIt('contains the correct headers', (done) => {
       const url = 'https://pokeapi.co/api/v2/berry/figy';
       const handleData = (data) => {
          const actual = {
@@ -298,9 +300,11 @@ describe('The low-level fetchJson.request() function', () => {
 ////////////////////////////////////////////////////////////////////////////////
 describe('HTTP error returned by the server', () => {
 
-   it.skip('for status 500 contains the message "Internal Server Error"', (done) => {
-      // TODO: Breaks with jsdom v28.0 as response.text() returns Promise<string> with garbled string.
-      // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
+   const conditionalIt = mode.spec === 'jsdom' ? it.skip : it;
+   // TODO: Breaks with jsdom v28.0 as response.text() returns Promise<string> with garbled string.
+   // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
+
+   conditionalIt('for status 500 contains the message "Internal Server Error"', (done) => {
       const url = 'https://centerkey.com/rest/status/500/';
       const handleData = (actual) => {
          delete actual.response;
@@ -326,9 +330,10 @@ describe('HTTP error returned by the server', () => {
    it('for status 418 contains the message "I\'m a teapot"', (done) => {
       const url = 'https://centerkey.com/rest/status/418/';  //trailing slash to prevent redirect
       const handleData = (actual) => {
-         console.info(actual.bodyText);
+         const asciiArt = mode.spec === 'jsdom' ? '[BROKEN TEAPOT]' : actual.bodyText;
          // TODO: actual.bodyText is garbled with jsdom v28.0 as response.text() returns Promise<string> with garbled string.
          // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
+         console.info(asciiArt);
          delete actual.bodyText;
          delete actual.response;
          const expected = {
