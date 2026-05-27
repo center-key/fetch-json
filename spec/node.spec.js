@@ -283,13 +283,15 @@ describe('The low-level fetchJson.request() function', () => {
 ////////////////////////////////////////////////////////////////////////////////
 describe('HTTP error returned by the server', () => {
 
+   const getFirstLine = (text) => text.trim().split('\n', 1)[0];
    const conditionalIt = mode.spec === 'jsdom' ? it.skip : it;
    // TODO: Breaks with jsdom v28.0 as response.text() returns Promise<string> with garbled string.
    // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
 
-   conditionalIt('for status 500 contains the message "Internal Server Error"', (done) => {
+   conditionalIt('for status 500 contains the text "Internal Server Error"', (done) => {
       const url = 'https://centerkey.com/rest/status/500/';
       const handleData = (actual) => {
+         actual.bodyText = getFirstLine(actual.bodyText);  //just verify first line
          delete actual.response;
          const expected = {
             http:        'GET https://centerkey.com/rest/status/500/',
@@ -298,7 +300,7 @@ describe('HTTP error returned by the server', () => {
             status:      500,
             message:     'Response not JSON',
             contentType: 'text/plain;charset=UTF-8',
-            bodyText:    'Whoa. Deja vu.\n',
+            bodyText:    '[HTTP 500 - Internal Server Error]',
             data:        null,
             };
          assertDeepStrictEqual(actual, expected, done);
@@ -310,14 +312,14 @@ describe('HTTP error returned by the server', () => {
       fetchJson.get(url).then(handleData).catch(handleError);
       });
 
-   it('for status 418 contains the message "I\'m a teapot"', (done) => {
+   it('for status 418 contains the text "I\'m a teapot"', (done) => {
       const url = 'https://centerkey.com/rest/status/418/';  //trailing slash to prevent redirect
       const handleData = (actual) => {
-         const asciiArt = mode.spec === 'jsdom' ? '[BROKEN TEAPOT]' : actual.bodyText;
+         if (mode.spec === 'jsdom') actual.bodyText = "[HTTP 418 - I'm a teapot]";
          // TODO: actual.bodyText is garbled with jsdom v28.0 as response.text() returns Promise<string> with garbled string.
          // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
-         console.info(asciiArt);
-         delete actual.bodyText;
+         console.info(actual.bodyText);
+         actual.bodyText = getFirstLine(actual.bodyText);  //just verify first line
          delete actual.response;
          const expected = {
             http:        'GET https://centerkey.com/rest/status/418/',
@@ -326,6 +328,7 @@ describe('HTTP error returned by the server', () => {
             status:      418,
             message:     'Response not JSON',
             contentType: 'text/plain;charset=UTF-8',
+            bodyText:    "[HTTP 418 - I'm a teapot]",
             data:        null,
             };
          assertDeepStrictEqual(actual, expected, done);
@@ -336,12 +339,36 @@ describe('HTTP error returned by the server', () => {
       fetchJson.get(url).then(handleData).catch(handleError);
       });
 
+   conditionalIt('for status 202 contains the text "Accepted"', (done) => {
+      const url = 'https://centerkey.com/rest/status/202/';
+      const handleData = (actual) => {
+         actual.bodyText = getFirstLine(actual.bodyText);  //just verify first line
+         delete actual.response;
+         const expected = {
+            http:        'GET https://centerkey.com/rest/status/202/',
+            ok:          true,
+            error:       false,
+            status:      202,
+            message:     'Response not JSON',
+            contentType: 'text/plain;charset=UTF-8',
+            bodyText:    '[HTTP 202 - Accepted]',
+            data:        null,
+            };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      const handleError = (error) => {
+         assert.fail(error);
+         };
+      fetchJson.enableLogger();
+      fetchJson.get(url).then(handleData).catch(handleError);
+      });
+
    });
 
 ////////////////////////////////////////////////////////////////////////////////
 describe('The "bodyText" field of the object returned from requesting', () => {
 
-   const getFirstLine = (string) => string.split('\n', 1)[0];
+   const getFirstLine = (text) => text.trim().split('\n', 1)[0];
 
    it('an HTML web page is a string that begins with "<!doctype html>"', (done) => {
       const url = 'https://pretty-print-json.js.org';
