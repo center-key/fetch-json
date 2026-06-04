@@ -9,13 +9,13 @@ export type FetchJsonMethod =  string;
 export type FetchJsonParams =  { [field: string]: string | number | boolean | null | undefined };
 export type FetchJsonAltResponse = {  //used for exceptions, HTTP errors, and text responses
    http:        string,           //request HTTP method and endpoint
-   ok:          boolean,          //code for HTTP status in the range 200-299
    error:       boolean,          //code for HTTP status not in the range 200-299 or exception thrown
+   ok:          boolean,          //code for HTTP status in the range 200-299
    status:      number,           //code for HTTP status
    message:     string,           //error information
    contentType: string | null,    //mime-type, such as 'text/html'
    bodyText:    string,           //body of the HTTP response or error details
-   data:        Json,             //body of the HTTP responce if the content is JSON
+   data:        Json,             //body of the HTTP response if the content is JSON
    response:    Response | null,  //response object
    };
 export type FetchJsonResponse = Json | FetchJsonAltResponse;
@@ -88,8 +88,8 @@ const fetchJson = {
          const headersObj =  () => Object.fromEntries(response.headers.entries());
          const textToObj = (httpBody: string, data?: Json): FetchJsonAltResponse => ({
             http:        httpLine,
-            ok:          response.ok,
             error:       !response.ok,
+            ok:          response.ok,
             status:      response.status,
             message:     'Response not JSON',
             contentType: contentType,
@@ -101,8 +101,8 @@ const fetchJson = {
             response.ok ? data : textToObj(JSON.stringify(data), data);
          const httpErrToObj = (error: Error): FetchJsonAltResponse => ({
             http:        httpLine,
-            ok:          false,
             error:       true,
+            ok:          false,
             status:      500,
             message:     'Invalid JSON',
             contentType: contentType,
@@ -121,8 +121,8 @@ const fetchJson = {
       const settingsRequestInit = <RequestInit>JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
       const exceptionToObj = (error: Error): FetchJsonAltResponse => ({
          http:        httpLine,
-         ok:          false,
          error:       true,
+         ok:          false,
          status:      499,
          message:     'Fetch API exception [' + error.constructor.name + ']',
          contentType: null,
@@ -168,7 +168,7 @@ const fetchJson = {
       },
 
    enableLogger(customLogger?: FetchJsonLogger): FetchJsonLogger {
-      this.logger = customLogger ?? console.log;
+      this.logger = customLogger ?? console.info;
       return this.logger;
       },
 

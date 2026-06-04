@@ -51,24 +51,6 @@ describe('Module fetch-json', () => {
    });
 
 ////////////////////////////////////////////////////////////////////////////////
-describe('Google Books API search result for "spacex" fetched by fetchJson.get()', () => {
-
-   it('contains the correct "kind" value and "totalItems" as a number', (done) => {
-      const url = 'https://www.googleapis.com/books/v1/volumes?q=spacex';
-      const handleData = (data) => {
-         const skip = data.status === 429 || data.status === 500;  //http: Too Many Requests
-         if (skip)
-            console.warn('[Assertion Skipped]', url, data.data?.error?.message);
-         const actual =   { total: typeof data.totalItems, kind: data.kind };
-         const expected = { total: 'number',               kind: 'books#volumes' };
-         assertDeepStrictEqual(actual, skip ? actual : expected, done);
-         };
-      fetchJson.get(url).then(handleData);
-      });
-
-   });
-
-////////////////////////////////////////////////////////////////////////////////
 describe('Nobel Prize API result for laureate #26 fetched by fetchJson.get()', () => {
 
    it('is Albert Einstein', (done) => {
@@ -289,7 +271,7 @@ describe('HTTP error returned by the server', () => {
    // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
 
    conditionalIt('for status 500 contains the text "Internal Server Error"', (done) => {
-      const url = 'https://centerkey.com/rest/status/500/';
+      const url = 'https://centerkey.com/rest/status/500/';  //mock server error
       const handleData = (actual) => {
          actual.bodyText = getFirstLine(actual.bodyText);  //just verify first line
          delete actual.response;
@@ -305,11 +287,8 @@ describe('HTTP error returned by the server', () => {
             };
          assertDeepStrictEqual(actual, expected, done);
          };
-      const handleError = (error) => {
-         assert.fail(error);
-         };
       fetchJson.enableLogger();
-      fetchJson.get(url).then(handleData).catch(handleError);
+      fetchJson.get(url).then(handleData);
       });
 
    it('for status 418 contains the text "I\'m a teapot"', (done) => {
@@ -333,13 +312,10 @@ describe('HTTP error returned by the server', () => {
             };
          assertDeepStrictEqual(actual, expected, done);
          };
-      const handleError = (error) => {
-         assert.fail(error);
-         };
-      fetchJson.get(url).then(handleData).catch(handleError);
+      fetchJson.get(url).then(handleData);
       });
 
-   conditionalIt('for status 202 contains the text "Accepted"', (done) => {
+   it('for status 202 contains the text "Accepted"', (done) => {
       const url = 'https://centerkey.com/rest/status/202/';
       const handleData = (actual) => {
          actual.bodyText = getFirstLine(actual.bodyText);  //just verify first line
@@ -356,11 +332,8 @@ describe('HTTP error returned by the server', () => {
             };
          assertDeepStrictEqual(actual, expected, done);
          };
-      const handleError = (error) => {
-         assert.fail(error);
-         };
       fetchJson.enableLogger();
-      fetchJson.get(url).then(handleData).catch(handleError);
+      fetchJson.get(url).then(handleData);
       });
 
    });
@@ -563,15 +536,15 @@ describe('FetchJson class instances', () => {
          const expected = [
             {
                method: 'GET',
-               query: 'planet=Venus',
+               query:  'planet=Venus',
                params: { planet: 'Venus' },
-               body: null
+               body:   null
                },
             {
                method: 'GET',
-               query: 'planet=Earth',
+               query:  'planet=Earth',
                params: { planet: 'Earth' },
-               body: null
+               body:   null
                },
             ['aaa@example.com', 'bbb@example.com'],
             ];

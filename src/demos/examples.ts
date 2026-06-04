@@ -11,7 +11,7 @@
 //    $ node build/demos/examples.js
 
 // Setup
-import { fetchJson, FetchJsonAltResponse, JsonObject } from '../fetch-json.js';
+import { fetchJson, FetchJsonAltResponse, FetchJsonResponse, JsonObject } from '../../dist/fetch-json.js';
 
 // Type Declarations
 export type BookData = { items: Book[] };
@@ -33,9 +33,9 @@ const example = {
 
       // NASA APoD
       const url =    'https://api.nasa.gov/planetary/apod';
-      const params = { api_key: 'DEMO_KEY' };
-      const handleData = (data: NasaApod) =>
-         console.info('The NASA APoD for today is at:', data.url);
+      const params = { api_key: 'DEMO_KEY', count: 1 };
+      const handleData = (data: NasaApod[]) =>
+         console.info('The NASA APoD for today is at:', data[0]?.url);
       fetchJson.get(url, params).then(handleData);
 
       },
@@ -43,34 +43,49 @@ const example = {
    jupiter(): void {
 
       // Create Jupiter
+      const url = 'https://centerkey.com/rest/echo/';
       const resource = { name: 'Jupiter', position: 5 };
       const handleData = (data: JsonObject) =>
          console.info('New planet:', data);
-      fetchJson.post('https://centerkey.com/rest/echo/', resource)
-         .then(handleData)
-         .catch(console.error);
+      fetchJson.post(url, resource).then(handleData);
 
       },
 
    teapot(): void {
 
       // Fetch me some tea
+      const url = 'https://centerkey.com/rest/status/418/';
       const handleData = (data: FetchJsonAltResponse) =>
          console.info(data.bodyText);
-      fetchJson.get('https://centerkey.com/rest/status/418/').then(handleData);
+      fetchJson.get(url).then(handleData);
 
       },
 
    books(): void {
 
       // Get books about SpaceX
+      const url = 'https://www.googleapis.com/books/v1/volumes?q=spacex';
       const handleData = (data: BookData) => {
          const getTitle = (book: Book) => book.volumeInfo.title;
          console.info('SpaceX books:');
          console.info(data.items.map(getTitle));
          };
-      const url = 'https://www.googleapis.com/books/v1/volumes?q=spacex';
-      fetchJson.get(url).then(handleData).catch(console.error);
+      fetchJson.get(url).then(handleData);
+
+      },
+
+   serverError(): void {
+
+      // HTTP status code 500
+      const url = 'https://centerkey.com/rest/status/500/';  //mock server error
+      const handleData = (data: FetchJsonResponse) => {
+         const response = <FetchJsonAltResponse>data;
+         if (response.error)
+            console.error('HTTP Status Code:', response.status, data);
+         else
+            console.info('Valid JSON Data:', data);
+         };
+      fetchJson.get(url).then(handleData);
 
       },
 
@@ -80,7 +95,8 @@ const example = {
 example.nasa();
 example.jupiter();
 example.teapot();
-example.books();
+// example.books();
+example.serverError();
 
 // Wait for HTTP requests to complete
 const done = () => console.info('\nDone.');

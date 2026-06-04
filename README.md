@@ -37,7 +37,7 @@ In a web page:
 ```
 or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ```html
-<script src=https://cdn.jsdelivr.net/npm/fetch-json@3.4/dist/fetch-json.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/fetch-json@3.5/dist/fetch-json.min.js></script>
 ```
 ### 2. Node.js server
 Install package for node:
@@ -55,9 +55,9 @@ Fetch the NASA Astronomy Picture of the Day:
 ```javascript
 // NASA APoD
 const url =    'https://api.nasa.gov/planetary/apod';
-const params = { api_key: 'DEMO_KEY' };
+const params = { api_key: 'DEMO_KEY', count: 1 };
 const handleData = (data) =>
-   console.info('The NASA APoD for today is at:', data.url);
+   console.info('The NASA APoD for today is at:', data[0]?.url);
 fetchJson.get(url, params).then(handleData);
 ```
 Example output:
@@ -73,8 +73,7 @@ const resource = { name: 'Jupiter', position: 5 };
 const handleData = (data) =>
    console.info('New planet:', data);  //http response body as an object literal
 fetchJson.post('https://centerkey.com/rest/echo/', resource)
-   .then(handleData)
-   .catch(console.error);
+   .then(handleData);
 ```
 For more examples, see the Mocha specification suite:<br>
 [spec/node.spec.js](spec/node.spec.js)
@@ -83,6 +82,42 @@ For more examples, see the Mocha specification suite:<br>
 To see a website that incorporates **fetch-json**, check out DataDashboard:<br>
 [data-dashboard.js.org 📊](https://data-dashboard.js.org)
 
+### 3. Error Handling
+Fetch from a test endpoint that responds with an HTTP error:
+```javascript
+// handle HTTP status code 500
+const url = 'https://centerkey.com/rest/status/500/';  //mock server error
+const handleData = (data) => {
+   if (data.error)
+      console.error('HTTP Status Code:', data.status, data);
+   else
+      console.info('Valid JSON Data:', data);
+   };
+fetchJson.get(url).then(handleData);
+```
+Example output:
+```
+HTTP Status Code: 500
+{
+   error: true,
+   ok: false,
+   status: 500,
+   message: 'Response not JSON',
+   contentType: 'text/plain;charset=UTF-8',
+   bodyText: 'Internal Server Error',
+   response: {
+      status: 500,
+      headers: Headers {
+         'access-control-allow-origin': '*',
+         'content-type': 'text/plain;charset=UTF-8',
+         'cache-control': 'public, max-age=30',
+      },
+      ok: false,
+      url: 'https://centerkey.com/rest/status/500/'
+   }
+}
+```
+
 ## D) Examples Using async/await
 ### 1. HTTP GET
 Fetch the NASA Astronomy Picture of the Day:
@@ -90,9 +125,9 @@ Fetch the NASA Astronomy Picture of the Day:
 // NASA APoD
 const show = async () => {
    const url =    'https://api.nasa.gov/planetary/apod';
-   const params = { api_key: 'DEMO_KEY' };
+   const params = { api_key: 'DEMO_KEY', count: 1  };
    const data =   await fetchJson.get(url, params);
-   console.info('The NASA APoD for today is at:', data.url);
+   console.info('The NASA APoD for today is at:', data[0]?.url);
    };
 show();
 ```
@@ -129,8 +164,7 @@ const handleData = (data) =>
    console.info(data);  //http response body as an object literal
 fetch('https://centerkey.com/rest/echo/', options)
    .then(response => response.json())
-   .then(handleData)
-   .catch(console.error);
+   .then(handleData);
 ```
 The example _with_ **fetch-json** and the example _without_ **fetch-json** each produce the same
 output.
@@ -211,8 +245,10 @@ For example, an HTTP response for an error status of 500 would be converted to a
 similar to:
 ```javascript
 {
+   error:       true,
    ok:          false,
    status:      500,  //INTERNAL SERVER ERROR
+   message:     'Response not JSON',
    contentType: 'text/html; charset=utf-8',
    bodyText:    '<!doctype html><html lang=en><body>Server Error</body></html>',
    data:        null,
@@ -271,26 +307,19 @@ If you're using an older version of **node,** stick with **fetch-json v2.7** and
 $ npm install node-fetch
 ```
 
-## K) Build Environment
-Check out the `runScriptsConfig` section in [package.json](package.json) for an
-interesting approach to organizing build tasks.
-
-**CLI Build Tools for package.json**
-   - 🎋 [add-dist-header](https://github.com/center-key/add-dist-header):&nbsp; _Prepend a one-line banner comment (with license notice) to distribution files_
-   - 📄 [copy-file-util](https://github.com/center-key/copy-file-util):&nbsp; _Copy or rename a file with optional package version number_
-   - 📂 [copy-folder-util](https://github.com/center-key/copy-folder-util):&nbsp; _Recursively copy files from one folder to another folder_
-   - 🪺 [recursive-exec](https://github.com/center-key/recursive-exec):&nbsp; _Run a command on each file in a folder and its subfolders_
-   - 🔍 [replacer-util](https://github.com/center-key/replacer-util):&nbsp; _Find and replace strings or template outputs in text files_
-   - 🔢 [rev-web-assets](https://github.com/center-key/rev-web-assets):&nbsp; _Revision web asset filenames with cache busting content hash fingerprints_
-   - 🚆 [run-scripts-util](https://github.com/center-key/run-scripts-util):&nbsp; _Organize npm package.json scripts into groups of easy to manage commands_
-   - 🚦 [w3c-html-validator](https://github.com/center-key/w3c-html-validator):&nbsp; _Check the markup validity of HTML files using the W3C validator_
-
 <br>
 
 ---
-_"Stop trying to make fetch happen without [#fetchJson](https://x.com/hashtag/fetchJson)!"_
-
-Feel free to submit questions at:<br>
-[github.com/center-key/fetch-json/issues](https://github.com/center-key/fetch-json/issues)
-
 [MIT License](LICENSE.txt)
+
+[🛡️ npm Security Aggregator](https://center-key.github.io/npm-security-aggregator/?package=fetch-json)
+
+See the `runScriptsConfig` section of [`package.json`](package.json) for a clean way to organize build tasks:
+   - 🎋 [`add-dist-header`](https://github.com/center-key/add-dist-header) &mdash;&nbsp; _Prepend a one-line banner comment (with license notice) to distribution files_
+   - 📄 [`copy-file-util`](https://github.com/center-key/copy-file-util) &mdash;&nbsp; _Copy or rename a file with optional package version number_
+   - 📂 [`copy-folder-util`](https://github.com/center-key/copy-folder-util) &mdash;&nbsp; _Recursively copy files from one folder to another folder_
+   - 🪺 [`recursive-exec`](https://github.com/center-key/recursive-exec) &mdash;&nbsp; _Run a command on each file in a folder and its subfolders_
+   - 🔍 [`replacer-util`](https://github.com/center-key/replacer-util) &mdash;&nbsp; _Find and replace strings or template outputs in text files_
+   - 🔢 [`rev-web-assets`](https://github.com/center-key/rev-web-assets) &mdash;&nbsp; _Revision web asset filenames with cache busting content hash fingerprints_
+   - 🚆 [`run-scripts-util`](https://github.com/center-key/run-scripts-util) &mdash;&nbsp; _Organize npm package.json scripts into groups of easy-to-manage commands_
+   - 🚦 [`w3c-html-validator`](https://github.com/center-key/w3c-html-validator) &mdash;&nbsp; _Check the markup validity of HTML files using the W3C validator_

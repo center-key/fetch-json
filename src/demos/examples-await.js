@@ -28,18 +28,18 @@ const example = {
 
       // NASA APoD
       const url =    'https://api.nasa.gov/planetary/apod';
-      const params = { api_key: 'DEMO_KEY' };
+      const params = { api_key: 'DEMO_KEY', count: 1 };
       const data =   await fetchJson.get(url, params);
-      console.info('The NASA APoD for today is at:', data.url);
+      console.info('The NASA APoD for today is at:', data[0]?.url);
 
       },
 
    jupiter: async () => {
 
       // Create Jupiter
+      const url =      'https://centerkey.com/rest/echo/';
       const resource = { name: 'Jupiter', position: 5 };
-      const data = await fetchJson.post('https://centerkey.com/rest/echo/', resource)
-         .catch(console.error);
+      const data =     await fetchJson.post(url, resource);
       console.info('New planet:', data);
 
       },
@@ -47,7 +47,8 @@ const example = {
    teapot: async () => {
 
       // Fetch me some tea
-      const data = await fetchJson.get('https://centerkey.com/rest/status/418/');
+      const url =  'https://centerkey.com/rest/status/418/';
+      const data = await fetchJson.get(url);
       console.info(data.bodyText);
 
       },
@@ -56,10 +57,22 @@ const example = {
 
       // Get books about SpaceX
       const url =      'https://www.googleapis.com/books/v1/volumes?q=spacex';
-      const data =     await fetchJson.get(url).catch(console.error);
+      const data =     await fetchJson.get(url);
       const getTitle = (book) => book.volumeInfo.title;
       console.info('SpaceX books:');
       console.info(data.items.map(getTitle));
+
+      },
+
+   serverError: async () => {
+
+      // HTTP status code 500
+      const url =  'https://centerkey.com/rest/status/500/';  //mock server error
+      const data = await fetchJson.get(url);
+      if (data.error)
+         console.error('HTTP Status Code:', data.status, data);
+      else
+         console.info('Valid JSON Data:', data);
 
       },
 
@@ -69,7 +82,8 @@ const example = {
 example.nasa();
 example.jupiter();
 example.teapot();
-example.books();
+// example.books();
+example.serverError();
 
 // Wait for HTTP requests to complete
 const done = () => console.info('\nDone.');

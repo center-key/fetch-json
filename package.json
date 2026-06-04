@@ -67,11 +67,16 @@
          "replacer    src/website                        docs",
          "replacer --virtual-input . --rename=robots.txt docs --content=#{{space}}Allow{{space}}bots",
          "replacer --virtual-input . --rename=CNAME      docs --content=fetch-json.js.org"
+      ],
+      "test": [
+         "mocha spec --ignore 'spec/jsdom*' --timeout 7000",
+         "mocha spec/jsdom.spec.js          --timeout 7000"
       ]
    },
    "scripts": {
+      "t": "mocha src/demos/plain-fetch.js",
       "pretest": "run-scripts clean lint build dist publish",
-      "test": "mocha spec --timeout 7000",
+      "test": "run-scripts test",
       "posttest": "html-validator spec docs",
       "examples": "node src/demos/examples.js",
       "dev": "tsc && node src/demos/dev.js",
