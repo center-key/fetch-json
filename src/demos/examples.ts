@@ -11,7 +11,7 @@
 //    $ node build/demos/examples.js
 
 // Setup
-import { fetchJson, FetchJsonAltResponse, FetchJsonResponse, JsonObject } from '../../dist/fetch-json.js';
+import { fetchJson, FetchJsonAltResponse, FetchJsonResponse, JsonObject } from '../fetch-json.js';
 
 // Type Declarations
 export type BookData = { items: Book[] };
