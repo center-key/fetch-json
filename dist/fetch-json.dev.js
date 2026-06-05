@@ -1,7 +1,7 @@
-//! fetch-json v3.5.0 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.5.1 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '3.5.0',
+    version: '3.5.1',
     baseOptions: {},
     assert(ok, message) {
         if (!ok)
@@ -50,8 +50,8 @@ const fetchJson = {
             const headersObj = () => Object.fromEntries(response.headers.entries());
             const textToObj = (httpBody, data) => ({
                 http: httpLine,
+                error: true,
                 ok: response.ok,
-                error: !response.ok,
                 status: response.status,
                 message: 'Response not JSON',
                 contentType: contentType,
@@ -62,8 +62,8 @@ const fetchJson = {
             const jsonToObj = (data) => response.ok ? data : textToObj(JSON.stringify(data), data);
             const httpErrToObj = (error) => ({
                 http: httpLine,
-                ok: false,
                 error: true,
+                ok: false,
                 status: 500,
                 message: 'Invalid JSON',
                 contentType: contentType,
@@ -81,8 +81,8 @@ const fetchJson = {
         const settingsRequestInit = JSON.parse(JSON.stringify(settings));
         const exceptionToObj = (error) => ({
             http: httpLine,
-            ok: false,
             error: true,
+            ok: false,
             status: 499,
             message: 'Fetch API exception [' + error.constructor.name + ']',
             contentType: null,
@@ -118,7 +118,7 @@ const fetchJson = {
         return { timestamp: 0, http: 1, method: 2, domain: 3, url: 4, ok: 5, status: 6, type: 7 };
     },
     enableLogger(customLogger) {
-        this.logger = customLogger ?? console.log;
+        this.logger = customLogger ?? console.info;
         return this.logger;
     },
     disableLogger() {
