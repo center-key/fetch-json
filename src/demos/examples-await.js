@@ -67,12 +67,18 @@ const example = {
    serverError: async () => {
 
       // HTTP status code 500
-      const url =  'https://centerkey.com/rest/status/500/';  //mock server error
-      const data = await fetchJson.get(url);
-      if (data.error)
-         console.error('HTTP Status Code:', data.status, data);
+      const url1 = 'https://dna-dom.org/api/books/3';         //valid book
+      const url2 = 'https://centerkey.com/rest/status/500/';  //mock server error
+      const data1 = await fetchJson.get(url1);  //response: ok
+      if (data1.error)
+         console.error('HTTP Status Code:', data1.status, data1);
       else
-         console.info('Valid JSON Data:', data);
+         console.info('Book Resource:', data1);
+      const data2 = await fetchJson.get(url2);  //response: error
+      if (data2.error)
+         console.error('HTTP Status Code:', data2.status, data2);
+      else
+         console.info('Book Resource:', data2);
 
       },
 

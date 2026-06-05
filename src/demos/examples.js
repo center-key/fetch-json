@@ -72,14 +72,16 @@ const example = {
    serverError() {
 
       // HTTP status code 500
-      const url = 'https://centerkey.com/rest/status/500/';  //mock server error
+      const url1 = 'https://dna-dom.org/api/books/3';         //valid book
+      const url2 = 'https://centerkey.com/rest/status/500/';  //mock server error
       const handleData = (data) => {
          if (data.error)
             console.error('HTTP Status Code:', data.status, data);
          else
-            console.info('Valid JSON Data:', data);
+            console.info('Book Resource:', data);
          };
-      fetchJson.get(url).then(handleData);
+      fetchJson.get(url1).then(handleData);  //response: ok
+      fetchJson.get(url2).then(handleData);  //response: error
 
       },
 

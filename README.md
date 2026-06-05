@@ -69,11 +69,11 @@ Example output:
 Create a resource for the planet Jupiter:
 ```javascript
 // Create Jupiter
+const url =      'https://centerkey.com/rest/echo/';
 const resource = { name: 'Jupiter', position: 5 };
 const handleData = (data) =>
    console.info('New planet:', data);  //http response body as an object literal
-fetchJson.post('https://centerkey.com/rest/echo/', resource)
-   .then(handleData);
+fetchJson.post(url, resource).then(handleData);
 ```
 For more examples, see the Mocha specification suite:<br>
 [spec/node.spec.js](spec/node.spec.js)
@@ -117,6 +117,9 @@ HTTP Status Code: 500
    }
 }
 ```
+If the endpoint is expected to return JSON, check the `error` field.&nbsp;
+If the endpoint is expected to return text, CSV, XML, or HTML, check the `ok` field
+or `status` field and read the payload from the `bodyText` field.
 
 ## D) Examples Using async/await
 ### 1. HTTP GET
@@ -135,8 +138,9 @@ show();
 Create a resource for the planet Jupiter:
 ```javascript
 // Create Jupiter
+const url = 'https://centerkey.com/rest/echo/';
 const create = async (resource) => {
-   const data = await fetchJson.post('https://centerkey.com/rest/echo/', resource);
+   const data = await fetchJson.post(url, resource);
    console.info('New planet:', data);  //http response body as an object literal
    };
 create({ name: 'Jupiter', position: 5 });
@@ -151,6 +155,7 @@ done calling the **Fetch API**
 directly with the code:
 ```javascript
 // Create Jupiter (WITHOUT fetch-json)
+const url =      'https://centerkey.com/rest/echo/';
 const resource = { name: 'Jupiter', position: 5 };
 const options = {
    method: 'POST',
@@ -162,7 +167,7 @@ const options = {
    };
 const handleData = (data) =>
    console.info(data);  //http response body as an object literal
-fetch('https://centerkey.com/rest/echo/', options)
+fetch(url, options)
    .then(response => response.json())
    .then(handleData);
 ```
@@ -232,8 +237,22 @@ fetchJson.enableLogger();
 ```
 
 ## G) Response Text and Errors Converted to JSON
-The HTTP response body is considered to be JSON if the `content-type` is `"application/json"` or
-`"text/javascript"`.&nbsp;
+
+> [!NOTE]
+> **Protocol-Level vs. Application Level**<br>
+> HTTP status codes are a mess.&nbsp;
+> This is not an opinion &mdash; it's a fact.&nbsp;
+> This fact is proven out by the large number of HTTP status code questions on Stack overflow with multiple very popular directly conflicting answers.&nbsp;
+> The mutually exclusive answers will often each have hundreds of upvotes.&nbsp;
+> At its core this problem is due to the impedance mismatch between protocol-level status and application-level status.&nbsp;
+> The "P" in HTTP stands for protocol, and it's the wrong level to pass application level status codes.&nbsp;
+> Applications cannot reasonably be expected to conform to a fixed set of status codes defined back in the 1990s.
+>
+> **fetch-json** returns the requested data as a simple object (JavaScript Object Literal) for any JSON response with an HTTP status code of `200`.&nbsp;
+> All other responses are wrapped into a simple object so it’s straightforward to analyze the HTTP status code, `"content-type"` header, response `"ok"` field, and body payload as needed.
+
+The HTTP response body is considered to be JSON if the `content-type` is
+`"application/json"` or `"text/javascript"`.&nbsp;
 If the HTTP response body is not JSON, **fetch-json** passes back
 through the promise an object with a `bodyText` string field containing response body text.
 
@@ -264,9 +283,10 @@ Use `fetchJson.setBaseOptions()` to configure options to be used on future **fet
 The example below sets the `Authorization` HTTP header so it is sent on the subsequent GET and
 DELETE requests:
 ```javascript
+const url = 'https://dna-dom.org/api/books/3';
 fetchJson.setBaseOptions({ headers: { Authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } });
-fetchJson.get('https://dna-dom.org/api/books/').then(display);  //with auth header
-fetchJson.delete('https://dna-dom.org/api/books/3/');           //with auth header
+fetchJson.get(url).then(display);  //with auth header
+fetchJson.delete(url);             //with auth header
 ```
 
 To have multiple base options available at the same time, use the `FetchJson` class to instantiate
@@ -276,18 +296,40 @@ import { FetchJson } from 'fetch-json';
 
 const fetchJsonA = new FetchJson({ headers: { from: 'aaa@example.com' } }).fetchJson;
 const fetchJsonB = new FetchJson({ headers: { from: 'bbb@example.com' } }).fetchJson;
-fetchJsonA.get('https://dna-dom.org/api/books/').then(display);  //"from: aaa@example.com"
-fetchJsonB.delete('https://dna-dom.org/api/books/3/');           //"from: bbb@example.com"
+const url = 'https://dna-dom.org/api/books/3';
+fetchJsonA.get(url).then(display);  //"from: aaa@example.com"
+fetchJsonB.delete(url);             //"from: bbb@example.com"
 ```
 
-## I) TypeScript Declarations
+## I) TypeScript
 See the TypeScript declarations at the top of the [fetch-json.ts](src/fetch-json.ts) file.
 
-The declarations provide type information about the API.  For example, the `fetchJson.post()`
-function returns a **Promise** for a `FetchResponse`:
+The declarations provide type information about the API.&nbsp;
+For example, the `fetchJson.post()` function returns a **Promise** for a `FetchResponse`:
 ```typescript
 fetchJson.post(url: string, resource?: RequestData,
    options?: FetchOptions): Promise<FetchResponse>
+```
+
+Example TypeScript for fetching a library book:
+```typescript
+import { fetchJson, FetchJsonErrorResponse } from 'fetch-json';
+type Book = {
+   id:     number,
+   title:  string,
+   author: string,
+   };
+
+const url1 = 'https://dna-dom.org/api/books/3';
+const handleData = (data: Book | FetchJsonErrorResponse) => {
+   const response = <FetchJsonErrorResponse>data;
+   const book =     <Book>data;
+   if (response.error)
+      console.error('HTTP Status Code:', response.status, data);
+   else
+      console.info('Book Resource:', book);
+   };
+fetchJson.get(url).then(handleData);
 ```
 
 ## J) Add Fetch to JSDOM

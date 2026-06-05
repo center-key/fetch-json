@@ -298,8 +298,8 @@ describe('HTTP error returned by the server', () => {
          delete actual.response;
          const expected = {
             http:        'GET https://centerkey.com/rest/status/500/',
-            ok:          false,
             error:       true,
+            ok:          false,
             status:      500,
             message:     'Response not JSON',
             contentType: 'text/plain;charset=UTF-8',
@@ -323,8 +323,8 @@ describe('HTTP error returned by the server', () => {
          delete actual.response;
          const expected = {
             http:        'GET https://centerkey.com/rest/status/418/',
-            ok:          false,
             error:       true,
+            ok:          false,
             status:      418,
             message:     'Response not JSON',
             contentType: 'text/plain;charset=UTF-8',
@@ -343,8 +343,8 @@ describe('HTTP error returned by the server', () => {
          delete actual.response;
          const expected = {
             http:        'GET https://centerkey.com/rest/status/202/',
+            error:       true,
             ok:          true,
-            error:       false,
             status:      202,
             message:     'Response not JSON',
             contentType: 'text/plain;charset=UTF-8',
@@ -393,8 +393,8 @@ describe('The "bodyText" field of the object returned from requesting', () => {
          delete actual.response;
          const expected = {
             http:        'GET https://centerkey.com/rest/echo/',
+            error:       true,
             ok:          true,
-            error:       false,
             status:      200,
             message:     'Response not JSON',
             contentType: 'application/xml',
@@ -414,8 +414,8 @@ describe('The "bodyText" field of the object returned from requesting', () => {
          delete actual.response;
          const expected = {
             http:        'GET https://centerkey.com/rest/echo/',
+            error:       true,
             ok:          true,
-            error:       false,
             status:      200,
             message:     'Response not JSON',
             contentType: 'text/plain;charset=UTF-8',
@@ -603,8 +603,8 @@ describe('Correct error is thrown or returned', () => {
       const handleData = (actual) => {
          const expected = {
             http:        'GET https://bogus-domain.invalid/api/',
-            ok:          false,
             error:       true,
+            ok:          false,
             status:      499,
             message:     'Fetch API exception [TypeError]',
             contentType: null,

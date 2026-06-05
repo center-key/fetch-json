@@ -7,26 +7,27 @@ export type JsonData =         JsonObject | Json[];
 export type FetchJsonOptions = RequestInit;
 export type FetchJsonMethod =  string;
 export type FetchJsonParams =  { [field: string]: string | number | boolean | null | undefined };
-export type FetchJsonAltResponse = {  //used for exceptions, HTTP errors, and text responses
+export type FetchJsonErrorResponse = {  //used for exceptions, HTTP errors, and text responses
    http:        string,           //request HTTP method and endpoint
-   error:       boolean,          //code for HTTP status not in the range 200-299 or exception thrown
-   ok:          boolean,          //code for HTTP status in the range 200-299
-   status:      number,           //code for HTTP status
+   error:       boolean,          //response must be valid JSON with an HTTP status code of 200
+   ok:          boolean,          //HTTP status code is in the range 200-299
+   status:      number,           //HTTP status code
    message:     string,           //error information
    contentType: string | null,    //mime-type, such as 'text/html'
    bodyText:    string,           //body of the HTTP response or error details
    data:        Json,             //body of the HTTP response if the content is JSON
-   response:    Response | null,  //response object
+   response:    Response | null,  //HTTP response object
    };
-export type FetchJsonResponse = Json | FetchJsonAltResponse;
+export type FetchJsonAltResponse = FetchJsonErrorResponse;  //useful for non-JSON responses: XML, HTML, CSV
+export type FetchJsonResponse = Json | FetchJsonErrorResponse;
 export type FetchJsonLogger = (
    dateIso:      string,                  //timestamp, such as '2022-12-06T07:24:40.330Z'
    type?:        'response' | 'request',  //message direction
    method?:      FetchJsonMethod,         //action for HTTP request, such as 'POST'
    domain?:      string,                  //hostname
    url?:         string,                  //address of requested resource (without parameters)
-   ok?:          boolean,                 //code for HTTP status in the range 200-299
-   status?:      number,                  //code for HTTP status, typically 200
+   ok?:          boolean,                 //HTTP status code is in the range 200-299
+   status?:      number,                  //HTTP status code, typically 200
    statusText?:  string,                  //message corresponding to the code, typically 'OK' [DEPRECATED for HTTP/2]
    contentType?: string | null,           //mime-type, typically 'application/json'
    ) => void;
@@ -86,9 +87,9 @@ const fetchJson = {
          const isHead =      httpMethod === 'HEAD';
          const isJson =      !!contentType && /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
          const headersObj =  () => Object.fromEntries(response.headers.entries());
-         const textToObj = (httpBody: string, data?: Json): FetchJsonAltResponse => ({
+         const textToObj = (httpBody: string, data?: Json): FetchJsonErrorResponse => ({
             http:        httpLine,
-            error:       !response.ok,
+            error:       true,
             ok:          response.ok,
             status:      response.status,
             message:     'Response not JSON',
@@ -99,7 +100,7 @@ const fetchJson = {
             });
          const jsonToObj = (data: Json): any =>
             response.ok ? data : textToObj(JSON.stringify(data), data);
-         const httpErrToObj = (error: Error): FetchJsonAltResponse => ({
+         const httpErrToObj = (error: Error): FetchJsonErrorResponse => ({
             http:        httpLine,
             error:       true,
             ok:          false,
@@ -119,7 +120,7 @@ const fetchJson = {
          };
       log('request');
       const settingsRequestInit = <RequestInit>JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
-      const exceptionToObj = (error: Error): FetchJsonAltResponse => ({
+      const exceptionToObj = (error: Error): FetchJsonErrorResponse => ({
          http:        httpLine,
          error:       true,
          ok:          false,

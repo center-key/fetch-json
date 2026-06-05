@@ -11,7 +11,7 @@
 //    $ node build/demos/examples.js
 
 // Setup
-import { fetchJson, FetchJsonAltResponse, FetchJsonResponse, JsonObject } from '../fetch-json.js';
+import { fetchJson, FetchJsonErrorResponse, JsonObject } from '../fetch-json.js';
 
 // Type Declarations
 export type BookData = { items: Book[] };
@@ -22,7 +22,7 @@ export type NasaApod = { url: string };
 console.info();
 console.info('Examples');
 console.info('========');
-console.info('fetch-json v' + fetchJson.version);
+//console.info('fetch-json v' + fetchJson.version);
 console.info();
 fetchJson.enableLogger();
 
@@ -55,7 +55,7 @@ const example = {
 
       // Fetch me some tea
       const url = 'https://centerkey.com/rest/status/418/';
-      const handleData = (data: FetchJsonAltResponse) =>
+      const handleData = (data: FetchJsonErrorResponse) =>
          console.info(data.bodyText);
       fetchJson.get(url).then(handleData);
 
@@ -77,15 +77,19 @@ const example = {
    serverError(): void {
 
       // HTTP status code 500
-      const url = 'https://centerkey.com/rest/status/500/';  //mock server error
-      const handleData = (data: FetchJsonResponse) => {
-         const response = <FetchJsonAltResponse>data;
+      type Book = { id: number, title: string, author: string };
+      const url1 = 'https://dna-dom.org/api/books/3';         //valid book
+      const url2 = 'https://centerkey.com/rest/status/500/';  //mock server error
+      const handleData = (data: Book | FetchJsonErrorResponse) => {
+         const response = <FetchJsonErrorResponse>data;
+         const book =     <Book>data;
          if (response.error)
             console.error('HTTP Status Code:', response.status, data);
          else
-            console.info('Valid JSON Data:', data);
+            console.info('Book Resource:', book);
          };
-      fetchJson.get(url).then(handleData);
+      fetchJson.get(url1).then(handleData);  //response: ok
+      fetchJson.get(url2).then(handleData);  //response: error
 
       },
 
