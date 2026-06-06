@@ -1,4 +1,4 @@
-//! fetch-json v3.5.1 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.5.2 ~~ https://fetch-json.js.org ~~ MIT License
 
 export type Json = string | number | boolean | null | undefined | JsonObject | Json[];
 export type JsonObject = {
@@ -20,6 +20,11 @@ export type FetchJsonErrorResponse = {
     bodyText: string;
     data: Json;
     response: Response | null;
+    details: {
+        name: string | null;
+        code: number | null;
+        cause: string | null;
+    };
 };
 export type FetchJsonAltResponse = FetchJsonErrorResponse;
 export type FetchJsonResponse = Json | FetchJsonErrorResponse;

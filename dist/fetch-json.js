@@ -1,7 +1,7 @@
-//! fetch-json v3.5.1 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.5.2 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '3.5.1',
+    version: '3.5.2',
     baseOptions: {},
     assert(ok, message) {
         if (!ok)
@@ -42,6 +42,11 @@ const fetchJson = {
             if (this.logger)
                 this.logger(new Date().toISOString(), type, httpMethod, domain, logUrl, ...items);
         };
+        const errorDetails = (error) => ({
+            name: error.name || null,
+            code: error.code || null,
+            cause: error.cause?.toString?.() || null,
+        });
         const toJson = (value) => {
             const response = value;
             const contentType = response.headers.get('content-type');
@@ -54,6 +59,7 @@ const fetchJson = {
                 ok: response.ok,
                 status: response.status,
                 message: 'Response not JSON',
+                details: { name: null, code: null, cause: httpBody.match(/^.*/)[0] },
                 contentType: contentType,
                 bodyText: httpBody,
                 data: data ?? null,
@@ -66,6 +72,7 @@ const fetchJson = {
                 ok: false,
                 status: 500,
                 message: 'Invalid JSON',
+                details: errorDetails(error),
                 contentType: contentType,
                 bodyText: error.toString(),
                 data: null,
@@ -78,19 +85,19 @@ const fetchJson = {
             return returnObj;
         };
         log('request');
-        const settingsRequestInit = JSON.parse(JSON.stringify(settings));
         const exceptionToObj = (error) => ({
             http: httpLine,
             error: true,
             ok: false,
             status: 499,
-            message: 'Fetch API exception [' + error.constructor.name + ']',
+            message: 'Fetch API exception',
+            details: errorDetails(error),
             contentType: null,
-            bodyText: String(error) + ', Cause: ' + String(error.cause),
+            bodyText: String(error),
             data: null,
             response: null,
         });
-        return fetch(requestUrl, settingsRequestInit).then(toJson).catch(exceptionToObj);
+        return fetch(requestUrl, settings).then(toJson).catch(exceptionToObj);
     },
     get(url, params, options) {
         return this.request('GET', url, params, options);
