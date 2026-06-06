@@ -121,8 +121,8 @@ If the endpoint is expected to return JSON, check the `error` field.&nbsp;
 If the endpoint is expected to return text, CSV, XML, or HTML, check the `ok` field
 or `status` field and read the payload from the `bodyText` field.
 
-### 3. Fetch Timeout
-Example of setting a timeout in the Fetch options:
+### 4. Fetch Timeout
+Example of using `AbortSignal` to set a timeout in the Fetch options:
 ```javascript
 // Force a timeout error by waiting for only 1 ms
 const url =         'https://dna-dom.org/api/books/';
@@ -372,13 +372,6 @@ Tell JSDOM to load and run the polyfill file:<br>
 `node_modules/whatwg-fetch/dist/fetch.umd.js`
 
 For a full example, see the usage of `whatwg-fetch` in [spec/jsdom.spec.js](spec/jsdom.spec.js).
-
-### 2. Legacy Node.js
-Native support for **Fetch API** was introduced in **node v18** which became the Active LTS version on 2022-10-25.&nbsp;
-If you're using an older version of **node,** stick with **fetch-json v2.7** and in your **package.json** file declare a dependency on the **node-fetch** polyfill package.
-```shell
-$ npm install node-fetch
-```
 
 <br>
 
