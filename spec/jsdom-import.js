@@ -1,8 +1,13 @@
 #!/usr/bin/env node
 
-// HTTP response headers are destroyed if "import" statement is uncommented.
+// JSDOM loads polyfills that interferes with node's built-in fetch() function.
+// Verified with JSDOM v29.1.1 and node v26.0.0 on macOS.
+// Run:
+//    $ npm list jsdom
+//    $ node --version
 //    $ node spec/jsdom-import.js
 
+// HTTP response headers are destroyed if below "import" statement is uncommented.
 // import { JSDOM } from 'jsdom';
 
 console.info('JSDOM:', typeof JSDOM);

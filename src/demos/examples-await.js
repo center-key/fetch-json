@@ -82,6 +82,16 @@ const example = {
 
       },
 
+   timeout: async () => {
+
+      // Force a timeout error by waiting for only 1 ms
+      const url =         'https://dna-dom.org/api/books/';
+      const abortSignal = globalThis.AbortSignal.timeout(1);  //maximum impatience
+      const data =        await fetchJson.get(url, {}, { signal: abortSignal });
+      console.info('Haste makes waste:', data);
+
+      },
+
    };
 
 // Run examples
@@ -90,6 +100,7 @@ example.jupiter();
 example.teapot();
 // example.books();
 example.serverError();
+example.timeout();
 
 // Wait for HTTP requests to complete
 const done = () => console.info('\nDone.');

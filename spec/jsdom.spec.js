@@ -286,15 +286,13 @@ describe('The low-level fetchJson.request() function', () => {
 ////////////////////////////////////////////////////////////////////////////////
 describe('HTTP error returned by the server', () => {
 
-   const getFirstLine = (text) => text.trim().split('\n', 1)[0];
-   const conditionalIt = mode.spec === 'jsdom' ? it.skip : it;
-   // TODO: Breaks with jsdom v28.0 as response.text() returns Promise<string> with garbled string.
-   // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
-
-   conditionalIt('for status 500 contains the text "Internal Server Error"', (done) => {
+   it('for status 500 contains the text "Internal Server Error"', (done) => {
       const url = 'https://centerkey.com/rest/status/500/';  //mock server error
       const handleData = (actual) => {
-         actual.bodyText = getFirstLine(actual.bodyText);  //just verify first line
+         if (mode.spec === 'jsdom') actual.details.cause = '[HTTP 500 - Internal Server Error]';  //WORKAROUND
+         // TODO: actual.bodyText is garbled with jsdom v28.0 as response.text() returns Promise<string> with garbled string.
+         // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
+         delete actual.bodyText;
          delete actual.response;
          const expected = {
             http:        'GET https://centerkey.com/rest/status/500/',
@@ -302,8 +300,8 @@ describe('HTTP error returned by the server', () => {
             ok:          false,
             status:      500,
             message:     'Response not JSON',
+            details:     { name: null, code: null, cause: '[HTTP 500 - Internal Server Error]' },
             contentType: 'text/plain;charset=UTF-8',
-            bodyText:    '[HTTP 500 - Internal Server Error]',
             data:        null,
             };
          assertDeepStrictEqual(actual, expected, done);
@@ -315,11 +313,12 @@ describe('HTTP error returned by the server', () => {
    it('for status 418 contains the text "I\'m a teapot"', (done) => {
       const url = 'https://centerkey.com/rest/status/418/';  //trailing slash to prevent redirect
       const handleData = (actual) => {
-         if (mode.spec === 'jsdom') actual.bodyText = "[HTTP 418 - I'm a teapot]";
+         if (mode.spec === 'jsdom') actual.bodyText =      "[HTTP 418 - I'm a teapot]";  //WORKAROUND
+         if (mode.spec === 'jsdom') actual.details.cause = "[HTTP 418 - I'm a teapot]";  //WORKAROUND
          // TODO: actual.bodyText is garbled with jsdom v28.0 as response.text() returns Promise<string> with garbled string.
          // See: https://github.com/jsdom/jsdom/pull/4033 and https://github.com/jsdom/jsdom/releases/tag/28.1.0
          console.info(actual.bodyText);
-         actual.bodyText = getFirstLine(actual.bodyText);  //just verify first line
+         delete actual.bodyText;
          delete actual.response;
          const expected = {
             http:        'GET https://centerkey.com/rest/status/418/',
@@ -327,8 +326,8 @@ describe('HTTP error returned by the server', () => {
             ok:          false,
             status:      418,
             message:     'Response not JSON',
+            details:     { name: null, code: null, cause: "[HTTP 418 - I'm a teapot]" },
             contentType: 'text/plain;charset=UTF-8',
-            bodyText:    "[HTTP 418 - I'm a teapot]",
             data:        null,
             };
          assertDeepStrictEqual(actual, expected, done);
@@ -339,7 +338,7 @@ describe('HTTP error returned by the server', () => {
    it('for status 202 contains the text "Accepted"', (done) => {
       const url = 'https://centerkey.com/rest/status/202/';
       const handleData = (actual) => {
-         actual.bodyText = getFirstLine(actual.bodyText);  //just verify first line
+         delete actual.bodyText;
          delete actual.response;
          const expected = {
             http:        'GET https://centerkey.com/rest/status/202/',
@@ -347,8 +346,8 @@ describe('HTTP error returned by the server', () => {
             ok:          true,
             status:      202,
             message:     'Response not JSON',
+            details:     { name: null, code: null, cause: '[HTTP 202 - Accepted]' },
             contentType: 'text/plain;charset=UTF-8',
-            bodyText:    '[HTTP 202 - Accepted]',
             data:        null,
             };
          assertDeepStrictEqual(actual, expected, done);
@@ -362,8 +361,6 @@ describe('HTTP error returned by the server', () => {
 ////////////////////////////////////////////////////////////////////////////////
 describe('The "bodyText" field of the object returned from requesting', () => {
 
-   const getFirstLine = (text) => text.trim().split('\n', 1)[0];
-
    it('an HTML web page is a string that begins with "<!doctype html>"', (done) => {
       const url = 'https://pretty-print-json.js.org';
       const handleData = (data) => {
@@ -371,7 +368,7 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             ok:          data.ok,
             status:      data.status,
             contentType: data.contentType,
-            firstLine:   getFirstLine(data.bodyText),
+            firstLine:   data.details.cause,
             data:        data.data,
             };
          const expected = {
@@ -389,7 +386,7 @@ describe('The "bodyText" field of the object returned from requesting', () => {
    it('an XML document is a string that begins with the <?xml> tag', (done) => {
       const url = 'https://centerkey.com/rest/echo/';
       const handleData = (actual) => {
-         actual.bodyText = getFirstLine(actual.bodyText);  //just verify first line
+         delete actual.bodyText;
          delete actual.response;
          const expected = {
             http:        'GET https://centerkey.com/rest/echo/',
@@ -397,8 +394,8 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             ok:          true,
             status:      200,
             message:     'Response not JSON',
+            details:     { name: null, code: null, cause: '<?xml version="1.0" encoding="utf-8"?>' },
             contentType: 'application/xml',
-            bodyText:    '<?xml version="1.0" encoding="utf-8"?>',
             data:        null,
             };
          assertDeepStrictEqual(actual, expected, done);
@@ -410,7 +407,7 @@ describe('The "bodyText" field of the object returned from requesting', () => {
    it('a plain text file is a string with the correct first word', (done) => {
       const url = 'https://centerkey.com/rest/echo/';
       const handleData = (actual) => {
-         actual.bodyText = getFirstLine(actual.bodyText);  //just verify first line
+         delete actual.bodyText;
          delete actual.response;
          const expected = {
             http:        'GET https://centerkey.com/rest/echo/',
@@ -418,8 +415,8 @@ describe('The "bodyText" field of the object returned from requesting', () => {
             ok:          true,
             status:      200,
             message:     'Response not JSON',
+            details:     { name: null, code: null, cause: '{' },
             contentType: 'text/plain;charset=UTF-8',
-            bodyText:    '{',
             data:        null,
             };
          assertDeepStrictEqual(actual, expected, done);
@@ -596,19 +593,19 @@ describe('Correct error is thrown or returned', () => {
       });
 
    it('when the HTTP domain is bogus', (done) => {
-      const url = 'https://bogus-domain.invalid/api/';
-      const getDetails = (isNode) => isNode ?
-         'TypeError: fetch failed, Cause: Error: getaddrinfo ENOTFOUND bogus-domain.invalid' :
-         'TypeError: Network request failed, Cause: undefined';
+      const url =     'https://bogus-domain.invalid/api/';
+      const cause =   'Error: getaddrinfo ENOTFOUND bogus-domain.invalid';
+      const isJsdom = mode.spec === 'jsdom';
       const handleData = (actual) => {
          const expected = {
             http:        'GET https://bogus-domain.invalid/api/',
             error:       true,
             ok:          false,
             status:      499,
-            message:     'Fetch API exception [TypeError]',
+            message:     'Fetch API exception',
+            details:     { name: 'TypeError', code: null, cause: isJsdom ? null : cause },
             contentType: null,
-            bodyText:    getDetails(mode.type === 'ES Module'),
+            bodyText:    `TypeError: ${isJsdom ? 'Network request failed' : 'fetch failed'}`,
             data:        null,
             response:    null,
             };

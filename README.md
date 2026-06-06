@@ -96,8 +96,8 @@ const handleData = (data) => {
 fetchJson.get(url).then(handleData);
 ```
 Example output:
-```
-HTTP Status Code: 500
+```javascript
+"HTTP Status Code:" 500
 {
    error: true,
    ok: false,
@@ -120,6 +120,37 @@ HTTP Status Code: 500
 If the endpoint is expected to return JSON, check the `error` field.&nbsp;
 If the endpoint is expected to return text, CSV, XML, or HTML, check the `ok` field
 or `status` field and read the payload from the `bodyText` field.
+
+### 3. Fetch Timeout
+Example of setting a timeout in the Fetch options:
+```javascript
+// Force a timeout error by waiting for only 1 ms
+const url =         'https://dna-dom.org/api/books/';
+const abortSignal = globalThis.AbortSignal.timeout(1);  //maximum impatience
+const handleData = (data) =>
+   console.info('Haste makes waste:', data);
+fetchJson.get(url, {}, { signal: abortSignal }).then(handleData);
+```
+Output:
+```javascript
+"Haste makes waste:" {
+   http: 'GET https://dna-dom.org/api/books/',
+   error: true,
+   ok: false,
+   status: 499,
+   message: 'Fetch API exception',
+   details: {
+      name: 'TimeoutError',
+      code: 23,
+      cause: null
+   },
+   contentType: null,
+   bodyText: 'TimeoutError: The operation was aborted due to timeout',
+   data: null,
+   response: null
+}
+```
+Check the `details.name` field to verify the exception type.
 
 ## D) Examples Using async/await
 ### 1. HTTP GET

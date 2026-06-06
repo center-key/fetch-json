@@ -17,6 +17,11 @@ export type FetchJsonErrorResponse = {  //used for exceptions, HTTP errors, and 
    bodyText:    string,           //body of the HTTP response or error details
    data:        Json,             //body of the HTTP response if the content is JSON
    response:    Response | null,  //HTTP response object
+   details: {                     //error details
+      name:  string | null,
+      code:  number | null,
+      cause: string | null,
+      },
    };
 export type FetchJsonAltResponse = FetchJsonErrorResponse;  //useful for non-JSON responses: XML, HTML, CSV
 export type FetchJsonResponse = Json | FetchJsonErrorResponse;
@@ -81,6 +86,11 @@ const fetchJson = {
          if (this.logger)
             this.logger(new Date().toISOString(), type, httpMethod, domain, logUrl, ...<boolean[]>items);
          };
+      const errorDetails = (error: Error): FetchJsonErrorResponse["details"] => ({
+         name:  error.name || null,
+         code:  <number>(<JsonObject><unknown>error).code || null,
+         cause: error.cause?.toString?.() || null,
+         });
       const toJson = (value: unknown): Promise<any> => {
          const response =    <Response>value;
          const contentType = response.headers.get('content-type');
@@ -93,6 +103,7 @@ const fetchJson = {
             ok:          response.ok,
             status:      response.status,
             message:     'Response not JSON',
+            details:     { name: null, code: null, cause: httpBody.match(/^.*/)![0] },  //first line of body
             contentType: contentType,
             bodyText:    httpBody,
             data:        data ?? null,
@@ -106,6 +117,7 @@ const fetchJson = {
             ok:          false,
             status:      500,
             message:     'Invalid JSON',
+            details:     errorDetails(error),
             contentType: contentType,
             bodyText:    error.toString(),
             data:        null,
@@ -119,19 +131,19 @@ const fetchJson = {
          return returnObj;
          };
       log('request');
-      const settingsRequestInit = <RequestInit>JSON.parse(JSON.stringify(settings));  //TODO: <RequestInit>
       const exceptionToObj = (error: Error): FetchJsonErrorResponse => ({
          http:        httpLine,
          error:       true,
          ok:          false,
          status:      499,
-         message:     'Fetch API exception [' + error.constructor.name + ']',
+         message:     'Fetch API exception',
+         details:     errorDetails(error),
          contentType: null,
-         bodyText:    String(error) + ', Cause: ' + String(error.cause),
+         bodyText:    String(error),
          data:        null,
          response:    null,
          });
-      return fetch(requestUrl, settingsRequestInit).then(toJson).catch(exceptionToObj);
+      return fetch(requestUrl, settings).then(toJson).catch(exceptionToObj);
       },
 
    get(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<any> {
