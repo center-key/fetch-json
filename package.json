@@ -69,8 +69,8 @@
          "replacer --virtual-input . --rename=CNAME      docs --content=fetch-json.js.org"
       ],
       "test": [
-         "mocha spec --ignore 'spec/jsdom*' --timeout 7000",
-         "mocha spec/jsdom.spec.js          --timeout 7000"
+         "mocha spec/*.spec.js --ignore spec/jsdom.spec.js --timeout 7000",
+         "mocha spec/jsdom.spec.js                         --timeout 7000"
       ]
    },
    "scripts": {
@@ -103,7 +103,7 @@
       "rimraf": "~6.1",
       "run-scripts-util": "~1.3",
       "typescript": "~6.0",
-      "typescript-eslint": "~8.60",
+      "typescript-eslint": "~8.61",
       "uglify-js": "~3.19",
       "w3c-html-validator": "~2.2",
       "web-ignition": "~2.5",
