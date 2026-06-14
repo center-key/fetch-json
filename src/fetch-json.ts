@@ -43,7 +43,7 @@ const fetchJson = {
 
    baseOptions: <FetchJsonOptions>{},
 
-   assert(ok: unknown, message: string | null) {
+   assertOk(ok: unknown, message: string | null) {
       if (!ok)
          throw new Error(`[fetch-json] ${message}`);
       },
@@ -65,8 +65,8 @@ const fetchJson = {
          };
       const settings =  { ...defaults, ...this.baseOptions, ...options };
       const badMethod = !settings.method || typeof settings.method !== 'string';
-      fetchJson.assert(!badMethod, 'HTTP method missing or invalid.');
-      fetchJson.assert(typeof url === 'string', 'URL must be a string.');
+      fetchJson.assertOk(!badMethod, 'HTTP method missing or invalid.');
+      fetchJson.assertOk(typeof url === 'string', 'URL must be a string.');
       const httpMethod =   settings.method!.trim().toUpperCase();
       const isGetRequest = httpMethod === 'GET';
       const jsonHeaders: HeadersInit = { accept: 'application/json' };
