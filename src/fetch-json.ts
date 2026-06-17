@@ -150,6 +150,10 @@ const fetchJson = {
       return this.request('GET', url, params, options);
       },
 
+   query(url: string, query?: unknown, options?: FetchJsonOptions): Promise<any> {
+      return this.request('QUERY', url, query, options);
+      },
+
    post(url: string, resource?: unknown, options?: FetchJsonOptions): Promise<any> {
       return this.request('POST', url, resource, options);
       },

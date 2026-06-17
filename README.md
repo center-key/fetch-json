@@ -212,6 +212,10 @@ The format for using **fetch-json** is:
 ```javascript
 fetchJson.get(url, params, options).then(callback);
 ```
+#### QUERY
+```javascript
+fetchJson.query(url, query, options).then(callback);
+```
 #### POST
 ```javascript
 fetchJson.post(url, resource, options).then(callback);
@@ -243,8 +247,8 @@ If you need to programmatically set the method, use the format:
 ```javascript
 fetchJson.request(method, url, data, options).then(callback);
 ```
-Where `method` is `'GET'`, `'POST'`, `'PUT'`, `'PATCH'`, or `'DELETE'`, and `data` represents
-either `params` or `resource`.
+Where `method` is `'GET'`, `'QUERY'`, `'POST'`, `'PUT'`, `'PATCH'`, or `'DELETE'`, and `data`
+represents the `params`, `query`, or `resource`.
 
 ### 2. API &mdash; logging
 Turn on basic logging to the console with:

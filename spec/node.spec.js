@@ -30,9 +30,10 @@ describe('Module fetch-json', () => {
       assertDeepStrictEqual(actual, expected);
       });
 
-   it('has functions for get(), post(), put(), patch(), and delete()', () => {
+   it('has functions for get(), query(), post(), put(), patch(), and delete()', () => {
       const actual = {
          get:    typeof fetchJson.get,
+         query:  typeof fetchJson.query,
          post:   typeof fetchJson.post,
          put:    typeof fetchJson.put,
          patch:  typeof fetchJson.patch,
@@ -40,6 +41,7 @@ describe('Module fetch-json', () => {
          };
       const expected = {
          get:    'function',
+         query:  'function',
          post:   'function',
          put:    'function',
          patch:  'function',
@@ -149,6 +151,22 @@ describe('GET response returned by HTTP echo service', () => {
 
 ////////////////////////////////////////////////////////////////////////////////
 describe('Response returned by HTTP echo service for a planet (object literal)', () => {
+
+   it.skip('from a QUERY contains the planet (JSON)', (done) => {
+      const url =      'https://centerkey.com/rest/echo/';
+      const resource = { name: 'Pluto', position: 9 };
+      const handleData = (actual) => {
+         delete actual.headers;
+         const expected = {
+            method: 'QUERY',
+            query:  '',
+            params: {},
+            body:   resource,
+            };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      fetchJson.query(url, resource).then(handleData);
+      });
 
    it('from a POST contains the planet (JSON)', (done) => {
       const url =      'https://centerkey.com/rest/echo/';
