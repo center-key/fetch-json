@@ -97,13 +97,14 @@ const fetchJson = {
          const isHead =      httpMethod === 'HEAD';
          const isJson =      !!contentType && /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
          const headersObj =  () => Object.fromEntries(response.headers.entries());
+         const firstLine =   (text: string) => text.match(/^.*/)![0];
          const textToObj = (httpBody: string, data?: Json): FetchJsonErrorResponse => ({
             http:        httpLine,
             error:       true,
             ok:          response.ok,
             status:      response.status,
             message:     'Response not JSON',
-            details:     { name: null, code: null, cause: httpBody.match(/^.*/)![0] },  //first line of body
+            details:     { name: null, code: null, cause: firstLine(httpBody) },
             contentType: contentType,
             bodyText:    httpBody,
             data:        data ?? null,

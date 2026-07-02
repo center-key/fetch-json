@@ -239,7 +239,7 @@ fetchJson.head(url, params, options).then(callback);  //headers returned as an o
 Notes:
 1. Only the `url` parameter is required.&nbsp; The other parameters are optional.
 1. The `params` object for `fetchJson.get()` is converted into a query string and appended to the `url`.
-1. The `resource` object is turned into the body of the HTTP request.
+1. The `query` or `resource` object is turned into the body of the HTTP request.
 1. The `options` parameter is passed through to the **Fetch API** (see the `init` [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters)).
 
 #### Dynamic HTTP method

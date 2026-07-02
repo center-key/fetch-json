@@ -17,10 +17,11 @@ describe(`Specifications: ${filename} - ${mode.type} (${mode.file})`, () => {
 ////////////////////////////////////////////////////////////////////////////////
 describe('Module fetch-json', () => {
 
-   it('follows semantic versioning', () => {
-      const semVerPattern = /\d+[.]\d+[.]\d+/;
-      const actual =   { version: fetchJson.version, valid: semVerPattern.test(fetchJson.version) };
-      const expected = { version: fetchJson.version, valid: true };
+   it('follows semantic version formatting', () => {
+      const version =  fetchJson.version;
+      const semVer =   /\d+[.]\d+[.]\d+/;
+      const actual =   { version: version, valid: semVer.test(version) };
+      const expected = { version: version, valid: true };
       assertDeepStrictEqual(actual, expected);
       });
 

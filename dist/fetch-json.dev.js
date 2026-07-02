@@ -1,9 +1,9 @@
-//! fetch-json v3.5.2 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.5.3 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '3.5.2',
+    version: '3.5.3',
     baseOptions: {},
-    assert(ok, message) {
+    assertOk(ok, message) {
         if (!ok)
             throw new Error(`[fetch-json] ${message}`);
     },
@@ -21,8 +21,8 @@ const fetchJson = {
         };
         const settings = { ...defaults, ...this.baseOptions, ...options };
         const badMethod = !settings.method || typeof settings.method !== 'string';
-        fetchJson.assert(!badMethod, 'HTTP method missing or invalid.');
-        fetchJson.assert(typeof url === 'string', 'URL must be a string.');
+        fetchJson.assertOk(!badMethod, 'HTTP method missing or invalid.');
+        fetchJson.assertOk(typeof url === 'string', 'URL must be a string.');
         const httpMethod = settings.method.trim().toUpperCase();
         const isGetRequest = httpMethod === 'GET';
         const jsonHeaders = { accept: 'application/json' };
@@ -53,13 +53,14 @@ const fetchJson = {
             const isHead = httpMethod === 'HEAD';
             const isJson = !!contentType && /json|javascript/.test(contentType);
             const headersObj = () => Object.fromEntries(response.headers.entries());
+            const firstLine = (text) => text.match(/^.*/)[0];
             const textToObj = (httpBody, data) => ({
                 http: httpLine,
                 error: true,
                 ok: response.ok,
                 status: response.status,
                 message: 'Response not JSON',
-                details: { name: null, code: null, cause: httpBody.match(/^.*/)[0] },
+                details: { name: null, code: null, cause: firstLine(httpBody) },
                 contentType: contentType,
                 bodyText: httpBody,
                 data: data ?? null,
@@ -101,6 +102,9 @@ const fetchJson = {
     },
     get(url, params, options) {
         return this.request('GET', url, params, options);
+    },
+    query(url, query, options) {
+        return this.request('QUERY', url, query, options);
     },
     post(url, resource, options) {
         return this.request('POST', url, resource, options);
