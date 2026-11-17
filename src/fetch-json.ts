@@ -67,19 +67,32 @@ const fetchJson = {
       const badMethod = !settings.method || typeof settings.method !== 'string';
       fetchJson.assertOk(!badMethod, 'HTTP method missing or invalid.');
       fetchJson.assertOk(typeof url === 'string', 'URL must be a string.');
-      const httpMethod =   settings.method!.trim().toUpperCase();
-      const isGetRequest = httpMethod === 'GET';
+      const lowkey = () => <HeadersInit>Object.fromEntries(Object.keys(settings.headers!).map(
+         key => [key.trim().toLowerCase(), settings.headers![<keyof HeadersInit>key]]));
+      if (settings.headers)
+         settings.headers = lowkey();
+      const httpMethod =     settings.method!.trim().toUpperCase();
+      const contentType =    settings.headers?.[<keyof HeadersInit>'content-type'];
+      const queryStrMime =   'application/x-www-form-urlencoded';
+      const isQueryStrMime = !!contentType && String(contentType).includes(queryStrMime);
+      const useRawQueryStr = isQueryStrMime && typeof data === 'string';
+      fetchJson.assertOk(!isQueryStrMime || httpMethod === 'QUERY', 'Unsupported HTTP method for MIME type.');
       const jsonHeaders: HeadersInit = { accept: 'application/json' };
-      if (!isGetRequest && data)
+      if (httpMethod !== 'GET' && data)
          jsonHeaders['content-type'] = 'application/json';
       settings.headers = { ...jsonHeaders, ...settings.headers };  //eslint-disable-line @typescript-eslint/no-misused-spread
-      const paramKeys =  isGetRequest && data ? Object.keys(data) : <string[]>[];
+      const paramKeys =  httpMethod === 'GET' && data ? Object.keys(data) : <string[]>[];
       const getValue =   (key: string) => data ? data[<keyof typeof data>key] : '';
       const toPair =     (key: string) => key + '=' + encodeURIComponent(getValue(key));  //build query string field-value
       const params =     () => paramKeys.map(toPair).join('&');
       const requestUrl = !paramKeys.length ? url : url + (url.includes('?') ? '&' : '?') + params();
       const httpLine =   `${httpMethod} ${requestUrl}`;
-      settings.body =    !isGetRequest && data ? JSON.stringify(data) : null;
+      settings.body =
+         httpMethod === 'GET' ? null :
+         useRawQueryStr ?       data :
+         isQueryStrMime ?       new URLSearchParams(<URLSearchParams>data).toString() :
+         !data ?                null :
+         JSON.stringify(data);
       const log = (type: 'response' | 'request', ...items: (string | number | boolean | null)[]) => {
          const logUrl = url.replace(/[?].*/, '');  //security: prevent logging url parameters
          const domain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');  //extract hostname
@@ -94,7 +107,6 @@ const fetchJson = {
       const toJson = (value: unknown): Promise<any> => {
          const response =    <Response>value;
          const contentType = response.headers.get('content-type');
-         const isHead =      httpMethod === 'HEAD';
          const isJson =      !!contentType && /json|javascript/.test(contentType);  //match "application/json" or "text/javascript"
          const headersObj =  () => Object.fromEntries(response.headers.entries());
          const firstLine =   (text: string) => text.match(/^.*/)![0];
@@ -126,8 +138,8 @@ const fetchJson = {
             });
          log('response', response.ok, response.status, contentType);
          const returnObj =
-            isHead ? response.text().then(headersObj) :
-            isJson ? response.json().then(jsonToObj).catch(httpErrToObj) :
+            httpMethod === 'HEAD' ? response.text().then(headersObj) :
+            isJson ?                response.json().then(jsonToObj).catch(httpErrToObj) :
             response.text().then(textToObj);
          return returnObj;
          };
@@ -151,8 +163,8 @@ const fetchJson = {
       return this.request('GET', url, params, options);
       },
 
-   query(url: string, query?: unknown, options?: FetchJsonOptions): Promise<any> {
-      return this.request('QUERY', url, query, options);
+   query(url: string, params?: unknown, options?: FetchJsonOptions): Promise<any> {
+      return this.request('QUERY', url, params, options);
       },
 
    post(url: string, resource?: unknown, options?: FetchJsonOptions): Promise<any> {

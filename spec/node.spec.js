@@ -153,24 +153,10 @@ describe('GET response returned by HTTP echo service', () => {
 ////////////////////////////////////////////////////////////////////////////////
 describe('Response returned by HTTP echo service for a planet (object literal)', () => {
 
-   it.skip('from a QUERY contains the planet (JSON)', (done) => {
-      const url =      'https://centerkey.com/rest/echo/';
-      const resource = { name: 'Pluto', position: 9 };
-      const handleData = (actual) => {
-         delete actual.headers;
-         const expected = {
-            method: 'QUERY',
-            query:  '',
-            params: {},
-            body:   resource,
-            };
-         assertDeepStrictEqual(actual, expected, done);
-         };
-      fetchJson.query(url, resource).then(handleData);
-      });
+   const host = 'https://centerkey.com';
 
    it('from a POST contains the planet (JSON)', (done) => {
-      const url =      'https://centerkey.com/rest/echo/';
+      const url =      `${host}/rest/echo/`;
       const resource = { name: 'Mercury', position: 1 };
       const handleData = (actual) => {
          delete actual.headers;
@@ -186,7 +172,7 @@ describe('Response returned by HTTP echo service for a planet (object literal)',
       });
 
    it('from a PUT contains the planet (JSON)', (done) => {
-      const url =      'https://centerkey.com/rest/echo/';
+      const url =      `${host}/rest/echo/`;
       const resource = { name: 'Venus', position: 2 };
       const handleData = (actual) => {
          delete actual.headers;
@@ -202,7 +188,7 @@ describe('Response returned by HTTP echo service for a planet (object literal)',
       });
 
    it('from a PATCH contains the planet (JSON)', (done) => {
-      const url =      'https://centerkey.com/rest/echo/';
+      const url =      `${host}/rest/echo/`;
       const resource = { name: 'Mars', position: 4 };
       const handleData = (actual) => {
          delete actual.headers;
@@ -215,6 +201,47 @@ describe('Response returned by HTTP echo service for a planet (object literal)',
          assertDeepStrictEqual(actual, expected, done);
          };
       fetchJson.patch(url, resource).then(handleData);
+      });
+
+   });
+
+////////////////////////////////////////////////////////////////////////////////
+describe.skip('HTTP request for the QUERY method', () => {
+
+   // const host = 'https://centerkey.com';
+   const host = 'http://localhost/centerkey.com';
+
+   it('has the correct query object in the body as JSON', (done) => {
+      const url =   `${host}/rest/echo/`;
+      const query = { category: 'sci-fi', price: { min: 5, max: 35 }, limit: 10 };
+      const handleData = (actual) => {
+         delete actual.headers;
+         const expected = {
+            method: 'QUERY',
+            query:  '',
+            params: {},
+            body:   { category: 'sci-fi', price: { min: 5, max: 35 }, limit: 10 },
+            };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      fetchJson.query(url, query).then(handleData);
+      });
+
+   it('supports the "application/x-www-form-urlencoded" MIME type', (done) => {
+      const url =     `${host}/rest/echo/`;
+      const query =   { category: 'sci-fi', limit: 10 };
+      const options = { headers: { 'content-type': 'application/x-www-form-urlencoded' } };
+      const handleData = (actual) => {
+         delete actual.headers;
+         const expected = {
+            method: 'QUERY',
+            query:  '',
+            params: { category: 'sci-fi', limit: '10' },  //all values are text in query strings
+            body:   'category=sci-fi&limit=10',
+            };
+         assertDeepStrictEqual(actual, expected, done);
+         };
+      fetchJson.query(url, query, options).then(handleData);
       });
 
    });
@@ -498,11 +525,11 @@ describe('Base options', () => {
 
    it('can be set to automatically add an "Authorization" HTTP header', (done) => {
       const url =         'https://centerkey.com/rest/echo/';
-      const baseOptions = { headers: { Authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } };
+      const baseOptions = { headers: { authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } };
       const options =     { referrerPolicy: 'no-referrer' };
       fetchJson.setBaseOptions(baseOptions);
       const handleData = (actual) => {
-         actual.auth = actual.headers.Authorization ?? null;
+         actual.auth = actual.headers.authorization ?? null;
          delete actual.headers;
          const expected = {
             auth:   'Basic WE1MIGlzIGhpZGVvdXM=',
@@ -520,7 +547,7 @@ describe('Base options', () => {
       const url = 'https://centerkey.com/rest/echo/';
       fetchJson.setBaseOptions({});
       const handleData = (actual) => {
-         actual.auth = actual.headers.Authorization ?? null;
+         actual.auth = actual.headers.authorization ?? null;
          delete actual.headers;
          const expected = {
             auth:   null,
