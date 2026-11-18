@@ -15,7 +15,11 @@ import { fetchJson } from '../../build/fetch-json.js';
 console.info();
 console.info('Single GET fetch');
 console.info('================');
-fetchJson.enableLogger();
 
-const url = 'https://official-joke-api.appspot.com/random_joke';
-fetchJson.get(url).then(data => console.info(data));
+const url =     'https://centerkey.com/rest/echo/';
+const data =    { x: 3, y: 7 };
+const options = { headers: { 'authorization': '123456', 'user-agent': 'Firefox' } };
+
+fetchJson.enableLogger();
+fetchJson.get( url, data, options).then(data => console.info(data));
+fetchJson.post(url, data, options).then(data => console.info(data));

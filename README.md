@@ -9,11 +9,22 @@ _A wrapper around Fetch just for JSON_
 [![Build](https://github.com/center-key/fetch-json/actions/workflows/run-spec-on-push.yaml/badge.svg)](https://github.com/center-key/fetch-json/actions/workflows/run-spec-on-push.yaml)
 [![Publish Website](https://github.com/center-key/fetch-json/actions/workflows/publish-website.yaml/badge.svg)](https://github.com/center-key/fetch-json/actions/workflows/publish-website.yaml)
 
-Why would you fetch anything but json? ;)
+Why would you fetch anything but JSON?
 
-## A) Make REST Easy
+| Table of Contents                                            |
+| :----------------------------------------------------------- |
+| A) [REST Made Easy](#rest-made-easy)                         |
+| B) [Setup](#setup)                                           |
+| C) [Examples](#examples)                                     |
+| D) [Comparison to Fetch API](#comparison-to-fetch-api)       |
+| E) [Usage](#usage)                                           |
+| F) [Application Errors in JSON](#application-errors-in-json) |
+| G) [TypeScript Types](#typescript-types)                     |
+| H) [Add Fetch API to JSDOM](#add-fetch-api-to-jsdom)         |
+
+## A) REST Made Easy
 **fetch-json** is a lightweight JavaScript library to reduce the boilerplate code needed to make
-HTTP calls to JSON endpoints.
+HTTP calls to JSON endpoints.&nbsp;
 The minified JS file is under 4 KB.
 
 **fetch-json** automatically:  <!-- sync with src/website/index.html -->
@@ -25,12 +36,11 @@ The minified JS file is under 4 KB.
 1. Converts the HTTP text response to JSON if it's not already JSON (convenient for handling HTTP errors)
 1. Maps HTTP response headers from a `HEAD` request into a simple object
 
-**fetch-json** is ideal for a [JAMstack](https://jamstack.org) architecture  where "dynamic
-programming during the request/response cycle is handled by JavaScript, running entirely on the
-client".
+**fetch-json** is ideal for a JAMstack architecture where the "dynamic programming during the
+request/response cycle is handled by JavaScript, running entirely on the client".
 
 ## B) Setup
-### 1. Web browser
+### 1. Web Browser
 In a web page:
 ```html
 <script src=fetch-json.min.js></script>
@@ -39,7 +49,7 @@ or from the [jsdelivr.com CDN](https://www.jsdelivr.com/package/npm/fetch-json):
 ```html
 <script src=https://cdn.jsdelivr.net/npm/fetch-json@3.5/dist/fetch-json.min.js></script>
 ```
-### 2. Node.js server
+### 2. Node.js Server
 Install package for node:
 ```shell
 $ npm install fetch-json
@@ -47,6 +57,15 @@ $ npm install fetch-json
 and then import:
 ```javascript
 import { fetchJson } from 'fetch-json';
+```
+### 3. Experiment Locally
+To run the [demonstration](src/demos/dev.js) script from the terminal:
+```shell
+$ git clone https://github.com/center-key/fetch-json.git
+$ cd fetch-json
+$ npm install
+$ npx tsc
+$ node src/demos/dev.js
 ```
 
 ## C) Examples
@@ -122,13 +141,15 @@ If the endpoint is expected to return text, CSV, XML, or HTML, check the `ok` fi
 or `status` field and read the payload from the `bodyText` field.
 
 ### 4. Fetch Timeout
-Example of using `AbortSignal` to set a timeout in the Fetch options:
+Example of using
+[`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/RequestInit#signal) to set a
+timeout in the Fetch options:
 ```javascript
 // Force a timeout error by waiting for only 1 ms
 const url =         'https://dna-dom.org/api/books/';
 const abortSignal = globalThis.AbortSignal.timeout(1);  //maximum impatience
-const handleData = (data) =>
-   console.info('Haste makes waste:', data);
+const handleData =  (data) => console.info('Haste makes waste:', data);
+
 fetchJson.get(url, {}, { signal: abortSignal }).then(handleData);
 ```
 Output:
@@ -152,8 +173,7 @@ Output:
 ```
 Check the `details.name` field to verify the exception type.
 
-## D) Examples Using async/await
-### 1. HTTP GET
+### 5. HTTP GET Using `async`/`await`
 Fetch the NASA Astronomy Picture of the Day:
 ```javascript
 // NASA APoD
@@ -165,7 +185,8 @@ const show = async () => {
    };
 show();
 ```
-### 2. HTTP POST
+
+### 6. HTTP POST Using `async`/`await`
 Create a resource for the planet Jupiter:
 ```javascript
 // Create Jupiter
@@ -177,13 +198,14 @@ const create = async (resource) => {
 create({ name: 'Jupiter', position: 5 });
 ```
 
-## E) Leverages Fetch API
-**fetch-json** calls the native
-**[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**.
+## D) Comparison to Fetch API
+**fetch-json** is a lightweight wrapper for
+**[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)** that eliminates the
+boilerplate code needed to call JSON endpoints.
 
-For comparison, the POST example in section [C) Examples](#c-examples) to create a planet would be
-done calling the **Fetch API**
-directly with the code:
+Below are two identical POST requests to help contrast creating a planet with just **Fetch API**
+and then with **fetch-json**.
+### Without `fetch-json`
 ```javascript
 // Create Jupiter (WITHOUT fetch-json)
 const url =      'https://centerkey.com/rest/echo/';
@@ -192,7 +214,7 @@ const options = {
    method: 'POST',
    headers: {
       'content-type': 'application/json',
-      'accept': 'application/json',
+      'accept':       'application/json',
       },
    body: JSON.stringify(resource),
    };
@@ -202,12 +224,28 @@ fetch(url, options)
    .then(response => response.json())
    .then(handleData);
 ```
+### With `fetch-json`
+```javascript
+// Create Jupiter
+const url =      'https://centerkey.com/rest/echo/';
+const resource = { name: 'Jupiter', position: 5 };
+const handleData = (data) =>
+   console.info('New planet:', data);  //http response body as an object literal
+fetchJson.post(url, resource).then(handleData);
+```
 The example _with_ **fetch-json** and the example _without_ **fetch-json** each produce the same
 output.
 
-## F) API
-### 1. API &mdash; HTTP Request
+## E) Usage
+### 1. API &mdash; HTTP Request Synopsis
 The format for using **fetch-json** is:
+**fetch-json** API :
+```javascript
+fetchJson.<METHOD>(url, data, options).then(callback);
+```
+**fetch-json** passes the `options` object through to **Fetch API**.<br>
+See: https://developer.mozilla.org/en-US/docs/Web/API/RequestInit
+
 #### GET
 ```javascript
 fetchJson.get(url, params, options).then(callback);
@@ -232,7 +270,7 @@ fetchJson.patch(url, resource, options).then(callback);
 ```javascript
 fetchJson.delete(url, resource, options).then(callback);
 ```
-#### HEAD (HTTP response headers)
+#### HEAD (HTTP Response Headers)
 ```javascript
 fetchJson.head(url, params, options).then(callback);  //headers returned as an object
 ```
@@ -240,9 +278,9 @@ Notes:
 1. Only the `url` parameter is required.&nbsp; The other parameters are optional.
 1. The `params` object for `fetchJson.get()` is converted into a query string and appended to the `url`.
 1. The `query` or `resource` object is turned into the body of the HTTP request.
-1. The `options` parameter is passed through to the **Fetch API** (see the `init` [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters)).
+1. When sending an HTTP request with the **QUERY** method to an API endpoint that requires a URL encoded query string instead of JSON, set **options** to `{ headers: { 'content-type': 'application/x-www-form-urlencoded' } }` in order to configure the request `content-type` appropriately.
 
-#### Dynamic HTTP method
+#### Dynamic HTTP Method
 If you need to programmatically set the method, use the format:
 ```javascript
 fetchJson.request(method, url, data, options).then(callback);
@@ -250,7 +288,7 @@ fetchJson.request(method, url, data, options).then(callback);
 Where `method` is `'GET'`, `'QUERY'`, `'POST'`, `'PUT'`, `'PATCH'`, or `'DELETE'`, and `data`
 represents the `params`, `query`, or `resource`.
 
-### 2. API &mdash; logging
+### 2. API &mdash; Logging Synopsis
 Turn on basic logging to the console with:
 ```javascript
 fetchJson.enableLogger();
@@ -271,13 +309,37 @@ Turn off logging with:
 fetchJson.enableLogger();
 ```
 
-## G) Response Text and Errors Converted to JSON
+### 3. API &mdash; Base Options Synopsis
+Use `fetchJson.setBaseOptions(options)` to configure options to be used on future **fetchJson**
+requests.
+
+The example below sets the `authorization` HTTP header so it is sent on the subsequent GET and
+DELETE requests:
+```javascript
+const url = 'https://dna-dom.org/api/books/3';
+fetchJson.setBaseOptions({ headers: { authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } });
+fetchJson.get(url).then(display);  //with auth header
+fetchJson.delete(url);             //with auth header
+```
+
+To have multiple base options available at the same time, use the `FetchJson` class to instantiate
+multiple copies of `fetchJson`:
+```javascript
+import { FetchJson } from 'fetch-json';
+
+const fetchJsonA = new FetchJson({ headers: { from: 'aaa@example.com' } }).fetchJson;
+const fetchJsonB = new FetchJson({ headers: { from: 'bbb@example.com' } }).fetchJson;
+const url = 'https://dna-dom.org/api/books/3';
+fetchJsonA.get(url).then(display);  //"from: aaa@example.com"
+fetchJsonB.delete(url);             //"from: bbb@example.com"
+```
+
+## F) Application Errors in JSON
 
 > [!NOTE]
 > **Protocol-Level vs. Application Level**<br>
 > HTTP status codes are a mess.&nbsp;
-> This is not an opinion &mdash; it's a fact.&nbsp;
-> This fact is proven out by the large number of HTTP status code questions on Stack overflow with multiple very popular directly conflicting answers.&nbsp;
+> The mess is easily visible in the large number of questions on Stack Overflow about HTTP status codes that all have multiple conflicting answers.&nbsp;
 > The mutually exclusive answers will often each have hundreds of upvotes.&nbsp;
 > At its core this problem is due to the impedance mismatch between protocol-level status and application-level status.&nbsp;
 > The "P" in HTTP stands for protocol, and it's the wrong level to pass application level status codes.&nbsp;
@@ -308,35 +370,12 @@ similar to:
    data:        null,
 }
 ```
-Every response that is not JSON or is an HTTP error will be consistently formatted like the object above.&nbsp;
+Every response that is not JSON or is an HTTP error will be consistently formatted like the object
+above.&nbsp;
 With **fetch-json** you know the response will always be passed back to you as a consistent,
 simple object literal.
 
-## H) Base Options
-Use `fetchJson.setBaseOptions()` to configure options to be used on future **fetchJson** requests.
-
-The example below sets the `Authorization` HTTP header so it is sent on the subsequent GET and
-DELETE requests:
-```javascript
-const url = 'https://dna-dom.org/api/books/3';
-fetchJson.setBaseOptions({ headers: { Authorization: 'Basic WE1MIGlzIGhpZGVvdXM=' } });
-fetchJson.get(url).then(display);  //with auth header
-fetchJson.delete(url);             //with auth header
-```
-
-To have multiple base options available at the same time, use the `FetchJson` class to instantiate
-multiple copies of `fetchJson`:
-```javascript
-import { FetchJson } from 'fetch-json';
-
-const fetchJsonA = new FetchJson({ headers: { from: 'aaa@example.com' } }).fetchJson;
-const fetchJsonB = new FetchJson({ headers: { from: 'bbb@example.com' } }).fetchJson;
-const url = 'https://dna-dom.org/api/books/3';
-fetchJsonA.get(url).then(display);  //"from: aaa@example.com"
-fetchJsonB.delete(url);             //"from: bbb@example.com"
-```
-
-## I) TypeScript
+## G) TypeScript Types
 See the TypeScript declarations at the top of the [fetch-json.ts](src/fetch-json.ts) file.
 
 The declarations provide type information about the API.&nbsp;
@@ -367,7 +406,7 @@ const handleData = (data: Book | FetchJsonErrorResponse) => {
 fetchJson.get(url).then(handleData);
 ```
 
-## J) Add Fetch to JSDOM
+## H) Add Fetch API to JSDOM
 JSDOM does not include `fetch` by default, so you need to add a polyfill.
 ```shell
 $ npm install --save-dev whatwg-fetch
