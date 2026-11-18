@@ -1,7 +1,7 @@
-//! fetch-json v3.5.3 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.5.4 ~~ https://fetch-json.js.org ~~ MIT License
 
 const fetchJson = {
-    version: '3.5.3',
+    version: '3.5.4',
     baseOptions: {},
     assertOk(ok, message) {
         if (!ok)
@@ -23,19 +23,31 @@ const fetchJson = {
         const badMethod = !settings.method || typeof settings.method !== 'string';
         fetchJson.assertOk(!badMethod, 'HTTP method missing or invalid.');
         fetchJson.assertOk(typeof url === 'string', 'URL must be a string.');
+        const lowkey = () => Object.fromEntries(Object.keys(settings.headers).map(key => [key.trim().toLowerCase(), settings.headers[key]]));
+        if (settings.headers)
+            settings.headers = lowkey();
         const httpMethod = settings.method.trim().toUpperCase();
-        const isGetRequest = httpMethod === 'GET';
+        const contentType = settings.headers?.['content-type'];
+        const queryStrMime = 'application/x-www-form-urlencoded';
+        const isQueryStrMime = !!contentType && String(contentType).includes(queryStrMime);
+        const useRawQueryStr = isQueryStrMime && typeof data === 'string';
+        fetchJson.assertOk(!isQueryStrMime || httpMethod === 'QUERY', 'Unsupported HTTP method for MIME type.');
         const jsonHeaders = { accept: 'application/json' };
-        if (!isGetRequest && data)
+        if (httpMethod !== 'GET' && data)
             jsonHeaders['content-type'] = 'application/json';
         settings.headers = { ...jsonHeaders, ...settings.headers };
-        const paramKeys = isGetRequest && data ? Object.keys(data) : [];
+        const paramKeys = httpMethod === 'GET' && data ? Object.keys(data) : [];
         const getValue = (key) => data ? data[key] : '';
         const toPair = (key) => key + '=' + encodeURIComponent(getValue(key));
         const params = () => paramKeys.map(toPair).join('&');
         const requestUrl = !paramKeys.length ? url : url + (url.includes('?') ? '&' : '?') + params();
         const httpLine = `${httpMethod} ${requestUrl}`;
-        settings.body = !isGetRequest && data ? JSON.stringify(data) : null;
+        settings.body =
+            httpMethod === 'GET' ? null :
+                useRawQueryStr ? data :
+                    isQueryStrMime ? new URLSearchParams(data).toString() :
+                        !data ? null :
+                            JSON.stringify(data);
         const log = (type, ...items) => {
             const logUrl = url.replace(/[?].*/, '');
             const domain = logUrl.replace(/.*:[/][/]/, '').replace(/[:/].*/, '');
@@ -50,7 +62,6 @@ const fetchJson = {
         const toJson = (value) => {
             const response = value;
             const contentType = response.headers.get('content-type');
-            const isHead = httpMethod === 'HEAD';
             const isJson = !!contentType && /json|javascript/.test(contentType);
             const headersObj = () => Object.fromEntries(response.headers.entries());
             const firstLine = (text) => text.match(/^.*/)[0];
@@ -80,7 +91,7 @@ const fetchJson = {
                 response: response,
             });
             log('response', response.ok, response.status, contentType);
-            const returnObj = isHead ? response.text().then(headersObj) :
+            const returnObj = httpMethod === 'HEAD' ? response.text().then(headersObj) :
                 isJson ? response.json().then(jsonToObj).catch(httpErrToObj) :
                     response.text().then(textToObj);
             return returnObj;
@@ -103,8 +114,8 @@ const fetchJson = {
     get(url, params, options) {
         return this.request('GET', url, params, options);
     },
-    query(url, query, options) {
-        return this.request('QUERY', url, query, options);
+    query(url, params, options) {
+        return this.request('QUERY', url, params, options);
     },
     post(url, resource, options) {
         return this.request('POST', url, resource, options);

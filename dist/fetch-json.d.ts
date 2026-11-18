@@ -1,4 +1,4 @@
-//! fetch-json v3.5.3 ~~ https://fetch-json.js.org ~~ MIT License
+//! fetch-json v3.5.4 ~~ https://fetch-json.js.org ~~ MIT License
 
 export type Json = string | number | boolean | null | undefined | JsonObject | Json[];
 export type JsonObject = {
@@ -37,7 +37,7 @@ declare const fetchJson: {
     setBaseOptions(options: FetchJsonOptions): FetchJsonOptions;
     request(method: FetchJsonMethod, url: string, data?: unknown, options?: FetchJsonOptions): Promise<any>;
     get(url: string, params?: FetchJsonParams, options?: FetchJsonOptions): Promise<any>;
-    query(url: string, query?: unknown, options?: FetchJsonOptions): Promise<any>;
+    query(url: string, params?: unknown, options?: FetchJsonOptions): Promise<any>;
     post(url: string, resource?: unknown, options?: FetchJsonOptions): Promise<any>;
     put(url: string, resource?: unknown, options?: FetchJsonOptions): Promise<any>;
     patch(url: string, resource?: unknown, options?: FetchJsonOptions): Promise<any>;
